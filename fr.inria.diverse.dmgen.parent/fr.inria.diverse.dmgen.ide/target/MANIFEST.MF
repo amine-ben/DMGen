@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: fr.inria.diverse.dmgen.ide; singleton:=true
+Export-Package: fr.inria.diverse.dmgen.ide.contentassist.antlr.interna
+ l,fr.inria.diverse.dmgen.ide.contentassist.antlr
+Bundle-Name: fr.inria.diverse.dmgen.ide
+Bundle-Version: 1.0.0.201706011305
+Require-Bundle: fr.inria.diverse.dmgen,org.eclipse.xtext.ide,org.eclip
+ se.xtext.xbase.ide
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: My Company
+

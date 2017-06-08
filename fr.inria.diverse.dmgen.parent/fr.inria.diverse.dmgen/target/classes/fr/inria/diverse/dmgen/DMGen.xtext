@@ -1,0 +1,63 @@
+grammar fr.inria.diverse.dmgen.DMGen with org.eclipse.xtext.common.Terminals
+
+generate dMGen "http://www.inria.fr/diverse/dmgen/DMGen"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+GenConfig returns GenConfig:
+	'import' metamodel=Metamodel ';'
+  (('global' 'density' globalDensity= INT ';')?  & 
+	('global' 'variation' globalVariation= DECIMAL ';')? )
+	 
+	 generators+=Generator (generators+=Generator)*
+	;
+
+DECIMAL returns ecore::EFloat:
+	INT'.'INT
+;
+
+Generator returns Generator:
+	name='generate' number=INT 'with'  (('size' size=INT) & ('prefix' prefix=STRING)?)
+		'{'
+			(classes+=Clazz)? ( ';' classes+=Clazz)*		
+		'}'
+;
+
+Bundle returns Bundle:
+	size=INT '#' times=INT	
+;
+
+Metamodel returns Metamodel:
+	name=ID uri=URI
+;
+
+Clazz returns Clazz:
+	name=ID ('#' instances=INT)? ( '{'
+		properties+=Property (';' properties+=Property)*
+		'}')?
+;
+
+Property returns Property:
+	name=ID (('density' density=INT)? & ('variation' variation=INT)?)
+;
+
+URI returns URI:
+	scheme=SCHEME // Scheme
+	(authority=FRAGMENT'/')? // 
+	fragments+=FRAGMENT ('/' fragments+=FRAGMENT)*	// 
+;
+
+// FIXME adding support for port number 
+FRAGMENT returns ecore::EString:
+	ID(('.' |'-') ID)*(':'INT)?
+;
+
+//AUTHORITY:
+//	ID('.'ID)*(':'INT)? //TODO limit the number of characters 
+//;
+
+terminal SCHEME:
+	'http://'|'file:///'|'platform:/'|'neoemfhbase://'
+;
+		
+

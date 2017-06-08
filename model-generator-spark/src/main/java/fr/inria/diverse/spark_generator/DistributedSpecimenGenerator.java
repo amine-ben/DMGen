@@ -1,0 +1,431 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Obeo.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:
+ *     Obeo - initial API and implementation
+ *     Amine Benelallam (DiverSE) - Additional modifications      
+ *******************************************************************************/
+
+package fr.inria.diverse.spark_generator;
+
+import static com.google.common.collect.Iterables.get;
+import static com.google.common.primitives.Primitives.isWrapperType;
+import static com.google.common.primitives.Primitives.unwrap;
+
+import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.math3.distribution.IntegerDistribution;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
+import fr.inria.atlanmod.neoemf.core.PersistentEObject;
+import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration;
+import fr.inria.diverse.spark_generator.util.ClassIterator;
+import fr.inria.diverse.spark_generator.util.EPackagesData;
+
+/**
+ * 
+ * @author <a href="mailto:amine.benelallam@inria.fr">Amine Benelallam</a>
+ * 
+ */
+
+public class DistributedSpecimenGenerator implements IGenerator, Serializable {
+		
+	
+	/**
+	 * Default serial version UID
+	 */
+	private static final long serialVersionUID = -5858905158233487033L;
+
+	private final static org.apache.log4j.Logger LOGGER = org.apache.log4j.LogManager.getLogger("Generator");
+
+	protected Random generator;
+	protected static ISpecimenConfiguration configuration;
+	protected EPackagesData ePackagesData;
+	
+	/* inner Variable state */
+	protected int currentDepth;
+	protected int currentMaxDepth;
+	protected int currentObjects;
+	protected long goalObjects;
+	protected int slices = 6;
+	ClassIterator clazzIter;
+
+	public DistributedSpecimenGenerator (ISpecimenConfiguration configuration, long seed) {
+		DistributedSpecimenGenerator.configuration = configuration;
+		//ePackagesData = new EPackagesData(configuration.ePackages(), configuration.ignoredEClasses());
+		generator = new Random(seed);
+	}
+
+	public DistributedSpecimenGenerator() {
+		// Do nothing
+	}
+
+	@Override
+	public ISpecimenConfiguration getConfig() {
+		return configuration;
+	}
+
+//	private String nextEClassName() {
+//		return clazzIter.next();
+//	}
+	
+	public void generate(Resource resource) {
+		
+		long averageSize = goalObjects/slices;
+		
+		clazzIter = new ClassIterator(configuration.getAllClassNames());
+		
+
+		
+		resource.setModified(true);
+		
+		ListMultimap<EClass, String> indexByKind = ArrayListMultimap.create();
+
+		ImmutableSet<EClass> possibleRootEClasses = configuration.possibleRootEClasses();
+
+		currentDepth = 0;
+		currentMaxDepth = 0;
+		currentObjects = 0;
+		
+		goalObjects = configuration.getResourceSizeDistribution().sample();
+
+		while (currentObjects < goalObjects) {
+			EClass eClass = configuration.getNextRootEClass(possibleRootEClasses);
+			currentMaxDepth = configuration.getDepthDistributionFor(eClass).sample();
+			Optional<EObject> generateEObject = generateEObject(eClass, indexByKind);
+			if (generateEObject.isPresent()) {
+				resource.getContents().add(generateEObject.get());
+			}
+		}
+
+		LOGGER.info("Generating cross-references");	
+		
+		int totalEObjects = currentObjects;
+		int currentEObject = 0;
+		TreeIterator<EObject> eAllContents = resource.getAllContents();
+		while (eAllContents.hasNext()) {
+			currentEObject++;
+			LOGGER.info(MessageFormat.format("Generating cross references {0} / {1}", currentEObject, totalEObjects));
+			EObject eObject = eAllContents.next();
+			generateCrossReferences(eObject, indexByKind);
+		}
+
+		LOGGER.info(MessageFormat.format("Requested #EObject={0}", goalObjects));
+		
+		LOGGER.info(MessageFormat.format("Actual #EObject={0}", ImmutableSet.copyOf(indexByKind.values()).size()));
+
+		for (Map.Entry<EClass, Collection<String>> entry : indexByKind.asMap().entrySet()) {
+			// Log number of elements for resolved EClasses
+			EClass eClass = entry.getKey();
+			if (!eClass.eIsProxy() || (eClass.eIsProxy() && EcoreUtil.resolve(eClass, resource) != eClass)) {
+				LOGGER.info(MessageFormat.format("#{0}::{1}={2}", 
+						eClass.getEPackage().getNsURI(),
+						eClass.getName(),
+						entry.getValue().size()));
+			}
+		}
+		
+		for (Map.Entry<EClass, Collection<String>> entry : indexByKind.asMap().entrySet()) {
+			EClass eClass = entry.getKey();
+			if (eClass.eIsProxy() && EcoreUtil.resolve(eClass, resource) == eClass) {
+				// Warn about unresolved EClasses
+				LOGGER.warn(MessageFormat.format("#{0} (unresolved)={1}", 
+						EcoreUtil.getURI(eClass),
+						entry.getValue().size()));
+			}
+		}
+
+		LOGGER.info(MessageFormat.format("Generation finished for resource ''{0}''", resource.getURI()));
+	}
+
+	
+
+	/**
+	 * @param eObject
+	 * @param indexByKind
+	 */
+	protected void generateCrossReferences(EObject eObject, ListMultimap<EClass, String> indexByKind) {
+		Iterable<EReference> eAllNonContainment = ePackagesData.eAllNonContainment(eObject.eClass());
+		for (EReference eReference : eAllNonContainment) {
+			EClass eReferenceType = eReference.getEReferenceType();
+			IntegerDistribution distribution = configuration.getDistributionFor(eReference);
+
+			if (eReference.isMany()) {
+				@SuppressWarnings("unchecked")
+				List<Object> values = (List<Object>) eObject.eGet(eReference);
+				int sample = distribution.sample();
+				LOGGER.info(MessageFormat.format("Generating {0} values for EReference ''{1}'' in EObject {2}", 
+																sample, eReference.getName(), eObject.toString()));
+				for (int i = 0; i < sample; i++) {
+					List<EObject> possibleValues = resolveObjectsOfType(eReferenceType, indexByKind, eObject.eResource());
+					if (!possibleValues.isEmpty()) {
+						final EObject nextEObject = possibleValues.get(generator.nextInt(possibleValues.size()));
+						values.add(nextEObject);
+					}
+				}
+			} else {
+				if (eReference.isRequired() || booleanInDistribution(distribution)) {
+					LOGGER.info(MessageFormat.format("Generating EReference ''{0}'' in EObject {1}", eReference.getName(), eObject.toString()));
+					List<EObject> possibleValues = resolveObjectsOfType(eReferenceType, indexByKind, eObject.eResource());
+					if (!possibleValues.isEmpty()) {
+						final EObject nextEObject = possibleValues.get(generator.nextInt(possibleValues.size()));
+						eObject.eSet(eReference, nextEObject);
+					}
+				}
+			}
+		}
+	}
+
+	protected List<EObject> resolveObjectsOfType(EClass eReferenceType, ListMultimap<EClass, String> indexByKind, Resource resource) {
+		List<EObject> possibleValues = new LinkedList<EObject>();
+		for (String uriFrag : indexByKind.get(eReferenceType)) {
+			possibleValues.add(resource.getEObject(uriFrag));
+		}
+		return possibleValues;
+	}
+
+	protected Optional<EObject> generateEObject(EClass eClass, ListMultimap<EClass, String> indexByKind) {
+		final EObject eObject;
+		currentObjects++;
+		LOGGER.info(MessageFormat.format("Generating EObject {0} / ~{1} (EClass={2})", 
+				currentObjects, goalObjects, eClass.getName()));
+		eObject = createEObject(eClass, indexByKind);
+		generateEAttributes(eObject, eClass);
+		generateEContainmentReferences(eObject, eClass, indexByKind);
+		return Optional.fromNullable(eObject);
+	}
+
+	protected EObject createEObject(EClass eClass, ListMultimap<EClass, String> indexByKind) {
+		EObject eObject = eClass.getEPackage().getEFactoryInstance().create(eClass);
+
+		indexByKind.put(eClass, ((PersistentEObject)eObject).id().toString());
+		for (EClass eSuperType : eClass.getEAllSuperTypes()) {
+			indexByKind.put(eSuperType, ((PersistentEObject)eObject).id().toString());
+		}
+		return eObject;
+	}
+
+	/**
+	 * @param eObject
+	 * @param eClass
+	 * @param indexByKind
+	 */
+	protected void generateEContainmentReferences(EObject eObject, EClass eClass,
+			ListMultimap<EClass, String> indexByKind) {
+		for (EReference eReference : ePackagesData.eAllContainment(eClass)) {
+			if (eReference.isRequired() || (currentObjects < goalObjects && currentDepth <= currentMaxDepth)) {
+				generateEContainmentReference(eObject, eReference, indexByKind);
+			}
+		}
+
+	}
+
+	/**
+	 * @param eObject
+	 * @param eReference
+	 * @param indexByKind
+	 */
+	protected void generateEContainmentReference(EObject eObject, EReference eReference,
+			ListMultimap<EClass, String> indexByKind) {
+		currentDepth++;
+
+		ImmutableList<EClass> eAllConcreteSubTypeOrSelf = ePackagesData.eAllConcreteSubTypeOrSelf(eReference);
+		ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf = getEReferenceTypesWithWeight(eReference,
+				eAllConcreteSubTypeOrSelf);
+
+		if (!eAllConcreteSubTypesOrSelf.isEmpty()) {
+			if (eReference.isMany()) {
+				generateManyContainmentReference(eObject, eReference, indexByKind, eAllConcreteSubTypesOrSelf);
+			} else {
+				generateSingleContainmentReference(eObject, eReference, indexByKind, eAllConcreteSubTypesOrSelf);
+			}
+		}
+		currentDepth--;
+	}
+
+	protected void generateSingleContainmentReference(EObject eObject, EReference eReference,
+			ListMultimap<EClass, String> indexByKind, ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf) {
+		IntegerDistribution distribution = configuration.getDistributionFor(eReference);
+		if (eReference.isRequired() || booleanInDistribution(distribution)) {
+			LOGGER.info(MessageFormat.format("Generating EReference ''{0}'' in EObject {1}", eReference.getName(), eObject.toString()));
+			int idx = generator.nextInt(eAllConcreteSubTypesOrSelf.size());
+			final Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx), indexByKind);
+			if (nextEObject.isPresent()) {
+				eObject.eSet(eReference, nextEObject.get());
+			}
+		}
+	}
+
+	protected void generateManyContainmentReference(EObject eObject, EReference eReference,
+			ListMultimap<EClass, String> indexByKind, ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf) {
+		IntegerDistribution distribution = configuration.getDistributionFor(eReference);
+		@SuppressWarnings("unchecked")
+		List<EObject> values = (List<EObject>) eObject.eGet(eReference);
+		int sample = distribution.sample();
+		LOGGER.info(MessageFormat.format("Generating {0} values for EReference ''{1}'' in EObject {2}", sample, eReference.getName(), eObject.toString()));
+		for (int i = 0; i < sample; i++) {
+			int idx = generator.nextInt(eAllConcreteSubTypesOrSelf.size());
+			final Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx), indexByKind);
+			if (nextEObject.isPresent()) {
+				values.add(nextEObject.get());
+			}
+		}
+	}
+
+	protected ImmutableMultiset<EClass> getEReferenceTypesWithWeight(EReference eReference,
+			ImmutableList<EClass> eAllSubTypesOrSelf) {
+		ImmutableMultiset.Builder<EClass> eAllSubTypesOrSelfWithWeights = ImmutableMultiset.builder();
+		for (EClass eClass : eAllSubTypesOrSelf) {
+			eAllSubTypesOrSelfWithWeights.addCopies(eClass, configuration.getWeightFor(eReference, eClass));
+		}
+		return eAllSubTypesOrSelfWithWeights.build();
+	}
+
+	/**
+	 * @param eObject
+	 * @param eClass
+	 */
+	protected void generateEAttributes(EObject eObject, EClass eClass) {
+		for (EAttribute eAttribute : ePackagesData.eAllAttributes(eClass)) {
+			generateAttributes(eObject, eAttribute);
+		}
+	}
+
+	protected void generateAttributes(EObject eObject, EAttribute eAttribute) {
+		IntegerDistribution distribution = configuration.getDistributionFor(eAttribute);
+		EDataType eAttributeType = eAttribute.getEAttributeType();
+		Class<?> instanceClass = eAttributeType.getInstanceClass();
+		if (eAttribute.isMany()) {
+			generateManyAttribute(eObject, eAttribute, distribution, instanceClass);
+		} else {
+			generateSingleAttribute(eObject, eAttribute, distribution, instanceClass);
+		}
+	}
+
+	protected void generateSingleAttribute(EObject eObject, EAttribute eAttribute, IntegerDistribution distribution,
+			Class<?> instanceClass) {
+		if (eAttribute.isRequired() || booleanInDistribution(distribution)) {
+			final Object value;
+			EDataType eAttributeType = eAttribute.getEAttributeType();
+			if (eAttributeType instanceof EEnum) {
+				assert instanceClass == null;
+				EEnum eEnum = (EEnum) eAttributeType;
+				instanceClass = int.class;
+				int randomValue = Math.abs((Integer) nextValue(instanceClass));
+				int size = eEnum.getELiterals().size();
+				value = eEnum.getELiterals().get(randomValue % size); 
+			} else {
+				value = nextValue(instanceClass);
+			}
+			eObject.eSet(eAttribute, value);
+		}
+	}
+
+	protected void generateManyAttribute(EObject eObject, EAttribute eAttribute, IntegerDistribution distribution,
+			Class<?> instanceClass) {
+		@SuppressWarnings("unchecked")
+		List<Object> values = (List<Object>) eObject.eGet(eAttribute);
+		for (int i = distribution.getSupportLowerBound(); i < distribution.sample(); i++) {
+			final Object value;
+			EDataType eAttributeType = eAttribute.getEAttributeType();
+			if (eAttributeType instanceof EEnum) {
+				assert instanceClass == null;
+				EEnum eEnum = (EEnum) eAttributeType;
+				instanceClass = int.class;
+				int randomValue = Math.abs((Integer) nextValue(instanceClass));
+				int size = eEnum.getELiterals().size();
+				value = eEnum.getELiterals().get(randomValue % size); 
+			} else {
+				value = nextValue(instanceClass);
+			}
+			values.add(value);
+		}
+	}
+
+	protected Object nextValue(Class<?> instanceClass) {
+		final Object value;
+		if (instanceClass.isPrimitive() || isWrapperType(instanceClass)) {
+			value = nextPrimitive(unwrap(instanceClass));
+		} else {
+			value = nextObject(instanceClass);
+		}
+		return value;
+	}
+
+	/**
+	 * @param instanceClass
+	 */
+	protected Object nextObject(Class<?> instanceClass) {
+		if (instanceClass == String.class) {
+			return RandomStringUtils.random(
+					configuration.getValueDistributionFor(instanceClass).sample(), 
+					0, 0, true, true, null, generator);
+		} else {
+			LOGGER.warn(
+					MessageFormat.format("Do not know how to randomly generate ''{0}'' object",
+					instanceClass.getName()));
+		}
+		return null;
+	}
+
+	/**
+	 * @param eObject
+	 * @param eAttribute
+	 * @param instanceClass
+	 */
+	protected Object nextPrimitive(Class<?> instanceClass) {
+		if (instanceClass == boolean.class) {
+			return generator.nextBoolean();
+		} else if (instanceClass == byte.class) {
+			byte[] buff = new byte[1];
+			generator.nextBytes(buff);
+			return buff[0];
+		} else if (instanceClass == char.class) {
+			char nextChar = (char) generator.nextInt();
+			return nextChar;
+		} else if (instanceClass == double.class) {
+			return generator.nextDouble();
+		} else if (instanceClass == float.class) {
+			return generator.nextFloat();
+		} else if (instanceClass == int.class) {
+			return generator.nextInt();
+		} else if (instanceClass == long.class) {
+			return generator.nextLong();
+		} else if (instanceClass == short.class) {
+			short nextShort = (short) generator.nextInt();
+			return nextShort;
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	protected boolean booleanInDistribution(IntegerDistribution distribution) {
+		int sample = distribution.sample();
+		return sample <= distribution.getNumericalMean();
+	}
+
+}

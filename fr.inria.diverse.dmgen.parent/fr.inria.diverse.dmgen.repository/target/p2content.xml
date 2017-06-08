@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='201706011305.main' version='1.0.0.2--cDl4w67735G3E35593C'>
+    <properties size='2'>
+      <property name='org.eclipse.equinox.p2.name' value='DMGen'/>
+      <property name='org.eclipse.equinox.p2.type.category' value='true'/>
+    </properties>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='201706011305.main' version='1.0.0.2--cDl4w67735G3E35593C'/>
+    </provides>
+    <requires size='1'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.inria.diverse.dmgen.feature.feature.group' range='[1.0.0.201706011305,1.0.0.201706011305]'/>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+  </unit>
+  <unit id='201706011305.main.source' version='1.0.0.2--cDl5657735G3E35593C'>
+    <properties size='2'>
+      <property name='org.eclipse.equinox.p2.name' value='DMGen (Sources)'/>
+      <property name='org.eclipse.equinox.p2.type.category' value='true'/>
+    </properties>
+    <provides size='1'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='201706011305.main.source' version='1.0.0.2--cDl5657735G3E35593C'/>
+    </provides>
+    <requires size='1'>
+      <required namespace='org.eclipse.equinox.p2.iu' name='fr.inria.diverse.dmgen.feature.source.feature.group' range='[1.0.0.201706011305,1.0.0.201706011305]'/>
+    </requires>
+    <touchpoint id='null' version='0.0.0'/>
+  </unit>
+</units>

@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: fr.inria.diverse.dmgen.ui; singleton:=true
+Export-Package: fr.inria.diverse.dmgen.ui.quickfix,fr.inria.diverse.dm
+ gen.ui.internal,fr.inria.diverse.dmgen.ui.contentassist
+Bundle-Name: fr.inria.diverse.dmgen.ui
+Bundle-Version: 1.0.0.201706011305
+Require-Bundle: fr.inria.diverse.dmgen,fr.inria.diverse.dmgen.ide,org.
+ eclipse.xtext.ui,org.eclipse.xtext.ui.shared,org.eclipse.xtext.ui.cod
+ etemplates.ui,org.eclipse.ui.editors;bundle-version="3.5.0",org.eclip
+ se.ui.ide;bundle-version="3.5.0",org.eclipse.ui,org.eclipse.compare,o
+ rg.eclipse.xtext.builder,org.eclipse.xtend.lib;resolution:=optional,o
+ rg.eclipse.xtext.xbase.lib
+Bundle-ManifestVersion: 2
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: fr.inria.diverse.dmgen.ui.internal.DmgenActivator
+Bundle-Vendor: My Company
+Import-Package: org.apache.log4j
+

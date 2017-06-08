@@ -1,0 +1,10 @@
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphX_generator/specimen/DirectWriteSpecimenGenerator.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/GenerationException.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/HBaseMetamodelGenerator.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/GenericMetamodelGenerator.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/GenericMetamodelConfig.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/GraphXGenMojo.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphX_generator/specimen/ISpecimenConfiguration.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/util/EPackagesData.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/IGenerator.java
+/home/amine/eclipse/workspaces/OCLonSpark-WS/graphx-generator/src/main/java/fr/inria/diverse/graphx_generator/Launcher.java
