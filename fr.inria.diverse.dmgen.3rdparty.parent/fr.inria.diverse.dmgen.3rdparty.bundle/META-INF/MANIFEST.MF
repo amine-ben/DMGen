@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: fr.inria.diverse.dmgen-3rdparty-bundle
+Built-By: amine
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1497269591888
+Import-Package: fr.inria.diverse.ocllite.pomfirst;version="1.0"
+Tool: Bnd-0.0.357
+Originally-Created-By: 1.8.0_121 (Oracle Corporation)
+Export-Package: fr.inria.diverse.ocllite.pomfirst;version="1.0.0.SNAPS
+ HOT"
+Bundle-Name: dmgen-3rdparty-bundle
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: 1.8.0_121 (Oracle Corporation)
+Build-Jdk: 1.8.0_121
+
