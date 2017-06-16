@@ -12,6 +12,11 @@ import org.eclipse.core.runtime.CoreException
 import org.eclipse.core.resources.IContainer
 import org.eclipse.core.resources.IFile
 
+
+
+/**
+ * Derived from org.eclipse.m2m.atl.adt.ui.common.WorkspaceFileDialog
+ */
 class WorkspaceFileDialog extends ElementTreeSelectionDialog {
 	
 		new(Shell parent, String... extensions) {

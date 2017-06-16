@@ -23,6 +23,10 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.swt.events.ModifyListener
 import org.eclipse.swt.events.ModifyEvent
 import org.eclipse.ui.PlatformUI
+import org.eclipse.swt.widgets.FileDialog
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import java.io.FileNotFoundException
+import fr.inria.diverse.dmgen.dMGen.GenConfig
 
 /**
  * Derived from EMFTVM Launcher @link 
@@ -34,14 +38,17 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	override createControl(Composite parent) {
 		
 		
+		// Main composite
 		val scCont = new ScrolledComposite(parent, SWT.V_SCROLL.bitwiseOr(SWT.H_SCROLL))
 		scCont.expandHorizontal = true
 		scCont.expandVertical = true
-		
+	
+		// The Root composite 
 		val rootCont = new Composite(scCont, SWT.NULL)
 		rootCont.layout = new GridLayout
 		scCont.content = rootCont 
-		
+	
+		// 
 		val moduleGrp = new Group(rootCont, SWT.BORDER) 
 		moduleGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
 		moduleGrp.layout = new GridLayout(3, false)
@@ -72,12 +79,12 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			
 			override modifyText(ModifyEvent e) {
 				if (!moduleChanged) {
-					moduleChanged = true;
+					moduleChanged = true 
 					PlatformUI.workbench.display.asyncExec(new Runnable() {
 						override run() {
 							rebuild
 						}						
-					});
+					}) 
 				}
 			}
 			
@@ -97,24 +104,12 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 							 else  null
 				if ((result != null) && (result instanceof IFile)) {
 
-					val currentFile = result as IFile;
-					val path = currentFile.fullPath;
-					val uri = URI.createPlatformResourceURI(path.toString, true);
-					val genModule = findGenerator(uri) as Generator;
-					
-//					if (module != null) {
-//						final String mName = module.getName();
-//						moduleNameText.setText(mName);
-//						int segments = 1;
-//						for (int index = mName.indexOf("::"); index > -1; index = mName.indexOf("::", index + 1)) {
-//							segments++;
-//						}
-//						modulePathText.setText(path.removeLastSegments(segments).toString() + '/');
-//					} else {
-//						modulePathText.setText(path.removeLastSegments(1).toString() + '/');
-//						moduleNameText.setText(path.removeFileExtension().lastSegment());
-//					}
-					rebuild();
+					val currentFile = result as IFile 
+					val path = currentFile.fullPath 
+					val uri = URI.createPlatformResourceURI(path.toString, true) 
+					val genConfig = findGenerator(uri)
+
+					rebuild() 
 				}
 			}
 			
@@ -122,47 +117,90 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		
 		val modulePathLabel = new Label(moduleGrp, SWT.LEFT)
 		modulePathLabel.setLayoutData(new GridData(SWT.LEFT))
-		modulePathLabel.setText("Path:");
+		modulePathLabel.setText("Path:") 
 
 		val modulePathText = new Text(moduleGrp, SWT.SINGLE.bitwiseOr( SWT.BORDER))
-		val modulePathData = new GridData(GridData.FILL_HORIZONTAL);
-		modulePathData.horizontalSpan = 2;
-		modulePathText.layoutData = modulePathData;
+		val modulePathData = new GridData(GridData.FILL_HORIZONTAL) 
+		modulePathData.horizontalSpan = 2 
+		modulePathText.layoutData = modulePathData 
 		modulePathText.addFocusListener(new FocusListener() {
 			override focusLost(FocusEvent e) {
 				if (moduleChanged) {
-					rebuild();
+					rebuild() 
 				}
 			}
 			override focusGained(FocusEvent e) {
 			}
-		});
+		}) 
 		
 		modulePathText.addModifyListener(new ModifyListener() {
 			override modifyText(ModifyEvent e) {
 				if (!moduleChanged) {
-					moduleChanged = true;
+					moduleChanged = true 
 					PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 						override run() {
-							rebuild();
+							rebuild() 
 						}
-					});
+					}) 
 				}
 			}
-		});
+		}) 
 		
 		val metamodelGrp = new Group(rootCont, SWT.NULL)
 		metamodelGrp.text = DMGenConfigurationAttributes.METAMODEL_GROUP_NAME
-		metamodelGrp.layoutData = new GridData(SWT.FILL, SWT.FILL, true, false, 1, 1)
-		metamodelGrp.layout = new GridLayout (4, false)
+		metamodelGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
+		metamodelGrp.layout = new GridLayout (3, false)
 		
 		val metamodelFileLabel = new Label(metamodelGrp, SWT.LEFT)
 		metamodelFileLabel.setLayoutData(new GridData(SWT.LEFT))
-		metamodelFileLabel.setText("Module:")
+		metamodelFileLabel.setText("Metamodel:")
 
-		val metamodelNameText = new Text(metamodelGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
-		metamodelNameText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL)) 
+		val metamodelLocationText = new Text(metamodelGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
+		metamodelLocationText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL)) 
+		metamodelLocationText.layoutData = modulePathData 
 		
+		val browseWSButt = new Button (metamodelGrp, SWT.LEFT)
+		browseWSButt.text = "Workspace..."
+		browseWSButt.addSelectionListener(new SelectionAdapter() {
+			override widgetSelected (SelectionEvent e) {
+				val extensions =  {"ecore"}
+				val dialog = new WorkspaceFileDialog (shell, extensions)
+				
+				val result = if (dialog.open ==  Dialog.OK )
+							 	dialog.firstResult 
+							 else  null
+				if ((result != null) && (result instanceof IFile)) {
+					val currentFile = result as IFile 
+					val path = currentFile.getFullPath().toString() 
+					metamodelLocationText.text = "platform:/resource" + path
+				}
+			}
+		})
+		
+		val browseFilesystem = new Button(metamodelGrp, SWT.NULL)
+			browseFilesystem.setText("File system...")
+		browseFilesystem.addSelectionListener(new SelectionAdapter() {
+			override widgetSelected(SelectionEvent evt) {
+				val fileDialog = new FileDialog(getShell(), SWT.OPEN)
+				fileDialog.setFilterExtensions(#['ecore']) //$NON-NLS-1$
+				val fileName = fileDialog.open() 
+				if (fileName != null) {
+					metamodelLocationText.text = "file:/" + fileName
+				}
+			}
+		}) 
+		
+		val browseEMFRegistry = new Button(metamodelGrp, SWT.RIGHT) 
+		browseEMFRegistry.setText("EMF registry...") 
+		browseEMFRegistry.addSelectionListener(new SelectionAdapter() {
+			override widgetSelected(SelectionEvent evt) {
+				val dialog = new RegisteredPackageDialog(shell) 
+				if (dialog.open() == Dialog.OK) {
+					metamodelLocationText.text = dialog.getResultAsString() 
+				}
+			}
+		}) 
+			
 		val sparkGrp = new Group(rootCont, SWT.NULL)
 		sparkGrp.text = DMGenConfigurationAttributes.SPARK_GROUP_NAME
 		sparkGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
@@ -207,11 +245,23 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	}
 	
 	def private rebuild() {
-//		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		//throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
-	def private Generator findGenerator(URI uri) {
-		//throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	def private GenConfig findGenerator(URI uri) throws FileNotFoundException {
+		val rs = new ResourceSetImpl
+		val resource = rs.getResource(uri, true)
+		try {
+			
+			if (resource == null)
+				throw new Exception()
+			resource.contents.findFirst[e|e instanceof GenConfig] as GenConfig
+		} catch (Exception e) {
+			throw new FileNotFoundException("Resource not found with URI: "+URI.toString)
+		}
+		
+		null
+		
 	}
 
 }
