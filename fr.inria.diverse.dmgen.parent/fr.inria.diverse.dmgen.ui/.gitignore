@@ -2,3 +2,4 @@
 /src-gen/**
 /xtend-gen/**
 /.settings/**
+plugin.xml_gen
