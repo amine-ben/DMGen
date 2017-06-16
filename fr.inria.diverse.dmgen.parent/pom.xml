@@ -33,6 +33,38 @@
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<pomDependencies>consider</pomDependencies>
+					<target>
+						<artifact>
+							<groupId>fr.inria.diverse.dmgen</groupId>
+							<artifactId>fr.inria.diverse.dmgen.target</artifactId>
+							<version>${project.version}</version>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
 				<version>${tycho-version}</version>
 				<executions>
@@ -71,39 +103,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>target-platform-configuration</artifactId>
-				<version>${tycho-version}</version>
-				<configuration>
-					<pomDependencies>consider</pomDependencies>
-					<target>
-						<artifact>
-							<groupId>fr.inria.diverse.dmgen</groupId>
-							<artifactId>fr.inria.diverse.dmgen.target</artifactId>
-							<version>${project.version}</version>
-						</artifact>
-					</target>
-					<environments>
-						<environment>
-							<os>macosx</os>
-							<ws>cocoa</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
-							<arch>x86_64</arch>
-						</environment>
-					</environments>
-				</configuration>
-			</plugin>
+			</plugin>		
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -302,5 +302,17 @@
 	</pluginRepositories>
 
 	<dependencies>
+
+	<dependency>
+		<groupId>fr.inria.diverse</groupId>
+		<artifactId>dmgen-3rdparty</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+		<type>bundle</type>
+	</dependency>
+	<dependency>
+		<groupId>fr.inria.diverse</groupId>
+		<artifactId>dmgen-3rdparty-bundle</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</dependency>
 	</dependencies>
 </project>

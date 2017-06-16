@@ -3,7 +3,7 @@ package fr.inria.diverse.dmgen.ui.handlers
 import com.google.inject.Injector
 import fr.inria.diverse.dmgen.DMGenStandaloneSetupGenerated
 import java.io.IOException
-import org.apache.log4j.Logger
+
 import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
@@ -12,10 +12,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil
 import org.eclipse.ui.part.FileEditorInput
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.ui.editor.utils.EditorUtils
+import java.util.logging.Logger
 
 class RunGenerationHandler extends AbstractHandler {
 	
-	val LOG = Logger.getLogger(RunGenerationHandler)
+	val LOG = Logger.getGlobal
 	
 	val Injector injector = new DMGenStandaloneSetupGenerated()
             .createInjectorAndDoEMFRegistration();
@@ -25,11 +26,11 @@ class RunGenerationHandler extends AbstractHandler {
     
     new() {
     	super()
-    }	
-    	
+    }
+
 	override execute(ExecutionEvent event) throws ExecutionException {
+		
 		try{
-			
 			val editor = EditorUtils.getActiveXtextEditor(event);
 			
 			if (editor != null) {
@@ -39,10 +40,10 @@ class RunGenerationHandler extends AbstractHandler {
 				
 			}
 		} catch (IOException e) {
-				LOG.error(Messages.RunGenerationHandlerError, e);
+				LOG.severe(Messages.RunGenerationHandlerError);
 		}
 		 catch (Exception e) {
-			LOG.error(Messages.RunGenerationHandlerError, e);
+			LOG.severe(Messages.RunGenerationHandlerError);
 		}
 				
 		return null
