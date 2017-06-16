@@ -7,6 +7,8 @@ public class Messages extends NLS {
 	private static final String BUNDLE_NAME = "fr.inria.diverse.dmgen.ui.handlers.messages"; //$NON-NLS-1$
 
 	public static String RunGenerationHandlerError;
+	
+	public static String RunGenerationXMIEroor; 
 
 	static {
 		// initialize resource bundle
