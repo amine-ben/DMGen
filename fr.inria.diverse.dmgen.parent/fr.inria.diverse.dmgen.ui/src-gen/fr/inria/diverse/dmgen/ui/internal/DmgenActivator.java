@@ -12,6 +12,7 @@ import fr.inria.diverse.dmgen.ui.DMGenUiModule;
 import java.util.Collections;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
 import org.eclipse.xtext.util.Modules2;
@@ -90,4 +91,7 @@ public class DmgenActivator extends AbstractUIPlugin {
 		return new SharedStateModule();
 	}
 	
+	public Shell getShell() {
+		return getWorkbench().getActiveWorkbenchWindow().getShell();
+	}
 }
