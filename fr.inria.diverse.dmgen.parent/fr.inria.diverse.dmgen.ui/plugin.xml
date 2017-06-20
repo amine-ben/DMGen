@@ -463,6 +463,25 @@
           id="fr.inria.diverse.dmgen.ui.DMGenShortcut"
           label="Generate Models"
           modes="run, debug">
+       <contextualLaunch>
+          <enablement>
+             <with
+                   variable="selection">
+                <count
+                      value="1">
+                </count>
+                <iterate>
+                   <test
+                         property="org.eclipse.debug.ui.matchesPattern"
+                         value="*.dmgen">
+                   </test>
+                </iterate>
+             </with>
+          </enablement></contextualLaunch>
+       <description
+             description="Generating a model "
+             mode="run">
+       </description>
     </shortcut>
  </extension>
  <extension

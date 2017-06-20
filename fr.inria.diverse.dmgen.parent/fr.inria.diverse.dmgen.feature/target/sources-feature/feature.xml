@@ -1,7 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<feature id="fr.inria.diverse.dmgen.feature.source" version="1.0.0.201706011305" label="DMGen Feature  Developer Resources">
-  <includes id="fr.inria.diverse.dmgen.feature" version="1.0.0.201706011305"/>
-  <plugin id="fr.inria.diverse.dmgen.source" version="1.0.0.201706011305" download-size="0" install-size="0" unpack="false"/>
-  <plugin id="fr.inria.diverse.dmgen.ide.source" version="1.0.0.201706011305" download-size="0" install-size="0" unpack="false"/>
-  <plugin id="fr.inria.diverse.dmgen.ui.source" version="1.0.0.201706011305" download-size="0" install-size="0" unpack="false"/>
-</feature>
+<feature id="fr.inria.diverse.dmgen.feature.source" version="1.0.0.qualifier"><includes id="fr.inria.diverse.dmgen.feature" version="1.0.0.qualifier"/></feature>

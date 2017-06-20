@@ -7,9 +7,8 @@ import org.eclipse.debug.ui.CommonTab
 class DMGenTabGroup extends AbstractLaunchConfigurationTabGroup {
 	
 	override createTabs(ILaunchConfigurationDialog dialog, String mode) {
-		tabs = #{ new DMGenMainTab,
-				  new CommonTab		
+		tabs = #{ new CommonTab , 
+					new DMGenMainTab
 				}
-	}
-	
+	}	
 }
