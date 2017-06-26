@@ -1,17 +1,14 @@
 Manifest-Version: 1.0
-Bundle-SymbolicName: fr.inria.diverse.dmgen-3rdparty-bundle
-Built-By: amine
-Bundle-ManifestVersion: 2
-Bnd-LastModified: 1497976802386
-Import-Package: fr.inria.diverse.ocllite.pomfirst;version="1.0",org.ap
- ache.spark.api.java,org.apache.spark.api.java.function
-Tool: Bnd-0.0.357
-Originally-Created-By: 1.8.0_121 (Oracle Corporation)
 Export-Package: fr.inria.diverse.ocllite.pomfirst;uses:="org.apache.sp
  ark.api.java.function,org.apache.spark.api.java";version="1.0.0.SNAPS
  HOT"
+Bundle-SymbolicName: fr.inria.diverse.dmgen-3rdparty-bundle
 Bundle-Name: dmgen-3rdparty-bundle
 Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1498465148623
+Import-Package: fr.inria.diverse.ocllite.pomfirst;version="1.0",org.ap
+ ache.spark.api.java,org.apache.spark.api.java.function
 Created-By: 1.8.0_121 (Oracle Corporation)
-Build-Jdk: 1.8.0_121
+Tool: Bnd-0.0.357
 
