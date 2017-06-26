@@ -1,13 +1,11 @@
 package fr.inria.diverse.dmgen.ui.launch
 
-import org.eclipse.jface.resource.ImageDescriptor
-
 interface DMGenConfigurationAttributes {
 	
 	
-	val String SPARK_HOST_DEFAULT= "local"
-	
-	val String TAB_GENARATION_NAME= "Main"
+	val String SPARK_HOST_DEFAULT = "local[*]"
+	val String HBASE_HOST_NAME_DEFAULT = "localhost:2181"
+	val String TAB_GENARATION_NAME = "Main"
 	
 	val String SELECT_FILE = "Select File"
 	
