@@ -2,7 +2,6 @@ package fr.inria.diverse.dmgen.ui.launch
 
 import fr.inria.diverse.dmgen.dMGen.GenConfig
 import fr.inria.diverse.dmgen.ui.internal.DmgenActivator
-import java.io.FileNotFoundException
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.FileLocator
 import org.eclipse.core.runtime.Path
@@ -32,7 +31,6 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
-import org.eclipse.core.resources.ResourcesPlugin
 
 /**
  * Derived from EMFTVM Launcher @link 
