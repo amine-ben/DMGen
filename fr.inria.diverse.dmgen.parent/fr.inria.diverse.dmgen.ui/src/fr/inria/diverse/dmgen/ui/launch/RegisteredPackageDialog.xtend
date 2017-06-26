@@ -63,7 +63,6 @@ class RegisteredPackageDialog extends ElementListSelectionDialog{
 
 		return result 
 	}
-	
 	def public String getResultAsString() {
 		var results = getResult() as Object[] 
 		
