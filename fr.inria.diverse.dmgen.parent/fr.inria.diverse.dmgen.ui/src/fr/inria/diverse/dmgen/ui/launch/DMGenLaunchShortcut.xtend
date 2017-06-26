@@ -1,19 +1,19 @@
 package fr.inria.diverse.dmgen.ui.launch
 
+import fr.inria.diverse.dmgen.ui.internal.DmgenActivator
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.runtime.Status
 import org.eclipse.debug.core.DebugPlugin
+import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
 import org.eclipse.debug.core.ILaunchManager
+import org.eclipse.debug.ui.DebugUITools
 import org.eclipse.debug.ui.ILaunchShortcut
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.jface.viewers.ISelection
 import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.jface.window.Window
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IFileEditorInput
-import org.eclipse.debug.ui.DebugUITools
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy
-import fr.inria.diverse.dmgen.ui.internal.DmgenActivator
-import org.eclipse.core.runtime.Status
-import org.eclipse.jface.window.Window
-import org.eclipse.jface.dialogs.MessageDialog
 
 class DMGenLaunchShortcut implements ILaunchShortcut {
 	
@@ -33,20 +33,29 @@ class DMGenLaunchShortcut implements ILaunchShortcut {
 	
 	protected def launch (IFile file, String mode) {
 		
-		val moduleName = file.fullPath.lastSegment
+		//val moduleName = file.fullPath.lastSegment
 		try {
 			val availablesConfs = launchManager.getLaunchConfigurations(getDMGenConfigurationType())
 											   .filter[ config | config.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, "")
-																		.equals(file.fullPath.toOSString)]
+																	   .equals(file.fullPath.toOSString)
+											  ]
+											  
 			if (! availablesConfs.isEmpty) {
-				DebugUITools.launch(availablesConfs.get(0), mode)
+				var configuration = availablesConfs.get(0)
+				DebugUITools.openLaunchConfigurationDialog(DmgenActivator.instance.shell,
+															configuration, 
+															DebugUITools.getLaunchGroup(configuration, mode).identifier, 
+															Status.OK_STATUS)
+				//DebugUITools.launch(, mode)
 			} else {
-				val configuration = createConfiguration
-				val launchGrp = DebugUITools.getLaunchGroup(configuration, mode)
+				var configuration = createConfiguration
 				if (DebugUITools.openLaunchConfigurationDialog(DmgenActivator.instance.shell,
-						configuration, launchGrp.identifier, Status.OK_STATUS) != Window.CANCEL)
+																	configuration, 
+																	DebugUITools.getLaunchGroup(configuration, mode).identifier, 
+																	Status.OK_STATUS) != Window.CANCEL)
 					configuration.doSave
 			}		
+			
 		} catch (Exception e) {
 			System.err.println(e.message)
 			MessageDialog.openError(DmgenActivator.instance.shell, "Launching error", e.getMessage()); //$NON-NLS-1$
