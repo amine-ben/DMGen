@@ -19,9 +19,21 @@
           <artifactId>spark-core_2.11</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.apache.spark</groupId>
-         <artifactId>spark-graphx_2.11</artifactId>
-     </dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	  </dependency>
+     <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-common</artifactId>
+    </dependency>
+	<dependency>
+	    <groupId>org.apache.hadoop</groupId>
+	    <artifactId>hadoop-mapreduce-client-common</artifactId>
+	</dependency>
+	<dependency>
+    	<groupId>org.apache.hadoop</groupId>
+    	<artifactId>hadoop-hdfs</artifactId>
+	</dependency>
   </dependencies>
 
   <build>

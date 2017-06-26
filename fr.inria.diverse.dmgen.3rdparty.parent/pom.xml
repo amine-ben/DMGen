@@ -15,8 +15,6 @@
     <tycho-version>0.19.0</tycho-version>
     <manifest-location>META-INF</manifest-location>
   </properties>
-
-
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -25,15 +23,27 @@
           <version>2.1.1</version>
       </dependency>
       <dependency>
-         <groupId>org.apache.spark</groupId>
-         <artifactId>spark-graphx_2.11</artifactId>
-         <version>2.1.1</version>
-     </dependency>
+	    <groupId>com.google.guava</groupId>
+	    <artifactId>guava</artifactId>
+	    <version>15.0</version>
+	  </dependency>
      <dependency>
         <groupId>org.apache.hadoop</groupId>
         <artifactId>hadoop-common</artifactId>
         <version>2.7.3</version>
     </dependency>
+	<dependency>
+	    <groupId>org.apache.hadoop</groupId>
+	    <artifactId>hadoop-mapreduce-client-common</artifactId>
+	    <version>2.7.3</version>
+	</dependency>
+    
+	<dependency>
+    	<groupId>org.apache.hadoop</groupId>
+    	<artifactId>hadoop-hdfs</artifactId>
+    	<version>2.7.3</version>
+	</dependency>
+    
     </dependencies>
   </dependencyManagement>
 

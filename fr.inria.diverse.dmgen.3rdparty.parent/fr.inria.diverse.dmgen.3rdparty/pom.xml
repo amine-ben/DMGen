@@ -18,14 +18,22 @@
           <groupId>org.apache.spark</groupId>
           <artifactId>spark-core_2.11</artifactId>
       </dependency>
-      <dependency>
-         <groupId>org.apache.spark</groupId>
-         <artifactId>spark-graphx_2.11</artifactId>
-     </dependency>
      <dependency>
         <groupId>org.apache.hadoop</groupId>
         <artifactId>hadoop-common</artifactId>
      </dependency>
+     <dependency>
+		<groupId>com.google.guava</groupId>
+		<artifactId>guava</artifactId>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.hadoop</groupId>
+	    <artifactId>hadoop-mapreduce-client-common</artifactId>
+	</dependency>    
+	<dependency>
+    	<groupId>org.apache.hadoop</groupId>
+    	<artifactId>hadoop-hdfs</artifactId>
+	</dependency>
   </dependencies>
 
   <build>
@@ -52,13 +60,12 @@
           <instructions>
             <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
             <Embed-Dependency>
-              spark-core_2.11,
-              spark-graphx_2.11,
-              hadoop-common
+			*;scope=compile|runtime
             </Embed-Dependency>
             <_exportcontents>
               org.apache.spark.*,
               org.apache.hadoop.*,
+              org.apache.log4j
             </_exportcontents>
             <Import-Package>*;resolution:=optional</Import-Package>
             <Bundle-ClassPath>{maven-dependencies}</Bundle-ClassPath>
@@ -83,7 +90,8 @@
             <configuration>
               <includes>**/*.class</includes>
               <excludes>**/*.properties</excludes>
-              <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+              <outputDirectory>${project.build.directory}/sources</outputDirectory>
+              <destFileName>dmgenLibs.jar</destFileName>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
             </configuration>
