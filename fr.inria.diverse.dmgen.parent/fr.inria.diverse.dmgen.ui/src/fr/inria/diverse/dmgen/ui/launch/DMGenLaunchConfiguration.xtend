@@ -1,5 +1,7 @@
 package fr.inria.diverse.dmgen.ui.launch
 
+import com.google.inject.Injector
+import fr.inria.diverse.dmgen.DMGenStandaloneSetupGenerated
 import fr.inria.diverse.dmgen.ui.internal.DmgenActivator
 import java.io.File
 import java.io.IOException
@@ -22,11 +24,25 @@ import org.eclipse.debug.core.ILaunch
 import org.eclipse.debug.core.ILaunchConfiguration
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.ui.editor.utils.EditorUtils
+import org.apache.log4j.Logger
+import org.eclipse.ui.part.FileEditorInput
+import org.eclipse.emf.ecore.util.EcoreUtil
 
 class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	
+	
+	val LOG = Logger.getLogger(DMGenLaunchConfiguration)
+	
+	val Injector injector = new DMGenStandaloneSetupGenerated()
+            .createInjectorAndDoEMFRegistration();
+    
+	val  XtextResourceSet resourceSet = injector
+    		.getInstance(XtextResourceSet);
+    
+    
 	var String sparkMaster
 	var String hbaseMaster
 	var String hdfsMaster = "hdfs://dmhadoop:8020"
@@ -48,7 +64,9 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 						IProgressMonitor monitor
 	) throws CoreException {
 	
+	// Initialiazing variables for Spark Context
 	initializeFromConfiguration(configuration)
+	// 		
 		
 	val sparkLauncher = new SparkLauncher()
 	val  handle = sparkLauncher.setAppResource(DMGenConfigurationAttributes.SPARK_APP_RESOURCE)
@@ -56,27 +74,23 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 							    .setMaster(sparkMaster)
 							    .setDeployMode(sparkDeployMode)
 							    .setSparkHome(sparkHome)
-							    .startApplication()
- 
- 	
- 	
+							    .startApplication()	
  
 	val countDownLatch = new CountDownLatch(1) 
 	handle.addListener(new SparkAppHandle.Listener() {
-	    override void stateChanged(SparkAppHandle handle) {
-	        if (handle.getState().isFinal()) {
-	            countDownLatch.countDown()
-	        }
-	    }
-	    override void infoChanged(SparkAppHandle handle) {
-   	 }
-	})
-		countDownLatch.await()
+		    override void stateChanged(SparkAppHandle handle) {
+		        if (handle.getState().isFinal()) {
+		            countDownLatch.countDown()
+		        }
+		    }
+		    override void infoChanged(SparkAppHandle handle) {}
+		})
+	countDownLatch.await()
 		 
-		System.out.println(handle.getAppId() + " ended in state " + handle.getState())
+	System.out.println(handle.getAppId() + " ended in state " + handle.getState())
 		
-		val attribute = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, DMGenConfigurationAttributes.SPARK_HOST_DEFAULT)
-		println(attribute)
+	val attribute = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, DMGenConfigurationAttributes.SPARK_HOST_DEFAULT)
+	println(attribute)
 		
 	}
 	
@@ -88,7 +102,7 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 		metamodel = configuration.getAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, "")
 		val envMap = configuration.getAttribute("org.eclipse.debug.core.environmentVariables", Collections.EMPTY_MAP)
 		
-		for (Entry entry : envMap.entrySet) {
+		for (Entry<String, String> entry : envMap.entrySet) {
 			if (entry.key == "SPARK_HOME") sparkHome = entry.value as String
 			else if (entry.key == "HADOOP_CONF_DIR") yarnConf = entry.value as String
 		}
@@ -117,37 +131,71 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 		val metamodelURI = URI.createURI(metamodel)
 		val tmpMetamodelURI = copyMetamodelInTmpFile(metamodelURI)
 		localPath =  new Path(tmpMetamodelURI.toFileString)
-		remotePath = new Path(SPARK_TEMP_DIRECTORY+"/"+metamodelURI.lastSegment)
+		remotePath = new Path(SPARK_TEMP_DIRECTORY+"/"+"metamodel.ecore")
 		fs.copyFromLocalFile(false, true, localPath, remotePath)
 		
+		val editor = EditorUtils.getActiveXtextEditor()
+			
+		if (editor != null) {
+				
+			val file  =  ( editor.getEditorInput() as FileEditorInput).getFile();
+			try{
+				val outUri = exportXMI(file.fullPath.toOSString)
+				localPath = new Path(outUri.toFileString)
+				remotePath = new Path(SPARK_TEMP_DIRECTORY+"/"+"module.xmi")
+				fs.copyFromLocalFile(false, true, localPath, remotePath)
+			} catch (IOException e) {
+					LOG.error(String.format("The file {0} is not found", file.fullPath.toOSString()), e)
+			}
+			 catch (Exception e) {
+				LOG.error(e.message, e);
+			}
+		}
 	}
 	
 	def URI copyMetamodelInTmpFile(URI metamodelURI) throws IOException{
 		
-		// Instantitating source and target URIs
-		
+		// Instantitating source and target URIs		
 		val tempfolder = Files.createTempDirectory("sparkGen")
 		//val tempFile = new File(tempfolder.toAbsolutePath+"/"+metamodelURI.lastSegment)
 		val metamodelTmpURI = URI.createFileURI(tempfolder.toAbsolutePath+"/"+metamodelURI.lastSegment)
 		
 		// creating the resources 
-		val rs = new ResourceSetImpl
-		rs.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
+		
+		resourceSet.resourceFactoryRegistry.extensionToFactoryMap.put("ecore", new EcoreResourceFactoryImpl)
 		
 		// loading the original resource
-		val metamodelResource = rs.getResource(metamodelURI, true)
+		val metamodelResource = resourceSet.getResource(metamodelURI, true)
 		metamodelResource.load(Collections.EMPTY_MAP)
 		
 		//creating and loading the tempResource 
-		val tempResource = rs.createResource(metamodelTmpURI)
+		val tempResource = resourceSet.createResource(metamodelTmpURI)
 		
 		//copying All content and saving the resource 
 		tempResource.contents.addAll(metamodelResource.contents)
 		tempResource.save(Collections.EMPTY_MAP)
 		
 		return metamodelTmpURI
-		
 	}
 	
+	def URI exportXMI(String osInPath) throws IOException {
+		// loading the dmgen resource
+	    val inURI = URI.createURI(osInPath);
+	    val xtextResource = resourceSet.getResource(inURI, true);
+	    
+	    val tempfolder = Files.createTempDirectory("sparkGen")
+		//val tempFile = new File(tempfolder.toAbsolutePath+"/"+metamodelURI.lastSegment)
+		val outURI = URI.createFileURI(tempfolder.toAbsolutePath+"/"+"module.xmi")
+		
+	    EcoreUtil.resolveAll(xtextResource);
+		// converting the resource to standard xmi format
+	    val xmiResource = resourceSet
+	            .createResource(outURI);
+	    xmiResource.getContents().addAll(xtextResource.contents);
+	 
+	    xmiResource.save(null);
+	    
+	    return outURI;
+	}
 									
 }

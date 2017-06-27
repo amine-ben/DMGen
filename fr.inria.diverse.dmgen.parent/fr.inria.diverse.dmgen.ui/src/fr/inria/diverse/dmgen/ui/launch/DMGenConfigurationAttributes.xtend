@@ -30,6 +30,6 @@ interface DMGenConfigurationAttributes {
 	val String DMGEN_FILE_NAME = "dmgen file name"
 	
 	val String SPARK_APP_RESOURCE = "graphx-generator-0.0.1-SNAPSHOT.jar"
-	val String SPARK_MAIN_CLASS = "fr.inria.diverse.spark_generator.Launcher.java"
+	val String SPARK_MAIN_CLASS = "fr.inria.diverse.spark_generator.Launcher"
 	
 }
