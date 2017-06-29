@@ -6,11 +6,13 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 GenConfig returns GenConfig:
 	'import' metamodel=Metamodel ';'
-  (('global' 'density' globalDensity= INT ';')?  & 
-	('global' 'variation' globalVariation= DECIMAL ';')? )
-	 
+	(('package' package=PACKAGE) & ('hdfs-master' hdfsMaster=URI) ) 
 	 generators+=Generator (generators+=Generator)*
 	;
+
+PACKAGE returns ecore::EString :
+	ID(('.' |'_') ID)*
+;
 
 DECIMAL returns ecore::EFloat:
 	INT'.'INT
@@ -19,6 +21,8 @@ DECIMAL returns ecore::EFloat:
 Generator returns Generator:
 	name='generate' number=INT 'with'  (('size' size=INT) & ('prefix' prefix=STRING)?)
 		'{'
+		 (( 'density' globalDensity= INT ';')?  & 
+			( 'deviation' globalDeviation= DECIMAL ';')? )
 			(classes+=Clazz)? ( ';' classes+=Clazz)*		
 		'}'
 ;
@@ -57,7 +61,7 @@ FRAGMENT returns ecore::EString:
 //;
 
 terminal SCHEME:
-	'http://'|'file:///'|'platform:/'|'neoemfhbase://'
+	'http://'|'file:///'|'platform:/'|'neoemfhbase://'|'hdfs://'
 ;
 		
 
