@@ -8,8 +8,8 @@
       fileExtensions="dmgen" ecorePackage="DMGen.ecore#/">
     <genClasses ecoreClass="DMGen.ecore#//GenConfig">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/metamodel"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/globalDensity"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/globalVariation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/package"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/hdfsMaster"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/generators"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Generator">
@@ -17,6 +17,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/number"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/size"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/globalDensity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/globalDeviation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Generator/classes"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Bundle">
