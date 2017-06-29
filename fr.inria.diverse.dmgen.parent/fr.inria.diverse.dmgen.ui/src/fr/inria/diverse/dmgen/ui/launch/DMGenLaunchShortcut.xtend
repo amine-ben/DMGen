@@ -14,6 +14,7 @@ import org.eclipse.jface.viewers.IStructuredSelection
 import org.eclipse.jface.window.Window
 import org.eclipse.ui.IEditorPart
 import org.eclipse.ui.IFileEditorInput
+import org.eclipse.swt.widgets.Shell
 
 class DMGenLaunchShortcut implements ILaunchShortcut {
 	
@@ -61,6 +62,15 @@ class DMGenLaunchShortcut implements ILaunchShortcut {
 			MessageDialog.openError(DmgenActivator.instance.shell, "Launching error", e.getMessage()); //$NON-NLS-1$
 		}
 	}
+	
+	/**
+	 * extension method that return the active shell from <em>activator</em> instance
+	 * @param <code>activator</code>
+ 	 */
+	def Shell getShell(DmgenActivator activator) {
+		activator.workbench.activeWorkbenchWindow.shell
+	}
+	
 	
 	def ILaunchConfigurationWorkingCopy createConfiguration() {
 		val moduleName =  file.fullPath.lastSegment
