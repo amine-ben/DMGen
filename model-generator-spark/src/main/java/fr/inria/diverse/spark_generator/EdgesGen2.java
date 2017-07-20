@@ -20,7 +20,7 @@ import com.hazelcast.core.MultiMap;
 import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration;
 import fr.inria.diverse.spark_generator.util.EPackagesData;
 
-public class EdgesGen implements  FlatMapFunction<Iterator<String>, Boolean> {
+public class EdgesGen2 implements  FlatMapFunction<Iterator<String>, Boolean> {
 
 	/**
 	 * 
@@ -36,7 +36,7 @@ public class EdgesGen implements  FlatMapFunction<Iterator<String>, Boolean> {
 
 	private static Random generator;
 	
-	public EdgesGen(ISpecimenConfiguration configuration, Resource resource) {
+	public EdgesGen2(ISpecimenConfiguration configuration, Resource resource) {
 		_resource = resource;
 		_conf = configuration;
 		hcInstance = Hazelcast.newHazelcastInstance();

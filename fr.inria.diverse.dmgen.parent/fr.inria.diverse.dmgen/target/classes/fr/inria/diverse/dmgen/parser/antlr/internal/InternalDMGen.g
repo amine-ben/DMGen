@@ -99,97 +99,181 @@ ruleGenConfig returns [EObject current=null]
 				}
 			)
 		)
-		otherlv_2=';'
-		{
-			newLeafNode(otherlv_2, grammarAccess.getGenConfigAccess().getSemicolonKeyword_2());
-		}
 		(
 			(
 				{ 
-				  getUnorderedGroupHelper().enter(grammarAccess.getGenConfigAccess().getUnorderedGroup_3());
+				  getUnorderedGroupHelper().enter(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
 				}
 				(
 					(
 			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_3(), 0)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 0)}?=>(
 					{
-						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_3(), 0);
+						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 0);
 					}
-								({true}?=>(otherlv_4='global'
+								({true}?=>(otherlv_3='package'
 								{
-									newLeafNode(otherlv_4, grammarAccess.getGenConfigAccess().getGlobalKeyword_3_0_0());
-								}
-								otherlv_5='density'
-								{
-									newLeafNode(otherlv_5, grammarAccess.getGenConfigAccess().getDensityKeyword_3_0_1());
-								}
-								(
-									(
-										lv_globalDensity_6_0=RULE_INT
-										{
-											newLeafNode(lv_globalDensity_6_0, grammarAccess.getGenConfigAccess().getGlobalDensityINTTerminalRuleCall_3_0_2_0());
-										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getGenConfigRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"globalDensity",
-												lv_globalDensity_6_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
-								)
-								otherlv_7=';'
-								{
-									newLeafNode(otherlv_7, grammarAccess.getGenConfigAccess().getSemicolonKeyword_3_0_3());
-								}
-								))
-					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_3());
-					}
-				)
-			)|
-			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_3(), 1)}?=>(
-					{
-						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_3(), 1);
-					}
-								({true}?=>(otherlv_8='global'
-								{
-									newLeafNode(otherlv_8, grammarAccess.getGenConfigAccess().getGlobalKeyword_3_1_0());
-								}
-								otherlv_9='variation'
-								{
-									newLeafNode(otherlv_9, grammarAccess.getGenConfigAccess().getVariationKeyword_3_1_1());
+									newLeafNode(otherlv_3, grammarAccess.getGenConfigAccess().getPackageKeyword_2_0_0());
 								}
 								(
 									(
 										{
-											newCompositeNode(grammarAccess.getGenConfigAccess().getGlobalVariationDECIMALParserRuleCall_3_1_2_0());
+											newCompositeNode(grammarAccess.getGenConfigAccess().getPackagePACKAGEParserRuleCall_2_0_1_0());
 										}
-										lv_globalVariation_10_0=ruleDECIMAL
+										lv_package_4_0=rulePACKAGE
 										{
 											if ($current==null) {
 												$current = createModelElementForParent(grammarAccess.getGenConfigRule());
 											}
 											set(
 												$current,
-												"globalVariation",
-												lv_globalVariation_10_0,
-												"fr.inria.diverse.dmgen.DMGen.DECIMAL");
+												"package",
+												lv_package_4_0,
+												"fr.inria.diverse.dmgen.DMGen.PACKAGE");
 											afterParserOrEnumRuleCall();
 										}
 									)
 								)
-								otherlv_11=';'
+								))
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 1)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 1);
+					}
+								({true}?=>(otherlv_5='fs-master'
 								{
-									newLeafNode(otherlv_11, grammarAccess.getGenConfigAccess().getSemicolonKeyword_3_1_3());
+									newLeafNode(otherlv_5, grammarAccess.getGenConfigAccess().getFsMasterKeyword_2_1_0());
+								}
+								(
+									(
+										{
+											newCompositeNode(grammarAccess.getGenConfigAccess().getHdfsMasterURIParserRuleCall_2_1_1_0());
+										}
+										lv_hdfsMaster_6_0=ruleURI
+										{
+											if ($current==null) {
+												$current = createModelElementForParent(grammarAccess.getGenConfigRule());
+											}
+											set(
+												$current,
+												"hdfsMaster",
+												lv_hdfsMaster_6_0,
+												"fr.inria.diverse.dmgen.DMGen.URI");
+											afterParserOrEnumRuleCall();
+										}
+									)
+								)
+								))
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 2)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 2);
+					}
+								({true}?=>(otherlv_7='deploy-mode'
+								{
+									newLeafNode(otherlv_7, grammarAccess.getGenConfigAccess().getDeployModeKeyword_2_2_0());
+								}
+								(
+									(
+										(
+											lv_deployMode_8_1='cluster'
+											{
+												newLeafNode(lv_deployMode_8_1, grammarAccess.getGenConfigAccess().getDeployModeClusterKeyword_2_2_1_0_0());
+											}
+											{
+												if ($current==null) {
+													$current = createModelElement(grammarAccess.getGenConfigRule());
+												}
+												setWithLastConsumed($current, "deployMode", lv_deployMode_8_1, null);
+											}
+											    |
+											lv_deployMode_8_2='local'
+											{
+												newLeafNode(lv_deployMode_8_2, grammarAccess.getGenConfigAccess().getDeployModeLocalKeyword_2_2_1_0_1());
+											}
+											{
+												if ($current==null) {
+													$current = createModelElement(grammarAccess.getGenConfigRule());
+												}
+												setWithLastConsumed($current, "deployMode", lv_deployMode_8_2, null);
+											}
+										)
+									)
+								)
+								otherlv_9='['
+								{
+									newLeafNode(otherlv_9, grammarAccess.getGenConfigAccess().getLeftSquareBracketKeyword_2_2_2());
+								}
+								(
+									(
+										{
+											newCompositeNode(grammarAccess.getGenConfigAccess().getNumberOfNodesINTorUNBOUNDEDParserRuleCall_2_2_3_0());
+										}
+										lv_numberOfNodes_10_0=ruleINTorUNBOUNDED
+										{
+											if ($current==null) {
+												$current = createModelElementForParent(grammarAccess.getGenConfigRule());
+											}
+											set(
+												$current,
+												"numberOfNodes",
+												lv_numberOfNodes_10_0,
+												"fr.inria.diverse.dmgen.DMGen.INTorUNBOUNDED");
+											afterParserOrEnumRuleCall();
+										}
+									)
+								)
+								otherlv_11=']'
+								{
+									newLeafNode(otherlv_11, grammarAccess.getGenConfigAccess().getRightSquareBracketKeyword_2_2_4());
 								}
 								))
 					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_3());
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 3)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getGenConfigAccess().getUnorderedGroup_2(), 3);
+					}
+								({true}?=>(otherlv_12='hbase-master'
+								{
+									newLeafNode(otherlv_12, grammarAccess.getGenConfigAccess().getHbaseMasterKeyword_2_3_0());
+								}
+								(
+									(
+										{
+											newCompositeNode(grammarAccess.getGenConfigAccess().getHbaseMasterURIParserRuleCall_2_3_1_0());
+										}
+										lv_hbaseMaster_13_0=ruleURI
+										{
+											if ($current==null) {
+												$current = createModelElementForParent(grammarAccess.getGenConfigRule());
+											}
+											set(
+												$current,
+												"hbaseMaster",
+												lv_hbaseMaster_13_0,
+												"fr.inria.diverse.dmgen.DMGen.URI");
+											afterParserOrEnumRuleCall();
+										}
+									)
+								)
+								))
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
 					}
 				)
 			)
@@ -197,15 +281,34 @@ ruleGenConfig returns [EObject current=null]
 				)
 			)
 				{ 
-				  getUnorderedGroupHelper().leave(grammarAccess.getGenConfigAccess().getUnorderedGroup_3());
+				  getUnorderedGroupHelper().leave(grammarAccess.getGenConfigAccess().getUnorderedGroup_2());
 				}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGenConfigAccess().getGeneratorsGeneratorParserRuleCall_3_0());
+				}
+				lv_generators_14_0=ruleGenerator
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getGenConfigRule());
+					}
+					add(
+						$current,
+						"generators",
+						lv_generators_14_0,
+						"fr.inria.diverse.dmgen.DMGen.Generator");
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getGenConfigAccess().getGeneratorsGeneratorParserRuleCall_4_0());
 				}
-				lv_generators_12_0=ruleGenerator
+				lv_generators_15_0=ruleGenerator
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getGenConfigRule());
@@ -213,30 +316,91 @@ ruleGenConfig returns [EObject current=null]
 					add(
 						$current,
 						"generators",
-						lv_generators_12_0,
+						lv_generators_15_0,
 						"fr.inria.diverse.dmgen.DMGen.Generator");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
+		)*
+	)
+;
+
+// Entry rule entryRuleINTorUNBOUNDED
+entryRuleINTorUNBOUNDED returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getINTorUNBOUNDEDRule()); }
+	iv_ruleINTorUNBOUNDED=ruleINTorUNBOUNDED
+	{ $current=$iv_ruleINTorUNBOUNDED.current.getText(); }
+	EOF;
+
+// Rule INTorUNBOUNDED
+ruleINTorUNBOUNDED returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		kw='*'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getINTorUNBOUNDEDAccess().getAsteriskKeyword_0());
+		}
+		    |
+		this_INT_1=RULE_INT
+		{
+			$current.merge(this_INT_1);
+		}
+		{
+			newLeafNode(this_INT_1, grammarAccess.getINTorUNBOUNDEDAccess().getINTTerminalRuleCall_1());
+		}
+	)
+;
+
+// Entry rule entryRulePACKAGE
+entryRulePACKAGE returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getPACKAGERule()); }
+	iv_rulePACKAGE=rulePACKAGE
+	{ $current=$iv_rulePACKAGE.current.getText(); }
+	EOF;
+
+// Rule PACKAGE
+rulePACKAGE returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		this_ID_0=RULE_ID
+		{
+			$current.merge(this_ID_0);
+		}
+		{
+			newLeafNode(this_ID_0, grammarAccess.getPACKAGEAccess().getIDTerminalRuleCall_0());
+		}
 		(
 			(
+				kw='.'
 				{
-					newCompositeNode(grammarAccess.getGenConfigAccess().getGeneratorsGeneratorParserRuleCall_5_0());
+					$current.merge(kw);
+					newLeafNode(kw, grammarAccess.getPACKAGEAccess().getFullStopKeyword_1_0_0());
 				}
-				lv_generators_13_0=ruleGenerator
+				    |
+				kw='_'
 				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getGenConfigRule());
-					}
-					add(
-						$current,
-						"generators",
-						lv_generators_13_0,
-						"fr.inria.diverse.dmgen.DMGen.Generator");
-					afterParserOrEnumRuleCall();
+					$current.merge(kw);
+					newLeafNode(kw, grammarAccess.getPACKAGEAccess().get_Keyword_1_0_1());
 				}
 			)
+			this_ID_3=RULE_ID
+			{
+				$current.merge(this_ID_3);
+			}
+			{
+				newLeafNode(this_ID_3, grammarAccess.getPACKAGEAccess().getIDTerminalRuleCall_1_1());
+			}
 		)*
 	)
 ;
@@ -418,10 +582,99 @@ ruleGenerator returns [EObject current=null]
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getGeneratorAccess().getClassesClazzParserRuleCall_5_0());
+				{ 
+				  getUnorderedGroupHelper().enter(grammarAccess.getGeneratorAccess().getUnorderedGroup_5());
 				}
-				lv_classes_9_0=ruleClazz
+				(
+					(
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGeneratorAccess().getUnorderedGroup_5(), 0)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getGeneratorAccess().getUnorderedGroup_5(), 0);
+					}
+								({true}?=>(otherlv_10='density'
+								{
+									newLeafNode(otherlv_10, grammarAccess.getGeneratorAccess().getDensityKeyword_5_0_0());
+								}
+								(
+									(
+										lv_globalDensity_11_0=RULE_INT
+										{
+											newLeafNode(lv_globalDensity_11_0, grammarAccess.getGeneratorAccess().getGlobalDensityINTTerminalRuleCall_5_0_1_0());
+										}
+										{
+											if ($current==null) {
+												$current = createModelElement(grammarAccess.getGeneratorRule());
+											}
+											setWithLastConsumed(
+												$current,
+												"globalDensity",
+												lv_globalDensity_11_0,
+												"org.eclipse.xtext.common.Terminals.INT");
+										}
+									)
+								)
+								otherlv_12=';'
+								{
+									newLeafNode(otherlv_12, grammarAccess.getGeneratorAccess().getSemicolonKeyword_5_0_2());
+								}
+								))
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGeneratorAccess().getUnorderedGroup_5());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getGeneratorAccess().getUnorderedGroup_5(), 1)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getGeneratorAccess().getUnorderedGroup_5(), 1);
+					}
+								({true}?=>(otherlv_13='deviation'
+								{
+									newLeafNode(otherlv_13, grammarAccess.getGeneratorAccess().getDeviationKeyword_5_1_0());
+								}
+								(
+									(
+										{
+											newCompositeNode(grammarAccess.getGeneratorAccess().getGlobalDeviationDECIMALParserRuleCall_5_1_1_0());
+										}
+										lv_globalDeviation_14_0=ruleDECIMAL
+										{
+											if ($current==null) {
+												$current = createModelElementForParent(grammarAccess.getGeneratorRule());
+											}
+											set(
+												$current,
+												"globalDeviation",
+												lv_globalDeviation_14_0,
+												"fr.inria.diverse.dmgen.DMGen.DECIMAL");
+											afterParserOrEnumRuleCall();
+										}
+									)
+								)
+								otherlv_15=';'
+								{
+									newLeafNode(otherlv_15, grammarAccess.getGeneratorAccess().getSemicolonKeyword_5_1_2());
+								}
+								))
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getGeneratorAccess().getUnorderedGroup_5());
+					}
+				)
+			)
+					)*
+				)
+			)
+				{ 
+				  getUnorderedGroupHelper().leave(grammarAccess.getGeneratorAccess().getUnorderedGroup_5());
+				}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getGeneratorAccess().getClassesClazzParserRuleCall_6_0());
+				}
+				lv_classes_16_0=ruleClazz
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getGeneratorRule());
@@ -429,23 +682,23 @@ ruleGenerator returns [EObject current=null]
 					add(
 						$current,
 						"classes",
-						lv_classes_9_0,
+						lv_classes_16_0,
 						"fr.inria.diverse.dmgen.DMGen.Clazz");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
 		(
-			otherlv_10=';'
+			otherlv_17=';'
 			{
-				newLeafNode(otherlv_10, grammarAccess.getGeneratorAccess().getSemicolonKeyword_6_0());
+				newLeafNode(otherlv_17, grammarAccess.getGeneratorAccess().getSemicolonKeyword_7_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getGeneratorAccess().getClassesClazzParserRuleCall_6_1_0());
+						newCompositeNode(grammarAccess.getGeneratorAccess().getClassesClazzParserRuleCall_7_1_0());
 					}
-					lv_classes_11_0=ruleClazz
+					lv_classes_18_0=ruleClazz
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getGeneratorRule());
@@ -453,16 +706,16 @@ ruleGenerator returns [EObject current=null]
 						add(
 							$current,
 							"classes",
-							lv_classes_11_0,
+							lv_classes_18_0,
 							"fr.inria.diverse.dmgen.DMGen.Clazz");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)*
-		otherlv_12='}'
+		otherlv_19='}'
 		{
-			newLeafNode(otherlv_12, grammarAccess.getGeneratorAccess().getRightCurlyBracketKeyword_7());
+			newLeafNode(otherlv_19, grammarAccess.getGeneratorAccess().getRightCurlyBracketKeyword_8());
 		}
 	)
 ;
@@ -558,15 +811,34 @@ ruleClazz returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_1='#'
+			(
+				{
+					newCompositeNode(grammarAccess.getClazzAccess().getRangeRangeParserRuleCall_1_0());
+				}
+				lv_range_1_0=ruleRange
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getClazzRule());
+					}
+					set(
+						$current,
+						"range",
+						lv_range_1_0,
+						"fr.inria.diverse.dmgen.DMGen.Range");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			otherlv_2='depth'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getClazzAccess().getNumberSignKeyword_1_0());
+				newLeafNode(otherlv_2, grammarAccess.getClazzAccess().getDepthKeyword_2_0());
 			}
 			(
 				(
-					lv_instances_2_0=RULE_INT
+					lv_depth_3_0=RULE_INT
 					{
-						newLeafNode(lv_instances_2_0, grammarAccess.getClazzAccess().getInstancesINTTerminalRuleCall_1_1_0());
+						newLeafNode(lv_depth_3_0, grammarAccess.getClazzAccess().getDepthINTTerminalRuleCall_2_1_0());
 					}
 					{
 						if ($current==null) {
@@ -574,24 +846,24 @@ ruleClazz returns [EObject current=null]
 						}
 						setWithLastConsumed(
 							$current,
-							"instances",
-							lv_instances_2_0,
+							"depth",
+							lv_depth_3_0,
 							"org.eclipse.xtext.common.Terminals.INT");
 					}
 				)
 			)
 		)?
 		(
-			otherlv_3='{'
+			otherlv_4='{'
 			{
-				newLeafNode(otherlv_3, grammarAccess.getClazzAccess().getLeftCurlyBracketKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getClazzAccess().getLeftCurlyBracketKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getClazzAccess().getPropertiesPropertyParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getClazzAccess().getPropertiesPropertyParserRuleCall_3_1_0());
 					}
-					lv_properties_4_0=ruleProperty
+					lv_properties_5_0=ruleProperty
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getClazzRule());
@@ -599,23 +871,23 @@ ruleClazz returns [EObject current=null]
 						add(
 							$current,
 							"properties",
-							lv_properties_4_0,
+							lv_properties_5_0,
 							"fr.inria.diverse.dmgen.DMGen.Property");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_5=';'
+				otherlv_6=';'
 				{
-					newLeafNode(otherlv_5, grammarAccess.getClazzAccess().getSemicolonKeyword_2_2_0());
+					newLeafNode(otherlv_6, grammarAccess.getClazzAccess().getSemicolonKeyword_3_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getClazzAccess().getPropertiesPropertyParserRuleCall_2_2_1_0());
+							newCompositeNode(grammarAccess.getClazzAccess().getPropertiesPropertyParserRuleCall_3_2_1_0());
 						}
-						lv_properties_6_0=ruleProperty
+						lv_properties_7_0=ruleProperty
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getClazzRule());
@@ -623,18 +895,85 @@ ruleClazz returns [EObject current=null]
 							add(
 								$current,
 								"properties",
-								lv_properties_6_0,
+								lv_properties_7_0,
 								"fr.inria.diverse.dmgen.DMGen.Property");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_7='}'
+			otherlv_8='}'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getClazzAccess().getRightCurlyBracketKeyword_2_3());
+				newLeafNode(otherlv_8, grammarAccess.getClazzAccess().getRightCurlyBracketKeyword_3_3());
 			}
 		)?
+	)
+;
+
+// Entry rule entryRuleRange
+entryRuleRange returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getRangeRule()); }
+	iv_ruleRange=ruleRange
+	{ $current=$iv_ruleRange.current; }
+	EOF;
+
+// Rule Range
+ruleRange returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='['
+		{
+			newLeafNode(otherlv_0, grammarAccess.getRangeAccess().getLeftSquareBracketKeyword_0());
+		}
+		(
+			(
+				lv_lower_1_0=RULE_INT
+				{
+					newLeafNode(lv_lower_1_0, grammarAccess.getRangeAccess().getLowerINTTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getRangeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"lower",
+						lv_lower_1_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+		otherlv_2='..'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getRangeAccess().getFullStopFullStopKeyword_2());
+		}
+		(
+			(
+				lv_upper_3_0=RULE_INT
+				{
+					newLeafNode(lv_upper_3_0, grammarAccess.getRangeAccess().getUpperINTTerminalRuleCall_3_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getRangeRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"upper",
+						lv_upper_3_0,
+						"org.eclipse.xtext.common.Terminals.INT");
+				}
+			)
+		)
+		otherlv_4=']'
+		{
+			newLeafNode(otherlv_4, grammarAccess.getRangeAccess().getRightSquareBracketKeyword_4());
+		}
 	)
 ;
 
@@ -684,28 +1023,49 @@ ruleProperty returns [EObject current=null]
 					{
 						getUnorderedGroupHelper().select(grammarAccess.getPropertyAccess().getUnorderedGroup_1(), 0);
 					}
-								({true}?=>(otherlv_2='density'
-								{
-									newLeafNode(otherlv_2, grammarAccess.getPropertyAccess().getDensityKeyword_1_0_0());
-								}
-								(
+								({true}?=>((
 									(
-										lv_density_3_0=RULE_INT
 										{
-											newLeafNode(lv_density_3_0, grammarAccess.getPropertyAccess().getDensityINTTerminalRuleCall_1_0_1_0());
+											newCompositeNode(grammarAccess.getPropertyAccess().getRangeRangeParserRuleCall_1_0_0_0());
 										}
+										lv_range_2_0=ruleRange
 										{
 											if ($current==null) {
-												$current = createModelElement(grammarAccess.getPropertyRule());
+												$current = createModelElementForParent(grammarAccess.getPropertyRule());
 											}
-											setWithLastConsumed(
+											set(
 												$current,
-												"density",
-												lv_density_3_0,
-												"org.eclipse.xtext.common.Terminals.INT");
+												"range",
+												lv_range_2_0,
+												"fr.inria.diverse.dmgen.DMGen.Range");
+											afterParserOrEnumRuleCall();
 										}
 									)
 								)
+								(
+									otherlv_3='density'
+									{
+										newLeafNode(otherlv_3, grammarAccess.getPropertyAccess().getDensityKeyword_1_0_1_0());
+									}
+									(
+										(
+											lv_density_4_0=RULE_INT
+											{
+												newLeafNode(lv_density_4_0, grammarAccess.getPropertyAccess().getDensityINTTerminalRuleCall_1_0_1_1_0());
+											}
+											{
+												if ($current==null) {
+													$current = createModelElement(grammarAccess.getPropertyRule());
+												}
+												setWithLastConsumed(
+													$current,
+													"density",
+													lv_density_4_0,
+													"org.eclipse.xtext.common.Terminals.INT");
+											}
+										)
+									)
+								)?
 								))
 					{ 
 						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getPropertyAccess().getUnorderedGroup_1());
@@ -717,15 +1077,15 @@ ruleProperty returns [EObject current=null]
 					{
 						getUnorderedGroupHelper().select(grammarAccess.getPropertyAccess().getUnorderedGroup_1(), 1);
 					}
-								({true}?=>(otherlv_4='variation'
+								({true}?=>(otherlv_5='variation'
 								{
-									newLeafNode(otherlv_4, grammarAccess.getPropertyAccess().getVariationKeyword_1_1_0());
+									newLeafNode(otherlv_5, grammarAccess.getPropertyAccess().getVariationKeyword_1_1_0());
 								}
 								(
 									(
-										lv_variation_5_0=RULE_INT
+										lv_variation_6_0=RULE_INT
 										{
-											newLeafNode(lv_variation_5_0, grammarAccess.getPropertyAccess().getVariationINTTerminalRuleCall_1_1_1_0());
+											newLeafNode(lv_variation_6_0, grammarAccess.getPropertyAccess().getVariationINTTerminalRuleCall_1_1_1_0());
 										}
 										{
 											if ($current==null) {
@@ -734,7 +1094,7 @@ ruleProperty returns [EObject current=null]
 											setWithLastConsumed(
 												$current,
 												"variation",
-												lv_variation_5_0,
+												lv_variation_6_0,
 												"org.eclipse.xtext.common.Terminals.INT");
 										}
 									)
@@ -745,7 +1105,8 @@ ruleProperty returns [EObject current=null]
 					}
 				)
 			)
-					)*
+					)+
+					{getUnorderedGroupHelper().canLeave(grammarAccess.getPropertyAccess().getUnorderedGroup_1())}?
 				)
 			)
 				{ 
@@ -788,7 +1149,7 @@ ruleURI returns [EObject current=null]
 						"fr.inria.diverse.dmgen.DMGen.SCHEME");
 				}
 			)
-		)
+		)?
 		(
 			(
 				(
@@ -923,7 +1284,7 @@ ruleFRAGMENT returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken(
 	)
 ;
 
-RULE_SCHEME : ('http://'|'file:///'|'platform:/'|'neoemfhbase://');
+RULE_SCHEME : ('http://'|'file:///'|'platform:/'|'neoemfhbase://'|'hdfs://');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

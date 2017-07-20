@@ -54,9 +54,11 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	val  XtextResourceSet resourceSet = injector
     		.getInstance(XtextResourceSet);
 	
-	//local variables
+	//models urls and package implementation
 	var String metamodelURL
-	var String dmgenURL 
+	var String dmgenURL
+	var String ePackage
+	 
 	    
 	var String sparkMaster
 	var String hbaseMaster
@@ -115,7 +117,9 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	def String[] createAppArgs() {
 		# [HDFS_MASTER, hbaseMaster,
 		   METAMODEL_URL, metamodelURL,
-		   DMGEN_URL,dmgenURL
+		   DMGEN_URL,dmgenURL,
+		   E_PACKAGE_CLASS, ePackage,
+		   HBASE_MASTER, hbaseMaster
 		]
 	}
 	

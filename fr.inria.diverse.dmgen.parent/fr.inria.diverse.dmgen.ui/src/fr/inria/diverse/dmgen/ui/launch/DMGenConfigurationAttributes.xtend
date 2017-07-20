@@ -18,6 +18,7 @@ interface DMGenConfigurationAttributes {
 	
 	val String SPARK_GROUP_NAME = "Spark host"
 	val String SPARK_HOST_NAME = "spark.host"
+	val String SPARK_NODES_NUMBER = "spark.nodes"
 	
 	val String HBASE_GROUP_NAME = "HBase host"
 	val String HBASE_HOST_NAME = "hbase.host"
@@ -31,5 +32,7 @@ interface DMGenConfigurationAttributes {
 	
 	val String SPARK_APP_RESOURCE = "graphx-generator-0.0.1-SNAPSHOT.jar"
 	val String SPARK_MAIN_CLASS = "fr.inria.diverse.spark_generator.Launcher"
+	
+	val String[] SPARK_MASTER_ARRAY = #["yarn-cluster"]
 	
 }

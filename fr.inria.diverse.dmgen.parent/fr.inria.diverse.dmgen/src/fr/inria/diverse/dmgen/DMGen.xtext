@@ -5,10 +5,18 @@ generate dMGen "http://www.inria.fr/diverse/dmgen/DMGen"
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 GenConfig returns GenConfig:
-	'import' metamodel=Metamodel ';'
-	(('package' package=PACKAGE) & ('hdfs-master' hdfsMaster=URI) ) 
+	'import' metamodel=Metamodel 
+	((('package' package=PACKAGE)?) & 
+			(('fs-master' hdfsMaster=URI)?) &
+			((('deploy-mode') deployMode=('cluster' | 'local') '[' numberOfNodes = INTorUNBOUNDED']')?) &
+			('hbase-master' hbaseMaster = URI)?	
+	) 
 	 generators+=Generator (generators+=Generator)*
 	;
+
+INTorUNBOUNDED returns ecore::EString:
+	'*' | INT
+;
 
 PACKAGE returns ecore::EString :
 	ID(('.' |'_') ID)*
@@ -27,26 +35,27 @@ Generator returns Generator:
 		'}'
 ;
 
-Bundle returns Bundle:
-	size=INT '#' times=INT	
-;
-
 Metamodel returns Metamodel:
 	name=ID uri=URI
 ;
 
 Clazz returns Clazz:
-	name=ID ('#' instances=INT)? ( '{'
+	name=ID (range = Range)? ('depth' depth=INT)? ( '{'
 		properties+=Property (';' properties+=Property)*
 		'}')?
 ;
 
+Range returns Range:
+	'[' lower=INT '..' upper=INT ']'
+;
+
 Property returns Property:
-	name=ID (('density' density=INT)? & ('variation' variation=INT)?)
+	//name=ID (('density' density=INT)? & ('variation' variation=INT)?)
+	name=ID (range=Range ('density' density=INT)? & ('variation' variation=INT)?)	
 ;
 
 URI returns URI:
-	scheme=SCHEME // Scheme
+	(scheme=SCHEME)? // Scheme
 	(authority=FRAGMENT'/')? // 
 	fragments+=FRAGMENT ('/' fragments+=FRAGMENT)*	// 
 ;

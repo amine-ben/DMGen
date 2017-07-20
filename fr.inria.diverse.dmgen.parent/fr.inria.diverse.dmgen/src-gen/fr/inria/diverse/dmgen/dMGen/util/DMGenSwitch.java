@@ -87,13 +87,6 @@ public class DMGenSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case DMGenPackage.BUNDLE:
-      {
-        Bundle bundle = (Bundle)theEObject;
-        T result = caseBundle(bundle);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case DMGenPackage.METAMODEL:
       {
         Metamodel metamodel = (Metamodel)theEObject;
@@ -105,6 +98,13 @@ public class DMGenSwitch<T> extends Switch<T>
       {
         Clazz clazz = (Clazz)theEObject;
         T result = caseClazz(clazz);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case DMGenPackage.RANGE:
+      {
+        Range range = (Range)theEObject;
+        T result = caseRange(range);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -159,22 +159,6 @@ public class DMGenSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Bundle</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Bundle</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseBundle(Bundle object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Metamodel</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -202,6 +186,22 @@ public class DMGenSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseClazz(Clazz object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Range</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRange(Range object)
   {
     return null;
   }

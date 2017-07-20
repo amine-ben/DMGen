@@ -35,6 +35,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getNumber <em>Number</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getSize <em>Size</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getGlobalDensity <em>Global Density</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getGlobalDeviation <em>Global Deviation</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GeneratorImpl#getClasses <em>Classes</em>}</li>
  * </ul>
  *
@@ -121,6 +123,46 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
    * @ordered
    */
   protected String prefix = PREFIX_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getGlobalDensity() <em>Global Density</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGlobalDensity()
+   * @generated
+   * @ordered
+   */
+  protected static final int GLOBAL_DENSITY_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getGlobalDensity() <em>Global Density</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGlobalDensity()
+   * @generated
+   * @ordered
+   */
+  protected int globalDensity = GLOBAL_DENSITY_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getGlobalDeviation() <em>Global Deviation</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGlobalDeviation()
+   * @generated
+   * @ordered
+   */
+  protected static final float GLOBAL_DEVIATION_EDEFAULT = 0.0F;
+
+  /**
+   * The cached value of the '{@link #getGlobalDeviation() <em>Global Deviation</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGlobalDeviation()
+   * @generated
+   * @ordered
+   */
+  protected float globalDeviation = GLOBAL_DEVIATION_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getClasses() <em>Classes</em>}' containment reference list.
@@ -250,6 +292,52 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
    * <!-- end-user-doc -->
    * @generated
    */
+  public int getGlobalDensity()
+  {
+    return globalDensity;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setGlobalDensity(int newGlobalDensity)
+  {
+    int oldGlobalDensity = globalDensity;
+    globalDensity = newGlobalDensity;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GENERATOR__GLOBAL_DENSITY, oldGlobalDensity, globalDensity));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public float getGlobalDeviation()
+  {
+    return globalDeviation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setGlobalDeviation(float newGlobalDeviation)
+  {
+    float oldGlobalDeviation = globalDeviation;
+    globalDeviation = newGlobalDeviation;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GENERATOR__GLOBAL_DEVIATION, oldGlobalDeviation, globalDeviation));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Clazz> getClasses()
   {
     if (classes == null)
@@ -293,6 +381,10 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
         return getSize();
       case DMGenPackage.GENERATOR__PREFIX:
         return getPrefix();
+      case DMGenPackage.GENERATOR__GLOBAL_DENSITY:
+        return getGlobalDensity();
+      case DMGenPackage.GENERATOR__GLOBAL_DEVIATION:
+        return getGlobalDeviation();
       case DMGenPackage.GENERATOR__CLASSES:
         return getClasses();
     }
@@ -321,6 +413,12 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
         return;
       case DMGenPackage.GENERATOR__PREFIX:
         setPrefix((String)newValue);
+        return;
+      case DMGenPackage.GENERATOR__GLOBAL_DENSITY:
+        setGlobalDensity((Integer)newValue);
+        return;
+      case DMGenPackage.GENERATOR__GLOBAL_DEVIATION:
+        setGlobalDeviation((Float)newValue);
         return;
       case DMGenPackage.GENERATOR__CLASSES:
         getClasses().clear();
@@ -352,6 +450,12 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
       case DMGenPackage.GENERATOR__PREFIX:
         setPrefix(PREFIX_EDEFAULT);
         return;
+      case DMGenPackage.GENERATOR__GLOBAL_DENSITY:
+        setGlobalDensity(GLOBAL_DENSITY_EDEFAULT);
+        return;
+      case DMGenPackage.GENERATOR__GLOBAL_DEVIATION:
+        setGlobalDeviation(GLOBAL_DEVIATION_EDEFAULT);
+        return;
       case DMGenPackage.GENERATOR__CLASSES:
         getClasses().clear();
         return;
@@ -377,6 +481,10 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
         return size != SIZE_EDEFAULT;
       case DMGenPackage.GENERATOR__PREFIX:
         return PREFIX_EDEFAULT == null ? prefix != null : !PREFIX_EDEFAULT.equals(prefix);
+      case DMGenPackage.GENERATOR__GLOBAL_DENSITY:
+        return globalDensity != GLOBAL_DENSITY_EDEFAULT;
+      case DMGenPackage.GENERATOR__GLOBAL_DEVIATION:
+        return globalDeviation != GLOBAL_DEVIATION_EDEFAULT;
       case DMGenPackage.GENERATOR__CLASSES:
         return classes != null && !classes.isEmpty();
     }
@@ -402,6 +510,10 @@ public class GeneratorImpl extends MinimalEObjectImpl.Container implements Gener
     result.append(size);
     result.append(", prefix: ");
     result.append(prefix);
+    result.append(", globalDensity: ");
+    result.append(globalDensity);
+    result.append(", globalDeviation: ");
+    result.append(globalDeviation);
     result.append(')');
     return result.toString();
   }

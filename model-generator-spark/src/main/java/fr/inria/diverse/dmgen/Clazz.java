@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.Clazz#getName <em>Name</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.Clazz#getInstances <em>Instances</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.Clazz#getRange <em>Range</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.Clazz#getDepth <em>Depth</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.Clazz#getProperties <em>Properties</em>}</li>
  * </ul>
  *
@@ -54,30 +55,56 @@ public interface Clazz extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Instances</b></em>' attribute.
+   * Returns the value of the '<em><b>Range</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Instances</em>' attribute isn't clear,
+   * If the meaning of the '<em>Range</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Instances</em>' attribute.
-   * @see #setInstances(int)
-   * @see fr.inria.diverse.dmgen.DMGenPackage#getClazz_Instances()
+   * @return the value of the '<em>Range</em>' containment reference.
+   * @see #setRange(Range)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getClazz_Range()
+   * @model containment="true"
+   * @generated
+   */
+  Range getRange();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.Clazz#getRange <em>Range</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Range</em>' containment reference.
+   * @see #getRange()
+   * @generated
+   */
+  void setRange(Range value);
+
+  /**
+   * Returns the value of the '<em><b>Depth</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Depth</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Depth</em>' attribute.
+   * @see #setDepth(int)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getClazz_Depth()
    * @model
    * @generated
    */
-  int getInstances();
+  int getDepth();
 
   /**
-   * Sets the value of the '{@link fr.inria.diverse.dmgen.Clazz#getInstances <em>Instances</em>}' attribute.
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.Clazz#getDepth <em>Depth</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Instances</em>' attribute.
-   * @see #getInstances()
+   * @param value the new value of the '<em>Depth</em>' attribute.
+   * @see #getDepth()
    * @generated
    */
-  void setInstances(int value);
+  void setDepth(int value);
 
   /**
    * Returns the value of the '<em><b>Properties</b></em>' containment reference list.

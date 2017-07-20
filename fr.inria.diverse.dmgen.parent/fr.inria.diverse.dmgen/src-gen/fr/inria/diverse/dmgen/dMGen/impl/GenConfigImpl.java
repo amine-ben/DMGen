@@ -7,6 +7,7 @@ import fr.inria.diverse.dmgen.dMGen.DMGenPackage;
 import fr.inria.diverse.dmgen.dMGen.GenConfig;
 import fr.inria.diverse.dmgen.dMGen.Generator;
 import fr.inria.diverse.dmgen.dMGen.Metamodel;
+import fr.inria.diverse.dmgen.dMGen.URI;
 
 import java.util.Collection;
 
@@ -33,8 +34,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getMetamodel <em>Metamodel</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getGlobalDensity <em>Global Density</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getGlobalVariation <em>Global Variation</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getPackage <em>Package</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getHdfsMaster <em>Hdfs Master</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getDeployMode <em>Deploy Mode</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getNumberOfNodes <em>Number Of Nodes</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getHbaseMaster <em>Hbase Master</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.GenConfigImpl#getGenerators <em>Generators</em>}</li>
  * </ul>
  *
@@ -53,44 +57,84 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
   protected Metamodel metamodel;
 
   /**
-   * The default value of the '{@link #getGlobalDensity() <em>Global Density</em>}' attribute.
+   * The default value of the '{@link #getPackage() <em>Package</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGlobalDensity()
+   * @see #getPackage()
    * @generated
    * @ordered
    */
-  protected static final int GLOBAL_DENSITY_EDEFAULT = 0;
+  protected static final String PACKAGE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getGlobalDensity() <em>Global Density</em>}' attribute.
+   * The cached value of the '{@link #getPackage() <em>Package</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGlobalDensity()
+   * @see #getPackage()
    * @generated
    * @ordered
    */
-  protected int globalDensity = GLOBAL_DENSITY_EDEFAULT;
+  protected String package_ = PACKAGE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getGlobalVariation() <em>Global Variation</em>}' attribute.
+   * The cached value of the '{@link #getHdfsMaster() <em>Hdfs Master</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGlobalVariation()
+   * @see #getHdfsMaster()
    * @generated
    * @ordered
    */
-  protected static final float GLOBAL_VARIATION_EDEFAULT = 0.0F;
+  protected URI hdfsMaster;
 
   /**
-   * The cached value of the '{@link #getGlobalVariation() <em>Global Variation</em>}' attribute.
+   * The default value of the '{@link #getDeployMode() <em>Deploy Mode</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGlobalVariation()
+   * @see #getDeployMode()
    * @generated
    * @ordered
    */
-  protected float globalVariation = GLOBAL_VARIATION_EDEFAULT;
+  protected static final String DEPLOY_MODE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDeployMode() <em>Deploy Mode</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeployMode()
+   * @generated
+   * @ordered
+   */
+  protected String deployMode = DEPLOY_MODE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getNumberOfNodes() <em>Number Of Nodes</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNumberOfNodes()
+   * @generated
+   * @ordered
+   */
+  protected static final String NUMBER_OF_NODES_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getNumberOfNodes() <em>Number Of Nodes</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNumberOfNodes()
+   * @generated
+   * @ordered
+   */
+  protected String numberOfNodes = NUMBER_OF_NODES_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getHbaseMaster() <em>Hbase Master</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getHbaseMaster()
+   * @generated
+   * @ordered
+   */
+  protected URI hbaseMaster;
 
   /**
    * The cached value of the '{@link #getGenerators() <em>Generators</em>}' containment reference list.
@@ -176,9 +220,9 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getGlobalDensity()
+  public String getPackage()
   {
-    return globalDensity;
+    return package_;
   }
 
   /**
@@ -186,12 +230,12 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setGlobalDensity(int newGlobalDensity)
+  public void setPackage(String newPackage)
   {
-    int oldGlobalDensity = globalDensity;
-    globalDensity = newGlobalDensity;
+    String oldPackage = package_;
+    package_ = newPackage;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__GLOBAL_DENSITY, oldGlobalDensity, globalDensity));
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__PACKAGE, oldPackage, package_));
   }
 
   /**
@@ -199,9 +243,9 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
    * <!-- end-user-doc -->
    * @generated
    */
-  public float getGlobalVariation()
+  public URI getHdfsMaster()
   {
-    return globalVariation;
+    return hdfsMaster;
   }
 
   /**
@@ -209,12 +253,131 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setGlobalVariation(float newGlobalVariation)
+  public NotificationChain basicSetHdfsMaster(URI newHdfsMaster, NotificationChain msgs)
   {
-    float oldGlobalVariation = globalVariation;
-    globalVariation = newGlobalVariation;
+    URI oldHdfsMaster = hdfsMaster;
+    hdfsMaster = newHdfsMaster;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__GLOBAL_VARIATION, oldGlobalVariation, globalVariation));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__HDFS_MASTER, oldHdfsMaster, newHdfsMaster);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHdfsMaster(URI newHdfsMaster)
+  {
+    if (newHdfsMaster != hdfsMaster)
+    {
+      NotificationChain msgs = null;
+      if (hdfsMaster != null)
+        msgs = ((InternalEObject)hdfsMaster).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.GEN_CONFIG__HDFS_MASTER, null, msgs);
+      if (newHdfsMaster != null)
+        msgs = ((InternalEObject)newHdfsMaster).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.GEN_CONFIG__HDFS_MASTER, null, msgs);
+      msgs = basicSetHdfsMaster(newHdfsMaster, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__HDFS_MASTER, newHdfsMaster, newHdfsMaster));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDeployMode()
+  {
+    return deployMode;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDeployMode(String newDeployMode)
+  {
+    String oldDeployMode = deployMode;
+    deployMode = newDeployMode;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__DEPLOY_MODE, oldDeployMode, deployMode));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getNumberOfNodes()
+  {
+    return numberOfNodes;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setNumberOfNodes(String newNumberOfNodes)
+  {
+    String oldNumberOfNodes = numberOfNodes;
+    numberOfNodes = newNumberOfNodes;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__NUMBER_OF_NODES, oldNumberOfNodes, numberOfNodes));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public URI getHbaseMaster()
+  {
+    return hbaseMaster;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetHbaseMaster(URI newHbaseMaster, NotificationChain msgs)
+  {
+    URI oldHbaseMaster = hbaseMaster;
+    hbaseMaster = newHbaseMaster;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__HBASE_MASTER, oldHbaseMaster, newHbaseMaster);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHbaseMaster(URI newHbaseMaster)
+  {
+    if (newHbaseMaster != hbaseMaster)
+    {
+      NotificationChain msgs = null;
+      if (hbaseMaster != null)
+        msgs = ((InternalEObject)hbaseMaster).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.GEN_CONFIG__HBASE_MASTER, null, msgs);
+      if (newHbaseMaster != null)
+        msgs = ((InternalEObject)newHbaseMaster).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.GEN_CONFIG__HBASE_MASTER, null, msgs);
+      msgs = basicSetHbaseMaster(newHbaseMaster, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.GEN_CONFIG__HBASE_MASTER, newHbaseMaster, newHbaseMaster));
   }
 
   /**
@@ -243,6 +406,10 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
     {
       case DMGenPackage.GEN_CONFIG__METAMODEL:
         return basicSetMetamodel(null, msgs);
+      case DMGenPackage.GEN_CONFIG__HDFS_MASTER:
+        return basicSetHdfsMaster(null, msgs);
+      case DMGenPackage.GEN_CONFIG__HBASE_MASTER:
+        return basicSetHbaseMaster(null, msgs);
       case DMGenPackage.GEN_CONFIG__GENERATORS:
         return ((InternalEList<?>)getGenerators()).basicRemove(otherEnd, msgs);
     }
@@ -261,10 +428,16 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
     {
       case DMGenPackage.GEN_CONFIG__METAMODEL:
         return getMetamodel();
-      case DMGenPackage.GEN_CONFIG__GLOBAL_DENSITY:
-        return getGlobalDensity();
-      case DMGenPackage.GEN_CONFIG__GLOBAL_VARIATION:
-        return getGlobalVariation();
+      case DMGenPackage.GEN_CONFIG__PACKAGE:
+        return getPackage();
+      case DMGenPackage.GEN_CONFIG__HDFS_MASTER:
+        return getHdfsMaster();
+      case DMGenPackage.GEN_CONFIG__DEPLOY_MODE:
+        return getDeployMode();
+      case DMGenPackage.GEN_CONFIG__NUMBER_OF_NODES:
+        return getNumberOfNodes();
+      case DMGenPackage.GEN_CONFIG__HBASE_MASTER:
+        return getHbaseMaster();
       case DMGenPackage.GEN_CONFIG__GENERATORS:
         return getGenerators();
     }
@@ -285,11 +458,20 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
       case DMGenPackage.GEN_CONFIG__METAMODEL:
         setMetamodel((Metamodel)newValue);
         return;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_DENSITY:
-        setGlobalDensity((Integer)newValue);
+      case DMGenPackage.GEN_CONFIG__PACKAGE:
+        setPackage((String)newValue);
         return;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_VARIATION:
-        setGlobalVariation((Float)newValue);
+      case DMGenPackage.GEN_CONFIG__HDFS_MASTER:
+        setHdfsMaster((URI)newValue);
+        return;
+      case DMGenPackage.GEN_CONFIG__DEPLOY_MODE:
+        setDeployMode((String)newValue);
+        return;
+      case DMGenPackage.GEN_CONFIG__NUMBER_OF_NODES:
+        setNumberOfNodes((String)newValue);
+        return;
+      case DMGenPackage.GEN_CONFIG__HBASE_MASTER:
+        setHbaseMaster((URI)newValue);
         return;
       case DMGenPackage.GEN_CONFIG__GENERATORS:
         getGenerators().clear();
@@ -312,11 +494,20 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
       case DMGenPackage.GEN_CONFIG__METAMODEL:
         setMetamodel((Metamodel)null);
         return;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_DENSITY:
-        setGlobalDensity(GLOBAL_DENSITY_EDEFAULT);
+      case DMGenPackage.GEN_CONFIG__PACKAGE:
+        setPackage(PACKAGE_EDEFAULT);
         return;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_VARIATION:
-        setGlobalVariation(GLOBAL_VARIATION_EDEFAULT);
+      case DMGenPackage.GEN_CONFIG__HDFS_MASTER:
+        setHdfsMaster((URI)null);
+        return;
+      case DMGenPackage.GEN_CONFIG__DEPLOY_MODE:
+        setDeployMode(DEPLOY_MODE_EDEFAULT);
+        return;
+      case DMGenPackage.GEN_CONFIG__NUMBER_OF_NODES:
+        setNumberOfNodes(NUMBER_OF_NODES_EDEFAULT);
+        return;
+      case DMGenPackage.GEN_CONFIG__HBASE_MASTER:
+        setHbaseMaster((URI)null);
         return;
       case DMGenPackage.GEN_CONFIG__GENERATORS:
         getGenerators().clear();
@@ -337,10 +528,16 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
     {
       case DMGenPackage.GEN_CONFIG__METAMODEL:
         return metamodel != null;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_DENSITY:
-        return globalDensity != GLOBAL_DENSITY_EDEFAULT;
-      case DMGenPackage.GEN_CONFIG__GLOBAL_VARIATION:
-        return globalVariation != GLOBAL_VARIATION_EDEFAULT;
+      case DMGenPackage.GEN_CONFIG__PACKAGE:
+        return PACKAGE_EDEFAULT == null ? package_ != null : !PACKAGE_EDEFAULT.equals(package_);
+      case DMGenPackage.GEN_CONFIG__HDFS_MASTER:
+        return hdfsMaster != null;
+      case DMGenPackage.GEN_CONFIG__DEPLOY_MODE:
+        return DEPLOY_MODE_EDEFAULT == null ? deployMode != null : !DEPLOY_MODE_EDEFAULT.equals(deployMode);
+      case DMGenPackage.GEN_CONFIG__NUMBER_OF_NODES:
+        return NUMBER_OF_NODES_EDEFAULT == null ? numberOfNodes != null : !NUMBER_OF_NODES_EDEFAULT.equals(numberOfNodes);
+      case DMGenPackage.GEN_CONFIG__HBASE_MASTER:
+        return hbaseMaster != null;
       case DMGenPackage.GEN_CONFIG__GENERATORS:
         return generators != null && !generators.isEmpty();
     }
@@ -358,10 +555,12 @@ public class GenConfigImpl extends MinimalEObjectImpl.Container implements GenCo
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (globalDensity: ");
-    result.append(globalDensity);
-    result.append(", globalVariation: ");
-    result.append(globalVariation);
+    result.append(" (package: ");
+    result.append(package_);
+    result.append(", deployMode: ");
+    result.append(deployMode);
+    result.append(", numberOfNodes: ");
+    result.append(numberOfNodes);
     result.append(')');
     return result.toString();
   }

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import fr.inria.diverse.dmgen.Clazz;
 import fr.inria.diverse.dmgen.DMGenPackage;
 import fr.inria.diverse.dmgen.Property;
+import fr.inria.diverse.dmgen.Range;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +33,8 @@ import fr.inria.diverse.dmgen.Property;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.impl.ClazzImpl#getName <em>Name</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.impl.ClazzImpl#getInstances <em>Instances</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.impl.ClazzImpl#getRange <em>Range</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.impl.ClazzImpl#getDepth <em>Depth</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.impl.ClazzImpl#getProperties <em>Properties</em>}</li>
  * </ul>
  *
@@ -61,24 +63,34 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getInstances() <em>Instances</em>}' attribute.
+   * The cached value of the '{@link #getRange() <em>Range</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstances()
+   * @see #getRange()
    * @generated
    * @ordered
    */
-  protected static final int INSTANCES_EDEFAULT = 0;
+  protected Range range;
 
   /**
-   * The cached value of the '{@link #getInstances() <em>Instances</em>}' attribute.
+   * The default value of the '{@link #getDepth() <em>Depth</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstances()
+   * @see #getDepth()
    * @generated
    * @ordered
    */
-  protected int instances = INSTANCES_EDEFAULT;
+  protected static final int DEPTH_EDEFAULT = 0;
+
+  /**
+   * The cached value of the '{@link #getDepth() <em>Depth</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDepth()
+   * @generated
+   * @ordered
+   */
+  protected int depth = DEPTH_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getProperties() <em>Properties</em>}' containment reference list.
@@ -139,9 +151,9 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
    * <!-- end-user-doc -->
    * @generated
    */
-  public int getInstances()
+  public Range getRange()
   {
-    return instances;
+    return range;
   }
 
   /**
@@ -149,12 +161,60 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setInstances(int newInstances)
+  public NotificationChain basicSetRange(Range newRange, NotificationChain msgs)
   {
-    int oldInstances = instances;
-    instances = newInstances;
+    Range oldRange = range;
+    range = newRange;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.CLAZZ__INSTANCES, oldInstances, instances));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DMGenPackage.CLAZZ__RANGE, oldRange, newRange);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRange(Range newRange)
+  {
+    if (newRange != range)
+    {
+      NotificationChain msgs = null;
+      if (range != null)
+        msgs = ((InternalEObject)range).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.CLAZZ__RANGE, null, msgs);
+      if (newRange != null)
+        msgs = ((InternalEObject)newRange).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.CLAZZ__RANGE, null, msgs);
+      msgs = basicSetRange(newRange, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.CLAZZ__RANGE, newRange, newRange));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public int getDepth()
+  {
+    return depth;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDepth(int newDepth)
+  {
+    int oldDepth = depth;
+    depth = newDepth;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.CLAZZ__DEPTH, oldDepth, depth));
   }
 
   /**
@@ -181,6 +241,8 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
   {
     switch (featureID)
     {
+      case DMGenPackage.CLAZZ__RANGE:
+        return basicSetRange(null, msgs);
       case DMGenPackage.CLAZZ__PROPERTIES:
         return ((InternalEList<?>)getProperties()).basicRemove(otherEnd, msgs);
     }
@@ -199,8 +261,10 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
     {
       case DMGenPackage.CLAZZ__NAME:
         return getName();
-      case DMGenPackage.CLAZZ__INSTANCES:
-        return getInstances();
+      case DMGenPackage.CLAZZ__RANGE:
+        return getRange();
+      case DMGenPackage.CLAZZ__DEPTH:
+        return getDepth();
       case DMGenPackage.CLAZZ__PROPERTIES:
         return getProperties();
     }
@@ -221,8 +285,11 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
       case DMGenPackage.CLAZZ__NAME:
         setName((String)newValue);
         return;
-      case DMGenPackage.CLAZZ__INSTANCES:
-        setInstances((Integer)newValue);
+      case DMGenPackage.CLAZZ__RANGE:
+        setRange((Range)newValue);
+        return;
+      case DMGenPackage.CLAZZ__DEPTH:
+        setDepth((Integer)newValue);
         return;
       case DMGenPackage.CLAZZ__PROPERTIES:
         getProperties().clear();
@@ -245,8 +312,11 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
       case DMGenPackage.CLAZZ__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case DMGenPackage.CLAZZ__INSTANCES:
-        setInstances(INSTANCES_EDEFAULT);
+      case DMGenPackage.CLAZZ__RANGE:
+        setRange((Range)null);
+        return;
+      case DMGenPackage.CLAZZ__DEPTH:
+        setDepth(DEPTH_EDEFAULT);
         return;
       case DMGenPackage.CLAZZ__PROPERTIES:
         getProperties().clear();
@@ -267,8 +337,10 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
     {
       case DMGenPackage.CLAZZ__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case DMGenPackage.CLAZZ__INSTANCES:
-        return instances != INSTANCES_EDEFAULT;
+      case DMGenPackage.CLAZZ__RANGE:
+        return range != null;
+      case DMGenPackage.CLAZZ__DEPTH:
+        return depth != DEPTH_EDEFAULT;
       case DMGenPackage.CLAZZ__PROPERTIES:
         return properties != null && !properties.isEmpty();
     }
@@ -288,8 +360,8 @@ public class ClazzImpl extends MinimalEObjectImpl.Container implements Clazz
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", instances: ");
-    result.append(instances);
+    result.append(", depth: ");
+    result.append(depth);
     result.append(')');
     return result.toString();
   }

@@ -58,12 +58,6 @@ import scala.Tuple2;
 
 public class GenericMetamodelGenerator {
 	
-	
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2736404357386812585L;
 
 	private static final org.apache.log4j.Logger LOGGER = org.apache.log4j.LogManager.getLogger("Generator");
 
@@ -137,7 +131,7 @@ public class GenericMetamodelGenerator {
 						.collect(Collectors.toList()), slices);
 
 				long exitCode = vertices.mapPartitions(new VerticesGenToPair (config, averageSize/slices, resource))
-						.mapPartitions(new EdgesGen(config, resource))
+						.mapPartitions(new EdgesGen2(config, resource))
 						.count();
 				
 				LOGGER.info(MessageFormat.format("Saving resource {0}", resource.getURI()));

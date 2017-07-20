@@ -31,6 +31,11 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
+import org.eclipse.swt.widgets.Combo
+import org.eclipse.swt.events.SelectionListener
+
+
+
 
 /**
  * Derived from EMFTVM Launcher @link 
@@ -54,6 +59,8 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	
 	var String moduleFileName
 	
+	var String numberOfNodes
+	
 	
 	// launch configuration UI
 	
@@ -65,10 +72,11 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	
 	var Text metamodelFileText
 	
-	var Text sparkHostText
+	var Combo sparkMasterCombo
 	
 	var Text hbaseHostText
 	
+	var Text sparkNodesText
 	// EMF Related variables
 	
 	val ResourceSet rs = new ResourceSetImpl
@@ -264,20 +272,36 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		val sparkGrp = new Group(rootCont, SWT.NULL)
 		sparkGrp.text = DMGenConfigurationAttributes.SPARK_GROUP_NAME
 		sparkGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
-		sparkGrp.layout = new GridLayout (2, false)
+		sparkGrp.layout = new GridLayout (4, false)
 		
-		val sparkHostLabel = new Label(sparkGrp, SWT.LEFT)
-		sparkHostLabel.setLayoutData(new GridData(SWT.LEFT))
+		val sparkHostLabel = new Label(sparkGrp, SWT.NULL)
+		sparkHostLabel.setLayoutData(new GridData(SWT.NULL))
 		sparkHostLabel.setText("Host:")
+		
+		sparkMasterCombo = new Combo(sparkGrp, SWT.READ_ONLY)
+		sparkMasterCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+		sparkMasterCombo.items = DMGenConfigurationAttributes.SPARK_MASTER_ARRAY
+		sparkMasterCombo.addSelectionListener(new SelectionListener() {	
 
-		sparkHostText = new Text(sparkGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
-		sparkHostText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-		sparkHostText.addModifyListener(new ModifyListener() {	
-			override modifyText(ModifyEvent e) {
-				sparkHost = sparkHostText.text
-				updateLaunchConfigurationDialog
+				
+				override widgetDefaultSelected(SelectionEvent e) {
+					sparkHost = sparkMasterCombo.text
+					updateLaunchConfigurationDialog
 				}
+				
+				override widgetSelected(SelectionEvent e) {
+					sparkHost = sparkMasterCombo.text
+					updateLaunchConfigurationDialog
+				}
+				
 		})
+		
+		val sparkNodesLabel = new Label(sparkGrp, SWT.NULL)
+		sparkNodesLabel.text = "Nodes:"
+		sparkNodesLabel.layoutData = new GridData(SWT.NULL)
+		
+		sparkNodesText = new Text(sparkGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
+		
 		
 		val hbaseGrp = new Group(rootCont, SWT.NULL)
 		hbaseGrp.text = DMGenConfigurationAttributes.HBASE_GROUP_NAME
@@ -326,13 +350,17 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			metamodelFileText.text =  metamodel
 			
 			sparkHost = conf.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, "")
-			sparkHostText.text = sparkHost
+			sparkMasterCombo.text = sparkHost
 			
 			hbaseHost = conf.getAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, "")
 			hbaseHostText.text = hbaseHost
+			
+			numberOfNodes = conf.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, "8")
+			sparkNodesText.text = numberOfNodes
 			//update configuration values 
 		}
 	}
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -341,9 +369,10 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		conf.setAttribute(DMGenConfigurationAttributes.MODULE_NAME, moduleNameText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.MODULE_PATH, modulePathText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, metamodelFileText.text)
-		conf.setAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, sparkHostText.text)
+		conf.setAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, sparkMasterCombo.text)
 		conf.setAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, hbaseHostText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, moduleFileName)
+		conf.setAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, sparkNodesText.text)
 	}
 	/**
 	 * {@inheritDoc}
@@ -359,7 +388,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	 override boolean isValid(ILaunchConfiguration conf) {
 	 	
-	 	// TODO very basic valid Check shoudl be elaborated 
+	 	// TODO very basic valid Check should be elaborated 
 	 	errorMessage = null
 	 	
 	 	if(moduleNameText.text.empty) {
@@ -375,7 +404,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 		errorMessage =  "No metamodel is provided"
 	 		return false 
 	 	} 
-	 	if (sparkHostText.text.empty) {
+	 	if (sparkMasterCombo.text.empty) {
 	 		errorMessage =  "No spark host is provided"
 	 		return false 
 	 	} 
@@ -402,29 +431,51 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 
 	def private rebuild() {		
 		resetAll
-		getGenConfFromFile
-		build
+		//getGenConfFromFile
+		build		
+	}
+	                 
+	def private build() {
+		genConfig.assertNotNull	
+		
+		metamodelFileText.text = genConfig.metamodel.uri.toPrettyString ?: metamodel
+		sparkMasterCombo.text = if (genConfig.deployMode == 'cluster') 
+									DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)
+								else 
+									DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)
+		// TODO should be removed after migrating the new API from Xtext								
+	    sparkNodesText.text = genConfig.numberOfNodes.toString ?: numberOfNodes
+									
+		hbaseHostText.text = genConfig.hbaseMaster.toPrettyString ?: hbaseHost
 			
 	}
-	
-	def build() {
-		// TODO building the module
 		
+	def String toPrettyString(fr.inria.diverse.dmgen.dMGen.URI uri) {
+		val StringBuilder builder = new StringBuilder(uri.scheme)
+		for ( frag : uri.fragments) {
+			builder.append(frag)
+			builder.append('/')
+		}
+		builder.toString
 	}
 	
-	def getGenConfFromFile() {
-		// the path is tied to the workspace location 
-		// FIXME make it related to the project location instead
-					
-	    
+	def boolean assertNotNull(Object object) {
+		if (object == null)
+			throw new RuntimeException (object.toString + " is null")
 	}
+	
+//	def getGenConfFromFile() {
+//		// the path is tied to the workspace location 
+//		// FIXME make it related to the project location instead				
+//	}
 	
 	def resetAll() {
 		moduleChanged = false
 		moduleName = moduleNameText.text
 		modulePath = modulePathText.text
-		sparkHost = sparkHostText.text
-		hbaseHost = hbaseHostText.text	
+		sparkHost = sparkMasterCombo.text
+		hbaseHost = hbaseHostText.text
+		numberOfNodes = sparkNodesText.text	
 	}
 	
 	/**

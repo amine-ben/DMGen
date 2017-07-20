@@ -42,15 +42,6 @@ public interface DMGenFactory extends EFactory
   Generator createGenerator();
 
   /**
-   * Returns a new object of class '<em>Bundle</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Bundle</em>'.
-   * @generated
-   */
-  Bundle createBundle();
-
-  /**
    * Returns a new object of class '<em>Metamodel</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -67,6 +58,15 @@ public interface DMGenFactory extends EFactory
    * @generated
    */
   Clazz createClazz();
+
+  /**
+   * Returns a new object of class '<em>Range</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Range</em>'.
+   * @generated
+   */
+  Range createRange();
 
   /**
    * Returns a new object of class '<em>Property</em>'.

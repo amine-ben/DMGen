@@ -17,8 +17,11 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getMetamodel <em>Metamodel</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getGlobalDensity <em>Global Density</em>}</li>
- *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getGlobalVariation <em>Global Variation</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getPackage <em>Package</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getHdfsMaster <em>Hdfs Master</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getDeployMode <em>Deploy Mode</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getNumberOfNodes <em>Number Of Nodes</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getHbaseMaster <em>Hbase Master</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getGenerators <em>Generators</em>}</li>
  * </ul>
  *
@@ -55,56 +58,134 @@ public interface GenConfig extends EObject
   void setMetamodel(Metamodel value);
 
   /**
-   * Returns the value of the '<em><b>Global Density</b></em>' attribute.
+   * Returns the value of the '<em><b>Package</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Global Density</em>' attribute isn't clear,
+   * If the meaning of the '<em>Package</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Global Density</em>' attribute.
-   * @see #setGlobalDensity(int)
-   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_GlobalDensity()
+   * @return the value of the '<em>Package</em>' attribute.
+   * @see #setPackage(String)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_Package()
    * @model
    * @generated
    */
-  int getGlobalDensity();
+  String getPackage();
 
   /**
-   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getGlobalDensity <em>Global Density</em>}' attribute.
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getPackage <em>Package</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Global Density</em>' attribute.
-   * @see #getGlobalDensity()
+   * @param value the new value of the '<em>Package</em>' attribute.
+   * @see #getPackage()
    * @generated
    */
-  void setGlobalDensity(int value);
+  void setPackage(String value);
 
   /**
-   * Returns the value of the '<em><b>Global Variation</b></em>' attribute.
+   * Returns the value of the '<em><b>Hdfs Master</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Global Variation</em>' attribute isn't clear,
+   * If the meaning of the '<em>Hdfs Master</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Global Variation</em>' attribute.
-   * @see #setGlobalVariation(float)
-   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_GlobalVariation()
+   * @return the value of the '<em>Hdfs Master</em>' containment reference.
+   * @see #setHdfsMaster(URI)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_HdfsMaster()
+   * @model containment="true"
+   * @generated
+   */
+  URI getHdfsMaster();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getHdfsMaster <em>Hdfs Master</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Hdfs Master</em>' containment reference.
+   * @see #getHdfsMaster()
+   * @generated
+   */
+  void setHdfsMaster(URI value);
+
+  /**
+   * Returns the value of the '<em><b>Deploy Mode</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Deploy Mode</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Deploy Mode</em>' attribute.
+   * @see #setDeployMode(String)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_DeployMode()
    * @model
    * @generated
    */
-  float getGlobalVariation();
+  String getDeployMode();
 
   /**
-   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getGlobalVariation <em>Global Variation</em>}' attribute.
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getDeployMode <em>Deploy Mode</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Global Variation</em>' attribute.
-   * @see #getGlobalVariation()
+   * @param value the new value of the '<em>Deploy Mode</em>' attribute.
+   * @see #getDeployMode()
    * @generated
    */
-  void setGlobalVariation(float value);
+  void setDeployMode(String value);
+
+  /**
+   * Returns the value of the '<em><b>Number Of Nodes</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Number Of Nodes</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Number Of Nodes</em>' attribute.
+   * @see #setNumberOfNodes(String)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_NumberOfNodes()
+   * @model
+   * @generated
+   */
+  String getNumberOfNodes();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getNumberOfNodes <em>Number Of Nodes</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Number Of Nodes</em>' attribute.
+   * @see #getNumberOfNodes()
+   * @generated
+   */
+  void setNumberOfNodes(String value);
+
+  /**
+   * Returns the value of the '<em><b>Hbase Master</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Hbase Master</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Hbase Master</em>' containment reference.
+   * @see #setHbaseMaster(URI)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenConfig_HbaseMaster()
+   * @model containment="true"
+   * @generated
+   */
+  URI getHbaseMaster();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.GenConfig#getHbaseMaster <em>Hbase Master</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Hbase Master</em>' containment reference.
+   * @see #getHbaseMaster()
+   * @generated
+   */
+  void setHbaseMaster(URI value);
 
   /**
    * Returns the value of the '<em><b>Generators</b></em>' containment reference list.

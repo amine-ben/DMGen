@@ -86,11 +86,6 @@ public class DMGenAdapterFactory extends AdapterFactoryImpl
         return createGeneratorAdapter();
       }
       @Override
-      public Adapter caseBundle(Bundle object)
-      {
-        return createBundleAdapter();
-      }
-      @Override
       public Adapter caseMetamodel(Metamodel object)
       {
         return createMetamodelAdapter();
@@ -99,6 +94,11 @@ public class DMGenAdapterFactory extends AdapterFactoryImpl
       public Adapter caseClazz(Clazz object)
       {
         return createClazzAdapter();
+      }
+      @Override
+      public Adapter caseRange(Range object)
+      {
+        return createRangeAdapter();
       }
       @Override
       public Adapter caseProperty(Property object)
@@ -163,21 +163,6 @@ public class DMGenAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link fr.inria.diverse.dmgen.dMGen.Bundle <em>Bundle</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see fr.inria.diverse.dmgen.dMGen.Bundle
-   * @generated
-   */
-  public Adapter createBundleAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link fr.inria.diverse.dmgen.dMGen.Metamodel <em>Metamodel</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -203,6 +188,21 @@ public class DMGenAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createClazzAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link fr.inria.diverse.dmgen.dMGen.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see fr.inria.diverse.dmgen.dMGen.Range
+   * @generated
+   */
+  public Adapter createRangeAdapter()
   {
     return null;
   }

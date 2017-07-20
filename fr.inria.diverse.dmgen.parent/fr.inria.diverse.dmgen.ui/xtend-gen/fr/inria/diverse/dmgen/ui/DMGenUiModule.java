@@ -9,23 +9,21 @@ import fr.inria.diverse.dmgen.ui.launch.DMGenLaunchConfiguration;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.debug.core.model.LaunchConfigurationDelegate;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor;
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
  */
-@FinalFieldsConstructor
 @SuppressWarnings("all")
 public class DMGenUiModule extends AbstractDMGenUiModule {
+  public DMGenUiModule(final AbstractUIPlugin plugin) {
+    super(plugin);
+  }
+  
   public Class<? extends AbstractHandler> bindAbstractHandler() {
     return RunGenerationHandler.class;
   }
   
   public Class<? extends LaunchConfigurationDelegate> bindLaunchConfigurationDelagate() {
     return DMGenLaunchConfiguration.class;
-  }
-  
-  public DMGenUiModule(final AbstractUIPlugin plugin) {
-    super(plugin);
   }
 }

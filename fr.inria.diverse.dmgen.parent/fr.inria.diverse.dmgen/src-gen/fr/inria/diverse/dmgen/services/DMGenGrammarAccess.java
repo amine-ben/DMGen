@@ -29,32 +29,43 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cMetamodelAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cMetamodelMetamodelParserRuleCall_1_0 = (RuleCall)cMetamodelAssignment_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final UnorderedGroup cUnorderedGroup_3 = (UnorderedGroup)cGroup.eContents().get(3);
-		private final Group cGroup_3_0 = (Group)cUnorderedGroup_3.eContents().get(0);
-		private final Keyword cGlobalKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
-		private final Keyword cDensityKeyword_3_0_1 = (Keyword)cGroup_3_0.eContents().get(1);
-		private final Assignment cGlobalDensityAssignment_3_0_2 = (Assignment)cGroup_3_0.eContents().get(2);
-		private final RuleCall cGlobalDensityINTTerminalRuleCall_3_0_2_0 = (RuleCall)cGlobalDensityAssignment_3_0_2.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
-		private final Group cGroup_3_1 = (Group)cUnorderedGroup_3.eContents().get(1);
-		private final Keyword cGlobalKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
-		private final Keyword cVariationKeyword_3_1_1 = (Keyword)cGroup_3_1.eContents().get(1);
-		private final Assignment cGlobalVariationAssignment_3_1_2 = (Assignment)cGroup_3_1.eContents().get(2);
-		private final RuleCall cGlobalVariationDECIMALParserRuleCall_3_1_2_0 = (RuleCall)cGlobalVariationAssignment_3_1_2.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3_1_3 = (Keyword)cGroup_3_1.eContents().get(3);
+		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
+		private final Group cGroup_2_0 = (Group)cUnorderedGroup_2.eContents().get(0);
+		private final Keyword cPackageKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
+		private final Assignment cPackageAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
+		private final RuleCall cPackagePACKAGEParserRuleCall_2_0_1_0 = (RuleCall)cPackageAssignment_2_0_1.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cUnorderedGroup_2.eContents().get(1);
+		private final Keyword cFsMasterKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cHdfsMasterAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cHdfsMasterURIParserRuleCall_2_1_1_0 = (RuleCall)cHdfsMasterAssignment_2_1_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cUnorderedGroup_2.eContents().get(2);
+		private final Keyword cDeployModeKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cDeployModeAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final Alternatives cDeployModeAlternatives_2_2_1_0 = (Alternatives)cDeployModeAssignment_2_2_1.eContents().get(0);
+		private final Keyword cDeployModeClusterKeyword_2_2_1_0_0 = (Keyword)cDeployModeAlternatives_2_2_1_0.eContents().get(0);
+		private final Keyword cDeployModeLocalKeyword_2_2_1_0_1 = (Keyword)cDeployModeAlternatives_2_2_1_0.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_2_2_2 = (Keyword)cGroup_2_2.eContents().get(2);
+		private final Assignment cNumberOfNodesAssignment_2_2_3 = (Assignment)cGroup_2_2.eContents().get(3);
+		private final RuleCall cNumberOfNodesINTorUNBOUNDEDParserRuleCall_2_2_3_0 = (RuleCall)cNumberOfNodesAssignment_2_2_3.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2_4 = (Keyword)cGroup_2_2.eContents().get(4);
+		private final Group cGroup_2_3 = (Group)cUnorderedGroup_2.eContents().get(3);
+		private final Keyword cHbaseMasterKeyword_2_3_0 = (Keyword)cGroup_2_3.eContents().get(0);
+		private final Assignment cHbaseMasterAssignment_2_3_1 = (Assignment)cGroup_2_3.eContents().get(1);
+		private final RuleCall cHbaseMasterURIParserRuleCall_2_3_1_0 = (RuleCall)cHbaseMasterAssignment_2_3_1.eContents().get(0);
+		private final Assignment cGeneratorsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cGeneratorsGeneratorParserRuleCall_3_0 = (RuleCall)cGeneratorsAssignment_3.eContents().get(0);
 		private final Assignment cGeneratorsAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cGeneratorsGeneratorParserRuleCall_4_0 = (RuleCall)cGeneratorsAssignment_4.eContents().get(0);
-		private final Assignment cGeneratorsAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cGeneratorsGeneratorParserRuleCall_5_0 = (RuleCall)cGeneratorsAssignment_5.eContents().get(0);
 		
 		//GenConfig:
-		//	'import' metamodel=Metamodel ';' (('global' 'density' globalDensity=INT ';')? & ('global' 'variation'
-		//	globalVariation=DECIMAL ';')?) generators+=Generator generators+=Generator*;
+		//	'import' metamodel=Metamodel (('package' package=PACKAGE)? & ('fs-master' hdfsMaster=URI)? & ('deploy-mode'
+		//	deployMode=('cluster' | 'local') '[' numberOfNodes=INTorUNBOUNDED ']')? & ('hbase-master' hbaseMaster=URI)?)
+		//	generators+=Generator generators+=Generator*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'import' metamodel=Metamodel ';' (('global' 'density' globalDensity=INT ';')? & ('global' 'variation'
-		//globalVariation=DECIMAL ';')?) generators+=Generator generators+=Generator*
+		//'import' metamodel=Metamodel (('package' package=PACKAGE)? & ('fs-master' hdfsMaster=URI)? & ('deploy-mode'
+		//deployMode=('cluster' | 'local') '[' numberOfNodes=INTorUNBOUNDED ']')? & ('hbase-master' hbaseMaster=URI)?)
+		//generators+=Generator generators+=Generator*
 		public Group getGroup() { return cGroup; }
 		
 		//'import'
@@ -66,59 +77,141 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		//Metamodel
 		public RuleCall getMetamodelMetamodelParserRuleCall_1_0() { return cMetamodelMetamodelParserRuleCall_1_0; }
 		
-		//';'
-		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
+		//(('package' package=PACKAGE)? & ('fs-master' hdfsMaster=URI)? & ('deploy-mode' deployMode=('cluster' | 'local') '['
+		//numberOfNodes=INTorUNBOUNDED ']')? & ('hbase-master' hbaseMaster=URI)?)
+		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
 		
-		//(('global' 'density' globalDensity=INT ';')? & ('global' 'variation' globalVariation=DECIMAL ';')?)
-		public UnorderedGroup getUnorderedGroup_3() { return cUnorderedGroup_3; }
+		//('package' package=PACKAGE)?
+		public Group getGroup_2_0() { return cGroup_2_0; }
 		
-		//('global' 'density' globalDensity=INT ';')?
-		public Group getGroup_3_0() { return cGroup_3_0; }
+		//'package'
+		public Keyword getPackageKeyword_2_0_0() { return cPackageKeyword_2_0_0; }
 		
-		//'global'
-		public Keyword getGlobalKeyword_3_0_0() { return cGlobalKeyword_3_0_0; }
+		//package=PACKAGE
+		public Assignment getPackageAssignment_2_0_1() { return cPackageAssignment_2_0_1; }
 		
-		//'density'
-		public Keyword getDensityKeyword_3_0_1() { return cDensityKeyword_3_0_1; }
+		//PACKAGE
+		public RuleCall getPackagePACKAGEParserRuleCall_2_0_1_0() { return cPackagePACKAGEParserRuleCall_2_0_1_0; }
 		
-		//globalDensity=INT
-		public Assignment getGlobalDensityAssignment_3_0_2() { return cGlobalDensityAssignment_3_0_2; }
+		//('fs-master' hdfsMaster=URI)?
+		public Group getGroup_2_1() { return cGroup_2_1; }
 		
-		//INT
-		public RuleCall getGlobalDensityINTTerminalRuleCall_3_0_2_0() { return cGlobalDensityINTTerminalRuleCall_3_0_2_0; }
+		//'fs-master'
+		public Keyword getFsMasterKeyword_2_1_0() { return cFsMasterKeyword_2_1_0; }
 		
-		//';'
-		public Keyword getSemicolonKeyword_3_0_3() { return cSemicolonKeyword_3_0_3; }
+		//hdfsMaster=URI
+		public Assignment getHdfsMasterAssignment_2_1_1() { return cHdfsMasterAssignment_2_1_1; }
 		
-		//('global' 'variation' globalVariation=DECIMAL ';')?
-		public Group getGroup_3_1() { return cGroup_3_1; }
+		//URI
+		public RuleCall getHdfsMasterURIParserRuleCall_2_1_1_0() { return cHdfsMasterURIParserRuleCall_2_1_1_0; }
 		
-		//'global'
-		public Keyword getGlobalKeyword_3_1_0() { return cGlobalKeyword_3_1_0; }
+		//('deploy-mode' deployMode=('cluster' | 'local') '[' numberOfNodes=INTorUNBOUNDED ']')?
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//'variation'
-		public Keyword getVariationKeyword_3_1_1() { return cVariationKeyword_3_1_1; }
+		//'deploy-mode'
+		public Keyword getDeployModeKeyword_2_2_0() { return cDeployModeKeyword_2_2_0; }
 		
-		//globalVariation=DECIMAL
-		public Assignment getGlobalVariationAssignment_3_1_2() { return cGlobalVariationAssignment_3_1_2; }
+		//deployMode=('cluster' | 'local')
+		public Assignment getDeployModeAssignment_2_2_1() { return cDeployModeAssignment_2_2_1; }
 		
-		//DECIMAL
-		public RuleCall getGlobalVariationDECIMALParserRuleCall_3_1_2_0() { return cGlobalVariationDECIMALParserRuleCall_3_1_2_0; }
+		//('cluster' | 'local')
+		public Alternatives getDeployModeAlternatives_2_2_1_0() { return cDeployModeAlternatives_2_2_1_0; }
 		
-		//';'
-		public Keyword getSemicolonKeyword_3_1_3() { return cSemicolonKeyword_3_1_3; }
+		//'cluster'
+		public Keyword getDeployModeClusterKeyword_2_2_1_0_0() { return cDeployModeClusterKeyword_2_2_1_0_0; }
+		
+		//'local'
+		public Keyword getDeployModeLocalKeyword_2_2_1_0_1() { return cDeployModeLocalKeyword_2_2_1_0_1; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_2_2_2() { return cLeftSquareBracketKeyword_2_2_2; }
+		
+		//numberOfNodes=INTorUNBOUNDED
+		public Assignment getNumberOfNodesAssignment_2_2_3() { return cNumberOfNodesAssignment_2_2_3; }
+		
+		//INTorUNBOUNDED
+		public RuleCall getNumberOfNodesINTorUNBOUNDEDParserRuleCall_2_2_3_0() { return cNumberOfNodesINTorUNBOUNDEDParserRuleCall_2_2_3_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_2_2_4() { return cRightSquareBracketKeyword_2_2_4; }
+		
+		//('hbase-master' hbaseMaster=URI)?
+		public Group getGroup_2_3() { return cGroup_2_3; }
+		
+		//'hbase-master'
+		public Keyword getHbaseMasterKeyword_2_3_0() { return cHbaseMasterKeyword_2_3_0; }
+		
+		//hbaseMaster=URI
+		public Assignment getHbaseMasterAssignment_2_3_1() { return cHbaseMasterAssignment_2_3_1; }
+		
+		//URI
+		public RuleCall getHbaseMasterURIParserRuleCall_2_3_1_0() { return cHbaseMasterURIParserRuleCall_2_3_1_0; }
 		
 		//generators+=Generator
+		public Assignment getGeneratorsAssignment_3() { return cGeneratorsAssignment_3; }
+		
+		//Generator
+		public RuleCall getGeneratorsGeneratorParserRuleCall_3_0() { return cGeneratorsGeneratorParserRuleCall_3_0; }
+		
+		//generators+=Generator*
 		public Assignment getGeneratorsAssignment_4() { return cGeneratorsAssignment_4; }
 		
 		//Generator
 		public RuleCall getGeneratorsGeneratorParserRuleCall_4_0() { return cGeneratorsGeneratorParserRuleCall_4_0; }
+	}
+	public class INTorUNBOUNDEDElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.INTorUNBOUNDED");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cAsteriskKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//generators+=Generator*
-		public Assignment getGeneratorsAssignment_5() { return cGeneratorsAssignment_5; }
+		//INTorUNBOUNDED:
+		//	'*' | INT;
+		@Override public ParserRule getRule() { return rule; }
 		
-		//Generator
-		public RuleCall getGeneratorsGeneratorParserRuleCall_5_0() { return cGeneratorsGeneratorParserRuleCall_5_0; }
+		//'*' | INT
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//'*'
+		public Keyword getAsteriskKeyword_0() { return cAsteriskKeyword_0; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
+	}
+	public class PACKAGEElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.PACKAGE");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
+		private final Keyword cFullStopKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
+		private final Keyword c_Keyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//PACKAGE:
+		//	ID (('.' | '_') ID)*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ID (('.' | '_') ID)*
+		public Group getGroup() { return cGroup; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+		
+		//(('.' | '_') ID)*
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//('.' | '_')
+		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1_0_0() { return cFullStopKeyword_1_0_0; }
+		
+		//'_'
+		public Keyword get_Keyword_1_0_1() { return c_Keyword_1_0_1; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	public class DECIMALElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.DECIMAL");
@@ -161,23 +254,34 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPrefixAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
 		private final RuleCall cPrefixSTRINGTerminalRuleCall_3_1_1_0 = (RuleCall)cPrefixAssignment_3_1_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cClassesAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cClassesClazzParserRuleCall_5_0 = (RuleCall)cClassesAssignment_5.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cSemicolonKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cClassesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cClassesClazzParserRuleCall_6_1_0 = (RuleCall)cClassesAssignment_6_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		private final UnorderedGroup cUnorderedGroup_5 = (UnorderedGroup)cGroup.eContents().get(5);
+		private final Group cGroup_5_0 = (Group)cUnorderedGroup_5.eContents().get(0);
+		private final Keyword cDensityKeyword_5_0_0 = (Keyword)cGroup_5_0.eContents().get(0);
+		private final Assignment cGlobalDensityAssignment_5_0_1 = (Assignment)cGroup_5_0.eContents().get(1);
+		private final RuleCall cGlobalDensityINTTerminalRuleCall_5_0_1_0 = (RuleCall)cGlobalDensityAssignment_5_0_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_0_2 = (Keyword)cGroup_5_0.eContents().get(2);
+		private final Group cGroup_5_1 = (Group)cUnorderedGroup_5.eContents().get(1);
+		private final Keyword cDeviationKeyword_5_1_0 = (Keyword)cGroup_5_1.eContents().get(0);
+		private final Assignment cGlobalDeviationAssignment_5_1_1 = (Assignment)cGroup_5_1.eContents().get(1);
+		private final RuleCall cGlobalDeviationDECIMALParserRuleCall_5_1_1_0 = (RuleCall)cGlobalDeviationAssignment_5_1_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_1_2 = (Keyword)cGroup_5_1.eContents().get(2);
+		private final Assignment cClassesAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cClassesClazzParserRuleCall_6_0 = (RuleCall)cClassesAssignment_6.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cSemicolonKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cClassesAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cClassesClazzParserRuleCall_7_1_0 = (RuleCall)cClassesAssignment_7_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Generator:
 		//	name='generate' number=INT 'with' ('size' size=INT & ('prefix' prefix=STRING)?)
-		//	'{'
-		//	classes+=Clazz? (';' classes+=Clazz)*
+		//	'{' (('density' globalDensity=INT ';')? & ('deviation' globalDeviation=DECIMAL ';')?) classes+=Clazz? (';'
+		//	classes+=Clazz)*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name='generate' number=INT 'with' ('size' size=INT & ('prefix' prefix=STRING)?) '{' classes+=Clazz? (';'
-		//classes+=Clazz)* '}'
+		//name='generate' number=INT 'with' ('size' size=INT & ('prefix' prefix=STRING)?) '{' (('density' globalDensity=INT ';')?
+		//& ('deviation' globalDeviation=DECIMAL ';')?) classes+=Clazz? (';' classes+=Clazz)* '}'
 		public Group getGroup() { return cGroup; }
 		
 		//name='generate'
@@ -225,57 +329,59 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 		
-		//classes+=Clazz?
-		public Assignment getClassesAssignment_5() { return cClassesAssignment_5; }
+		//(('density' globalDensity=INT ';')? & ('deviation' globalDeviation=DECIMAL ';')?)
+		public UnorderedGroup getUnorderedGroup_5() { return cUnorderedGroup_5; }
 		
-		//Clazz
-		public RuleCall getClassesClazzParserRuleCall_5_0() { return cClassesClazzParserRuleCall_5_0; }
+		//('density' globalDensity=INT ';')?
+		public Group getGroup_5_0() { return cGroup_5_0; }
 		
-		//(';' classes+=Clazz)*
-		public Group getGroup_6() { return cGroup_6; }
+		//'density'
+		public Keyword getDensityKeyword_5_0_0() { return cDensityKeyword_5_0_0; }
+		
+		//globalDensity=INT
+		public Assignment getGlobalDensityAssignment_5_0_1() { return cGlobalDensityAssignment_5_0_1; }
+		
+		//INT
+		public RuleCall getGlobalDensityINTTerminalRuleCall_5_0_1_0() { return cGlobalDensityINTTerminalRuleCall_5_0_1_0; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_6_0() { return cSemicolonKeyword_6_0; }
+		public Keyword getSemicolonKeyword_5_0_2() { return cSemicolonKeyword_5_0_2; }
 		
-		//classes+=Clazz
-		public Assignment getClassesAssignment_6_1() { return cClassesAssignment_6_1; }
+		//('deviation' globalDeviation=DECIMAL ';')?
+		public Group getGroup_5_1() { return cGroup_5_1; }
+		
+		//'deviation'
+		public Keyword getDeviationKeyword_5_1_0() { return cDeviationKeyword_5_1_0; }
+		
+		//globalDeviation=DECIMAL
+		public Assignment getGlobalDeviationAssignment_5_1_1() { return cGlobalDeviationAssignment_5_1_1; }
+		
+		//DECIMAL
+		public RuleCall getGlobalDeviationDECIMALParserRuleCall_5_1_1_0() { return cGlobalDeviationDECIMALParserRuleCall_5_1_1_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_5_1_2() { return cSemicolonKeyword_5_1_2; }
+		
+		//classes+=Clazz?
+		public Assignment getClassesAssignment_6() { return cClassesAssignment_6; }
 		
 		//Clazz
-		public RuleCall getClassesClazzParserRuleCall_6_1_0() { return cClassesClazzParserRuleCall_6_1_0; }
+		public RuleCall getClassesClazzParserRuleCall_6_0() { return cClassesClazzParserRuleCall_6_0; }
+		
+		//(';' classes+=Clazz)*
+		public Group getGroup_7() { return cGroup_7; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_7_0() { return cSemicolonKeyword_7_0; }
+		
+		//classes+=Clazz
+		public Assignment getClassesAssignment_7_1() { return cClassesAssignment_7_1; }
+		
+		//Clazz
+		public RuleCall getClassesClazzParserRuleCall_7_1_0() { return cClassesClazzParserRuleCall_7_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
-	}
-	public class BundleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.Bundle");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cSizeAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cSizeINTTerminalRuleCall_0_0 = (RuleCall)cSizeAssignment_0.eContents().get(0);
-		private final Keyword cNumberSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cTimesAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTimesINTTerminalRuleCall_2_0 = (RuleCall)cTimesAssignment_2.eContents().get(0);
-		
-		//Bundle:
-		//	size=INT '#' times=INT;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//size=INT '#' times=INT
-		public Group getGroup() { return cGroup; }
-		
-		//size=INT
-		public Assignment getSizeAssignment_0() { return cSizeAssignment_0; }
-		
-		//INT
-		public RuleCall getSizeINTTerminalRuleCall_0_0() { return cSizeINTTerminalRuleCall_0_0; }
-		
-		//'#'
-		public Keyword getNumberSignKeyword_1() { return cNumberSignKeyword_1; }
-		
-		//times=INT
-		public Assignment getTimesAssignment_2() { return cTimesAssignment_2; }
-		
-		//INT
-		public RuleCall getTimesINTTerminalRuleCall_2_0() { return cTimesINTTerminalRuleCall_2_0; }
+		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
 	public class MetamodelElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.Metamodel");
@@ -309,27 +415,29 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cNumberSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cInstancesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cInstancesINTTerminalRuleCall_1_1_0 = (RuleCall)cInstancesAssignment_1_1.eContents().get(0);
+		private final Assignment cRangeAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cRangeRangeParserRuleCall_1_0 = (RuleCall)cRangeAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cPropertiesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cPropertiesPropertyParserRuleCall_2_1_0 = (RuleCall)cPropertiesAssignment_2_1.eContents().get(0);
-		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
-		private final Keyword cSemicolonKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
-		private final Assignment cPropertiesAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cPropertiesPropertyParserRuleCall_2_2_1_0 = (RuleCall)cPropertiesAssignment_2_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Keyword cDepthKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cDepthAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cDepthINTTerminalRuleCall_2_1_0 = (RuleCall)cDepthAssignment_2_1.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cPropertiesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cPropertiesPropertyParserRuleCall_3_1_0 = (RuleCall)cPropertiesAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cSemicolonKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cPropertiesAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cPropertiesPropertyParserRuleCall_3_2_1_0 = (RuleCall)cPropertiesAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		
 		//Clazz:
-		//	name=ID ('#' instances=INT)? ('{'
+		//	name=ID range=Range? ('depth' depth=INT)? ('{'
 		//	properties+=Property (';' properties+=Property)*
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID ('#' instances=INT)? ('{' properties+=Property (';' properties+=Property)* '}')?
+		//name=ID range=Range? ('depth' depth=INT)? ('{' properties+=Property (';' properties+=Property)* '}')?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -338,44 +446,89 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//('#' instances=INT)?
-		public Group getGroup_1() { return cGroup_1; }
+		//range=Range?
+		public Assignment getRangeAssignment_1() { return cRangeAssignment_1; }
 		
-		//'#'
-		public Keyword getNumberSignKeyword_1_0() { return cNumberSignKeyword_1_0; }
+		//Range
+		public RuleCall getRangeRangeParserRuleCall_1_0() { return cRangeRangeParserRuleCall_1_0; }
 		
-		//instances=INT
-		public Assignment getInstancesAssignment_1_1() { return cInstancesAssignment_1_1; }
-		
-		//INT
-		public RuleCall getInstancesINTTerminalRuleCall_1_1_0() { return cInstancesINTTerminalRuleCall_1_1_0; }
-		
-		//('{' properties+=Property (';' properties+=Property)* '}')?
+		//('depth' depth=INT)?
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//'depth'
+		public Keyword getDepthKeyword_2_0() { return cDepthKeyword_2_0; }
+		
+		//depth=INT
+		public Assignment getDepthAssignment_2_1() { return cDepthAssignment_2_1; }
+		
+		//INT
+		public RuleCall getDepthINTTerminalRuleCall_2_1_0() { return cDepthINTTerminalRuleCall_2_1_0; }
+		
+		//('{' properties+=Property (';' properties+=Property)* '}')?
+		public Group getGroup_3() { return cGroup_3; }
+		
 		//'{'
-		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
+		public Keyword getLeftCurlyBracketKeyword_3_0() { return cLeftCurlyBracketKeyword_3_0; }
 		
 		//properties+=Property
-		public Assignment getPropertiesAssignment_2_1() { return cPropertiesAssignment_2_1; }
+		public Assignment getPropertiesAssignment_3_1() { return cPropertiesAssignment_3_1; }
 		
 		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_2_1_0() { return cPropertiesPropertyParserRuleCall_2_1_0; }
+		public RuleCall getPropertiesPropertyParserRuleCall_3_1_0() { return cPropertiesPropertyParserRuleCall_3_1_0; }
 		
 		//(';' properties+=Property)*
-		public Group getGroup_2_2() { return cGroup_2_2; }
+		public Group getGroup_3_2() { return cGroup_3_2; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_2_2_0() { return cSemicolonKeyword_2_2_0; }
+		public Keyword getSemicolonKeyword_3_2_0() { return cSemicolonKeyword_3_2_0; }
 		
 		//properties+=Property
-		public Assignment getPropertiesAssignment_2_2_1() { return cPropertiesAssignment_2_2_1; }
+		public Assignment getPropertiesAssignment_3_2_1() { return cPropertiesAssignment_3_2_1; }
 		
 		//Property
-		public RuleCall getPropertiesPropertyParserRuleCall_2_2_1_0() { return cPropertiesPropertyParserRuleCall_2_2_1_0; }
+		public RuleCall getPropertiesPropertyParserRuleCall_3_2_1_0() { return cPropertiesPropertyParserRuleCall_3_2_1_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_2_3() { return cRightCurlyBracketKeyword_2_3; }
+		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
+	}
+	public class RangeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.Range");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftSquareBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cLowerAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cLowerINTTerminalRuleCall_1_0 = (RuleCall)cLowerAssignment_1.eContents().get(0);
+		private final Keyword cFullStopFullStopKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cUpperAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cUpperINTTerminalRuleCall_3_0 = (RuleCall)cUpperAssignment_3.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		
+		//Range:
+		//	'[' lower=INT '..' upper=INT ']';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'[' lower=INT '..' upper=INT ']'
+		public Group getGroup() { return cGroup; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_0() { return cLeftSquareBracketKeyword_0; }
+		
+		//lower=INT
+		public Assignment getLowerAssignment_1() { return cLowerAssignment_1; }
+		
+		//INT
+		public RuleCall getLowerINTTerminalRuleCall_1_0() { return cLowerINTTerminalRuleCall_1_0; }
+		
+		//'..'
+		public Keyword getFullStopFullStopKeyword_2() { return cFullStopFullStopKeyword_2; }
+		
+		//upper=INT
+		public Assignment getUpperAssignment_3() { return cUpperAssignment_3; }
+		
+		//INT
+		public RuleCall getUpperINTTerminalRuleCall_3_0() { return cUpperINTTerminalRuleCall_3_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 	}
 	public class PropertyElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "fr.inria.diverse.dmgen.DMGen.Property");
@@ -384,41 +537,55 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final UnorderedGroup cUnorderedGroup_1 = (UnorderedGroup)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cUnorderedGroup_1.eContents().get(0);
-		private final Keyword cDensityKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final Assignment cDensityAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cDensityINTTerminalRuleCall_1_0_1_0 = (RuleCall)cDensityAssignment_1_0_1.eContents().get(0);
+		private final Assignment cRangeAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
+		private final RuleCall cRangeRangeParserRuleCall_1_0_0_0 = (RuleCall)cRangeAssignment_1_0_0.eContents().get(0);
+		private final Group cGroup_1_0_1 = (Group)cGroup_1_0.eContents().get(1);
+		private final Keyword cDensityKeyword_1_0_1_0 = (Keyword)cGroup_1_0_1.eContents().get(0);
+		private final Assignment cDensityAssignment_1_0_1_1 = (Assignment)cGroup_1_0_1.eContents().get(1);
+		private final RuleCall cDensityINTTerminalRuleCall_1_0_1_1_0 = (RuleCall)cDensityAssignment_1_0_1_1.eContents().get(0);
 		private final Group cGroup_1_1 = (Group)cUnorderedGroup_1.eContents().get(1);
 		private final Keyword cVariationKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
 		private final Assignment cVariationAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
 		private final RuleCall cVariationINTTerminalRuleCall_1_1_1_0 = (RuleCall)cVariationAssignment_1_1_1.eContents().get(0);
 		
 		//Property:
-		//	name=ID (('density' density=INT)? & ('variation' variation=INT)?);
+		//	name=ID (range=Range ('density' density=INT)? & ('variation' variation=INT)?);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID (('density' density=INT)? & ('variation' variation=INT)?)
+		////name=ID (('density' density=INT)? & ('variation' variation=INT)?)
+		//name=ID (range=Range ('density' density=INT)? & ('variation' variation=INT)?)
 		public Group getGroup() { return cGroup; }
 		
+		////name=ID (('density' density=INT)? & ('variation' variation=INT)?)
 		//name=ID
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 		
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
-		//(('density' density=INT)? & ('variation' variation=INT)?)
+		//(range=Range ('density' density=INT)? & ('variation' variation=INT)?)
 		public UnorderedGroup getUnorderedGroup_1() { return cUnorderedGroup_1; }
 		
-		//('density' density=INT)?
+		//range=Range ('density' density=INT)?
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
+		//range=Range
+		public Assignment getRangeAssignment_1_0_0() { return cRangeAssignment_1_0_0; }
+		
+		//Range
+		public RuleCall getRangeRangeParserRuleCall_1_0_0_0() { return cRangeRangeParserRuleCall_1_0_0_0; }
+		
+		//('density' density=INT)?
+		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
+		
 		//'density'
-		public Keyword getDensityKeyword_1_0_0() { return cDensityKeyword_1_0_0; }
+		public Keyword getDensityKeyword_1_0_1_0() { return cDensityKeyword_1_0_1_0; }
 		
 		//density=INT
-		public Assignment getDensityAssignment_1_0_1() { return cDensityAssignment_1_0_1; }
+		public Assignment getDensityAssignment_1_0_1_1() { return cDensityAssignment_1_0_1_1; }
 		
 		//INT
-		public RuleCall getDensityINTTerminalRuleCall_1_0_1_0() { return cDensityINTTerminalRuleCall_1_0_1_0; }
+		public RuleCall getDensityINTTerminalRuleCall_1_0_1_1_0() { return cDensityINTTerminalRuleCall_1_0_1_1_0; }
 		
 		//('variation' variation=INT)?
 		public Group getGroup_1_1() { return cGroup_1_1; }
@@ -449,16 +616,16 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFragmentsFRAGMENTParserRuleCall_3_1_0 = (RuleCall)cFragmentsAssignment_3_1.eContents().get(0);
 		
 		//URI:
-		//	scheme=SCHEME (authority=FRAGMENT '/')? // 
+		//	scheme=SCHEME? (authority=FRAGMENT '/')? // 
 		//	fragments+=FRAGMENT ('/' fragments+=FRAGMENT)* // 
 		//;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//scheme=SCHEME (authority=FRAGMENT '/')? // 
+		//scheme=SCHEME? (authority=FRAGMENT '/')? // 
 		//fragments+=FRAGMENT ('/' fragments+=FRAGMENT)*
 		public Group getGroup() { return cGroup; }
 		
-		//scheme=SCHEME
+		//scheme=SCHEME?
 		public Assignment getSchemeAssignment_0() { return cSchemeAssignment_0; }
 		
 		//SCHEME
@@ -546,11 +713,13 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private final GenConfigElements pGenConfig;
+	private final INTorUNBOUNDEDElements pINTorUNBOUNDED;
+	private final PACKAGEElements pPACKAGE;
 	private final DECIMALElements pDECIMAL;
 	private final GeneratorElements pGenerator;
-	private final BundleElements pBundle;
 	private final MetamodelElements pMetamodel;
 	private final ClazzElements pClazz;
+	private final RangeElements pRange;
 	private final PropertyElements pProperty;
 	private final URIElements pURI;
 	private final FRAGMENTElements pFRAGMENT;
@@ -566,11 +735,13 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 		this.pGenConfig = new GenConfigElements();
+		this.pINTorUNBOUNDED = new INTorUNBOUNDEDElements();
+		this.pPACKAGE = new PACKAGEElements();
 		this.pDECIMAL = new DECIMALElements();
 		this.pGenerator = new GeneratorElements();
-		this.pBundle = new BundleElements();
 		this.pMetamodel = new MetamodelElements();
 		this.pClazz = new ClazzElements();
+		this.pRange = new RangeElements();
 		this.pProperty = new PropertyElements();
 		this.pURI = new URIElements();
 		this.pFRAGMENT = new FRAGMENTElements();
@@ -605,14 +776,35 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//GenConfig:
-	//	'import' metamodel=Metamodel ';' (('global' 'density' globalDensity=INT ';')? & ('global' 'variation'
-	//	globalVariation=DECIMAL ';')?) generators+=Generator generators+=Generator*;
+	//	'import' metamodel=Metamodel (('package' package=PACKAGE)? & ('fs-master' hdfsMaster=URI)? & ('deploy-mode'
+	//	deployMode=('cluster' | 'local') '[' numberOfNodes=INTorUNBOUNDED ']')? & ('hbase-master' hbaseMaster=URI)?)
+	//	generators+=Generator generators+=Generator*;
 	public GenConfigElements getGenConfigAccess() {
 		return pGenConfig;
 	}
 	
 	public ParserRule getGenConfigRule() {
 		return getGenConfigAccess().getRule();
+	}
+	
+	//INTorUNBOUNDED:
+	//	'*' | INT;
+	public INTorUNBOUNDEDElements getINTorUNBOUNDEDAccess() {
+		return pINTorUNBOUNDED;
+	}
+	
+	public ParserRule getINTorUNBOUNDEDRule() {
+		return getINTorUNBOUNDEDAccess().getRule();
+	}
+	
+	//PACKAGE:
+	//	ID (('.' | '_') ID)*;
+	public PACKAGEElements getPACKAGEAccess() {
+		return pPACKAGE;
+	}
+	
+	public ParserRule getPACKAGERule() {
+		return getPACKAGEAccess().getRule();
 	}
 	
 	//DECIMAL ecore::EFloat:
@@ -627,8 +819,8 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Generator:
 	//	name='generate' number=INT 'with' ('size' size=INT & ('prefix' prefix=STRING)?)
-	//	'{'
-	//	classes+=Clazz? (';' classes+=Clazz)*
+	//	'{' (('density' globalDensity=INT ';')? & ('deviation' globalDeviation=DECIMAL ';')?) classes+=Clazz? (';'
+	//	classes+=Clazz)*
 	//	'}';
 	public GeneratorElements getGeneratorAccess() {
 		return pGenerator;
@@ -636,16 +828,6 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getGeneratorRule() {
 		return getGeneratorAccess().getRule();
-	}
-	
-	//Bundle:
-	//	size=INT '#' times=INT;
-	public BundleElements getBundleAccess() {
-		return pBundle;
-	}
-	
-	public ParserRule getBundleRule() {
-		return getBundleAccess().getRule();
 	}
 	
 	//Metamodel:
@@ -659,7 +841,7 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Clazz:
-	//	name=ID ('#' instances=INT)? ('{'
+	//	name=ID range=Range? ('depth' depth=INT)? ('{'
 	//	properties+=Property (';' properties+=Property)*
 	//	'}')?;
 	public ClazzElements getClazzAccess() {
@@ -670,8 +852,18 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 		return getClazzAccess().getRule();
 	}
 	
+	//Range:
+	//	'[' lower=INT '..' upper=INT ']';
+	public RangeElements getRangeAccess() {
+		return pRange;
+	}
+	
+	public ParserRule getRangeRule() {
+		return getRangeAccess().getRule();
+	}
+	
 	//Property:
-	//	name=ID (('density' density=INT)? & ('variation' variation=INT)?);
+	//	name=ID (range=Range ('density' density=INT)? & ('variation' variation=INT)?);
 	public PropertyElements getPropertyAccess() {
 		return pProperty;
 	}
@@ -681,7 +873,7 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//URI:
-	//	scheme=SCHEME (authority=FRAGMENT '/')? // 
+	//	scheme=SCHEME? (authority=FRAGMENT '/')? // 
 	//	fragments+=FRAGMENT ('/' fragments+=FRAGMENT)* // 
 	//;
 	public URIElements getURIAccess() {
@@ -704,7 +896,7 @@ public class DMGenGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//terminal SCHEME:
-	//	'http://' | 'file:///' | 'platform:/' | 'neoemfhbase://';
+	//	'http://' | 'file:///' | 'platform:/' | 'neoemfhbase://' | 'hdfs://';
 	public TerminalRule getSCHEMERule() {
 		return tSCHEME;
 	}

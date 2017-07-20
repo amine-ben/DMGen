@@ -19,6 +19,9 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getMetamodel <em>Metamodel</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getPackage <em>Package</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getHdfsMaster <em>Hdfs Master</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getDeployMode <em>Deploy Mode</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getNumberOfNodes <em>Number Of Nodes</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getHbaseMaster <em>Hbase Master</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.GenConfig#getGenerators <em>Generators</em>}</li>
  * </ul>
  *
@@ -105,6 +108,84 @@ public interface GenConfig extends EObject
    * @generated
    */
   void setHdfsMaster(URI value);
+
+  /**
+   * Returns the value of the '<em><b>Deploy Mode</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Deploy Mode</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Deploy Mode</em>' attribute.
+   * @see #setDeployMode(String)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getGenConfig_DeployMode()
+   * @model
+   * @generated
+   */
+  String getDeployMode();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.GenConfig#getDeployMode <em>Deploy Mode</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Deploy Mode</em>' attribute.
+   * @see #getDeployMode()
+   * @generated
+   */
+  void setDeployMode(String value);
+
+  /**
+   * Returns the value of the '<em><b>Number Of Nodes</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Number Of Nodes</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Number Of Nodes</em>' attribute.
+   * @see #setNumberOfNodes(String)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getGenConfig_NumberOfNodes()
+   * @model
+   * @generated
+   */
+  String getNumberOfNodes();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.GenConfig#getNumberOfNodes <em>Number Of Nodes</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Number Of Nodes</em>' attribute.
+   * @see #getNumberOfNodes()
+   * @generated
+   */
+  void setNumberOfNodes(String value);
+
+  /**
+   * Returns the value of the '<em><b>Hbase Master</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Hbase Master</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Hbase Master</em>' containment reference.
+   * @see #setHbaseMaster(URI)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getGenConfig_HbaseMaster()
+   * @model containment="true"
+   * @generated
+   */
+  URI getHbaseMaster();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.GenConfig#getHbaseMaster <em>Hbase Master</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Hbase Master</em>' containment reference.
+   * @see #getHbaseMaster()
+   * @generated
+   */
+  void setHbaseMaster(URI value);
 
   /**
    * Returns the value of the '<em><b>Generators</b></em>' containment reference list.

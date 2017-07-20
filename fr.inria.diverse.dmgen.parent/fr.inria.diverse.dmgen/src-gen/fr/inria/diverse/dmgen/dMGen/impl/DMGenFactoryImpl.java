@@ -67,9 +67,9 @@ public class DMGenFactoryImpl extends EFactoryImpl implements DMGenFactory
     {
       case DMGenPackage.GEN_CONFIG: return createGenConfig();
       case DMGenPackage.GENERATOR: return createGenerator();
-      case DMGenPackage.BUNDLE: return createBundle();
       case DMGenPackage.METAMODEL: return createMetamodel();
       case DMGenPackage.CLAZZ: return createClazz();
+      case DMGenPackage.RANGE: return createRange();
       case DMGenPackage.PROPERTY: return createProperty();
       case DMGenPackage.URI: return createURI();
       default:
@@ -104,17 +104,6 @@ public class DMGenFactoryImpl extends EFactoryImpl implements DMGenFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Bundle createBundle()
-  {
-    BundleImpl bundle = new BundleImpl();
-    return bundle;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Metamodel createMetamodel()
   {
     MetamodelImpl metamodel = new MetamodelImpl();
@@ -130,6 +119,17 @@ public class DMGenFactoryImpl extends EFactoryImpl implements DMGenFactory
   {
     ClazzImpl clazz = new ClazzImpl();
     return clazz;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Range createRange()
+  {
+    RangeImpl range = new RangeImpl();
+    return range;
   }
 
   /**

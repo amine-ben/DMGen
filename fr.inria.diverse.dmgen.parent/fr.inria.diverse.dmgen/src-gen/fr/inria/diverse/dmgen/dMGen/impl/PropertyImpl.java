@@ -5,10 +5,13 @@ package fr.inria.diverse.dmgen.dMGen.impl;
 
 import fr.inria.diverse.dmgen.dMGen.DMGenPackage;
 import fr.inria.diverse.dmgen.dMGen.Property;
+import fr.inria.diverse.dmgen.dMGen.Range;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -22,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.PropertyImpl#getName <em>Name</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.PropertyImpl#getRange <em>Range</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.PropertyImpl#getDensity <em>Density</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.impl.PropertyImpl#getVariation <em>Variation</em>}</li>
  * </ul>
@@ -49,6 +53,16 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    * @ordered
    */
   protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getRange() <em>Range</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRange()
+   * @generated
+   * @ordered
+   */
+  protected Range range;
 
   /**
    * The default value of the '{@link #getDensity() <em>Density</em>}' attribute.
@@ -139,6 +153,54 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    * <!-- end-user-doc -->
    * @generated
    */
+  public Range getRange()
+  {
+    return range;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetRange(Range newRange, NotificationChain msgs)
+  {
+    Range oldRange = range;
+    range = newRange;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, DMGenPackage.PROPERTY__RANGE, oldRange, newRange);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setRange(Range newRange)
+  {
+    if (newRange != range)
+    {
+      NotificationChain msgs = null;
+      if (range != null)
+        msgs = ((InternalEObject)range).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.PROPERTY__RANGE, null, msgs);
+      if (newRange != null)
+        msgs = ((InternalEObject)newRange).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - DMGenPackage.PROPERTY__RANGE, null, msgs);
+      msgs = basicSetRange(newRange, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, DMGenPackage.PROPERTY__RANGE, newRange, newRange));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public int getDensity()
   {
     return density;
@@ -186,12 +248,30 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
    * @generated
    */
   @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case DMGenPackage.PROPERTY__RANGE:
+        return basicSetRange(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case DMGenPackage.PROPERTY__NAME:
         return getName();
+      case DMGenPackage.PROPERTY__RANGE:
+        return getRange();
       case DMGenPackage.PROPERTY__DENSITY:
         return getDensity();
       case DMGenPackage.PROPERTY__VARIATION:
@@ -212,6 +292,9 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
     {
       case DMGenPackage.PROPERTY__NAME:
         setName((String)newValue);
+        return;
+      case DMGenPackage.PROPERTY__RANGE:
+        setRange((Range)newValue);
         return;
       case DMGenPackage.PROPERTY__DENSITY:
         setDensity((Integer)newValue);
@@ -236,6 +319,9 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
       case DMGenPackage.PROPERTY__NAME:
         setName(NAME_EDEFAULT);
         return;
+      case DMGenPackage.PROPERTY__RANGE:
+        setRange((Range)null);
+        return;
       case DMGenPackage.PROPERTY__DENSITY:
         setDensity(DENSITY_EDEFAULT);
         return;
@@ -258,6 +344,8 @@ public class PropertyImpl extends MinimalEObjectImpl.Container implements Proper
     {
       case DMGenPackage.PROPERTY__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case DMGenPackage.PROPERTY__RANGE:
+        return range != null;
       case DMGenPackage.PROPERTY__DENSITY:
         return density != DENSITY_EDEFAULT;
       case DMGenPackage.PROPERTY__VARIATION:

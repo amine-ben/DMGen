@@ -4,13 +4,13 @@
 package fr.inria.diverse.dmgen.serializer;
 
 import com.google.inject.Inject;
-import fr.inria.diverse.dmgen.dMGen.Bundle;
 import fr.inria.diverse.dmgen.dMGen.Clazz;
 import fr.inria.diverse.dmgen.dMGen.DMGenPackage;
 import fr.inria.diverse.dmgen.dMGen.GenConfig;
 import fr.inria.diverse.dmgen.dMGen.Generator;
 import fr.inria.diverse.dmgen.dMGen.Metamodel;
 import fr.inria.diverse.dmgen.dMGen.Property;
+import fr.inria.diverse.dmgen.dMGen.Range;
 import fr.inria.diverse.dmgen.dMGen.URI;
 import fr.inria.diverse.dmgen.services.DMGenGrammarAccess;
 import java.util.Set;
@@ -38,9 +38,6 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == DMGenPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case DMGenPackage.BUNDLE:
-				sequence_Bundle(context, (Bundle) semanticObject); 
-				return; 
 			case DMGenPackage.CLAZZ:
 				sequence_Clazz(context, (Clazz) semanticObject); 
 				return; 
@@ -56,6 +53,9 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case DMGenPackage.PROPERTY:
 				sequence_Property(context, (Property) semanticObject); 
 				return; 
+			case DMGenPackage.RANGE:
+				sequence_Range(context, (Range) semanticObject); 
+				return; 
 			case DMGenPackage.URI:
 				sequence_URI(context, (URI) semanticObject); 
 				return; 
@@ -66,31 +66,10 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
-	 *     Bundle returns Bundle
-	 *
-	 * Constraint:
-	 *     (size=INT times=INT)
-	 */
-	protected void sequence_Bundle(ISerializationContext context, Bundle semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, DMGenPackage.Literals.BUNDLE__SIZE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DMGenPackage.Literals.BUNDLE__SIZE));
-			if (transientValues.isValueTransient(semanticObject, DMGenPackage.Literals.BUNDLE__TIMES) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DMGenPackage.Literals.BUNDLE__TIMES));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getBundleAccess().getSizeINTTerminalRuleCall_0_0(), semanticObject.getSize());
-		feeder.accept(grammarAccess.getBundleAccess().getTimesINTTerminalRuleCall_2_0(), semanticObject.getTimes());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     Clazz returns Clazz
 	 *
 	 * Constraint:
-	 *     (name=ID instances=INT? (properties+=Property properties+=Property*)?)
+	 *     (name=ID range=Range? depth=INT? (properties+=Property properties+=Property*)?)
 	 */
 	protected void sequence_Clazz(ISerializationContext context, Clazz semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -102,7 +81,12 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     GenConfig returns GenConfig
 	 *
 	 * Constraint:
-	 *     (metamodel=Metamodel (globalDensity=INT | globalVariation=DECIMAL)* generators+=Generator generators+=Generator*)
+	 *     (
+	 *         metamodel=Metamodel 
+	 *         ((package=PACKAGE | hdfsMaster=URI | hbaseMaster=URI)? ((deployMode='cluster' | deployMode='local') numberOfNodes=INTorUNBOUNDED)?)+ 
+	 *         generators+=Generator 
+	 *         generators+=Generator*
+	 *     )
 	 */
 	protected void sequence_GenConfig(ISerializationContext context, GenConfig semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -114,7 +98,15 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     Generator returns Generator
 	 *
 	 * Constraint:
-	 *     (name='generate' number=INT (size=INT | prefix=STRING)* classes+=Clazz? classes+=Clazz*)
+	 *     (
+	 *         name='generate' 
+	 *         number=INT 
+	 *         (size=INT | prefix=STRING)* 
+	 *         globalDensity=INT? 
+	 *         (globalDeviation=DECIMAL? globalDensity=INT?)* 
+	 *         classes+=Clazz? 
+	 *         classes+=Clazz*
+	 *     )
 	 */
 	protected void sequence_Generator(ISerializationContext context, Generator semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -147,7 +139,7 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     Property returns Property
 	 *
 	 * Constraint:
-	 *     (name=ID (density=INT | variation=INT)*)
+	 *     (name=ID (variation=INT? (range=Range density=INT?)?)+)
 	 */
 	protected void sequence_Property(ISerializationContext context, Property semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -156,10 +148,31 @@ public class DMGenSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     Range returns Range
+	 *
+	 * Constraint:
+	 *     (lower=INT upper=INT)
+	 */
+	protected void sequence_Range(ISerializationContext context, Range semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, DMGenPackage.Literals.RANGE__LOWER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DMGenPackage.Literals.RANGE__LOWER));
+			if (transientValues.isValueTransient(semanticObject, DMGenPackage.Literals.RANGE__UPPER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, DMGenPackage.Literals.RANGE__UPPER));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRangeAccess().getLowerINTTerminalRuleCall_1_0(), semanticObject.getLower());
+		feeder.accept(grammarAccess.getRangeAccess().getUpperINTTerminalRuleCall_3_0(), semanticObject.getUpper());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     URI returns URI
 	 *
 	 * Constraint:
-	 *     (scheme=SCHEME authority=FRAGMENT? fragments+=FRAGMENT fragments+=FRAGMENT*)
+	 *     (scheme=SCHEME? authority=FRAGMENT? fragments+=FRAGMENT fragments+=FRAGMENT*)
 	 */
 	protected void sequence_URI(ISerializationContext context, URI semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

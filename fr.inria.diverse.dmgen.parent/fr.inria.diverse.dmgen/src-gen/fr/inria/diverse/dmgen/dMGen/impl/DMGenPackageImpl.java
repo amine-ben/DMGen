@@ -3,7 +3,6 @@
  */
 package fr.inria.diverse.dmgen.dMGen.impl;
 
-import fr.inria.diverse.dmgen.dMGen.Bundle;
 import fr.inria.diverse.dmgen.dMGen.Clazz;
 import fr.inria.diverse.dmgen.dMGen.DMGenFactory;
 import fr.inria.diverse.dmgen.dMGen.DMGenPackage;
@@ -11,6 +10,7 @@ import fr.inria.diverse.dmgen.dMGen.GenConfig;
 import fr.inria.diverse.dmgen.dMGen.Generator;
 import fr.inria.diverse.dmgen.dMGen.Metamodel;
 import fr.inria.diverse.dmgen.dMGen.Property;
+import fr.inria.diverse.dmgen.dMGen.Range;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -46,13 +46,6 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass bundleEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass metamodelEClass = null;
 
   /**
@@ -61,6 +54,13 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * @generated
    */
   private EClass clazzEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass rangeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -164,7 +164,7 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGenConfig_GlobalDensity()
+  public EAttribute getGenConfig_Package()
   {
     return (EAttribute)genConfigEClass.getEStructuralFeatures().get(1);
   }
@@ -174,9 +174,39 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getGenConfig_GlobalVariation()
+  public EReference getGenConfig_HdfsMaster()
   {
-    return (EAttribute)genConfigEClass.getEStructuralFeatures().get(2);
+    return (EReference)genConfigEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGenConfig_DeployMode()
+  {
+    return (EAttribute)genConfigEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGenConfig_NumberOfNodes()
+  {
+    return (EAttribute)genConfigEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGenConfig_HbaseMaster()
+  {
+    return (EReference)genConfigEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -186,7 +216,7 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    */
   public EReference getGenConfig_Generators()
   {
-    return (EReference)genConfigEClass.getEStructuralFeatures().get(3);
+    return (EReference)genConfigEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -244,39 +274,29 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getGenerator_GlobalDensity()
+  {
+    return (EAttribute)generatorEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGenerator_GlobalDeviation()
+  {
+    return (EAttribute)generatorEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getGenerator_Classes()
   {
-    return (EReference)generatorEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getBundle()
-  {
-    return bundleEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBundle_Size()
-  {
-    return (EAttribute)bundleEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBundle_Times()
-  {
-    return (EAttribute)bundleEClass.getEStructuralFeatures().get(1);
+    return (EReference)generatorEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -334,9 +354,19 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getClazz_Instances()
+  public EReference getClazz_Range()
   {
-    return (EAttribute)clazzEClass.getEStructuralFeatures().get(1);
+    return (EReference)clazzEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getClazz_Depth()
+  {
+    return (EAttribute)clazzEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -346,7 +376,37 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    */
   public EReference getClazz_Properties()
   {
-    return (EReference)clazzEClass.getEStructuralFeatures().get(2);
+    return (EReference)clazzEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRange()
+  {
+    return rangeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_Lower()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getRange_Upper()
+  {
+    return (EAttribute)rangeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -374,9 +434,19 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getProperty_Range()
+  {
+    return (EReference)propertyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getProperty_Density()
   {
-    return (EAttribute)propertyEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)propertyEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -386,7 +456,7 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
    */
   public EAttribute getProperty_Variation()
   {
-    return (EAttribute)propertyEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)propertyEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -461,8 +531,11 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
     // Create classes and their features
     genConfigEClass = createEClass(GEN_CONFIG);
     createEReference(genConfigEClass, GEN_CONFIG__METAMODEL);
-    createEAttribute(genConfigEClass, GEN_CONFIG__GLOBAL_DENSITY);
-    createEAttribute(genConfigEClass, GEN_CONFIG__GLOBAL_VARIATION);
+    createEAttribute(genConfigEClass, GEN_CONFIG__PACKAGE);
+    createEReference(genConfigEClass, GEN_CONFIG__HDFS_MASTER);
+    createEAttribute(genConfigEClass, GEN_CONFIG__DEPLOY_MODE);
+    createEAttribute(genConfigEClass, GEN_CONFIG__NUMBER_OF_NODES);
+    createEReference(genConfigEClass, GEN_CONFIG__HBASE_MASTER);
     createEReference(genConfigEClass, GEN_CONFIG__GENERATORS);
 
     generatorEClass = createEClass(GENERATOR);
@@ -470,11 +543,9 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
     createEAttribute(generatorEClass, GENERATOR__NUMBER);
     createEAttribute(generatorEClass, GENERATOR__SIZE);
     createEAttribute(generatorEClass, GENERATOR__PREFIX);
+    createEAttribute(generatorEClass, GENERATOR__GLOBAL_DENSITY);
+    createEAttribute(generatorEClass, GENERATOR__GLOBAL_DEVIATION);
     createEReference(generatorEClass, GENERATOR__CLASSES);
-
-    bundleEClass = createEClass(BUNDLE);
-    createEAttribute(bundleEClass, BUNDLE__SIZE);
-    createEAttribute(bundleEClass, BUNDLE__TIMES);
 
     metamodelEClass = createEClass(METAMODEL);
     createEAttribute(metamodelEClass, METAMODEL__NAME);
@@ -482,11 +553,17 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
 
     clazzEClass = createEClass(CLAZZ);
     createEAttribute(clazzEClass, CLAZZ__NAME);
-    createEAttribute(clazzEClass, CLAZZ__INSTANCES);
+    createEReference(clazzEClass, CLAZZ__RANGE);
+    createEAttribute(clazzEClass, CLAZZ__DEPTH);
     createEReference(clazzEClass, CLAZZ__PROPERTIES);
+
+    rangeEClass = createEClass(RANGE);
+    createEAttribute(rangeEClass, RANGE__LOWER);
+    createEAttribute(rangeEClass, RANGE__UPPER);
 
     propertyEClass = createEClass(PROPERTY);
     createEAttribute(propertyEClass, PROPERTY__NAME);
+    createEReference(propertyEClass, PROPERTY__RANGE);
     createEAttribute(propertyEClass, PROPERTY__DENSITY);
     createEAttribute(propertyEClass, PROPERTY__VARIATION);
 
@@ -529,8 +606,11 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
     // Initialize classes and features; add operations and parameters
     initEClass(genConfigEClass, GenConfig.class, "GenConfig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getGenConfig_Metamodel(), this.getMetamodel(), null, "metamodel", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getGenConfig_GlobalDensity(), ecorePackage.getEInt(), "globalDensity", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getGenConfig_GlobalVariation(), ecorePackage.getEFloat(), "globalVariation", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenConfig_Package(), ecorePackage.getEString(), "package", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGenConfig_HdfsMaster(), this.getURI(), null, "hdfsMaster", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenConfig_DeployMode(), ecorePackage.getEString(), "deployMode", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenConfig_NumberOfNodes(), ecorePackage.getEString(), "numberOfNodes", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGenConfig_HbaseMaster(), this.getURI(), null, "hbaseMaster", null, 0, 1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGenConfig_Generators(), this.getGenerator(), null, "generators", null, 0, -1, GenConfig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(generatorEClass, Generator.class, "Generator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -538,11 +618,9 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
     initEAttribute(getGenerator_Number(), ecorePackage.getEInt(), "number", null, 0, 1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGenerator_Size(), ecorePackage.getEInt(), "size", null, 0, 1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGenerator_Prefix(), ecorePackage.getEString(), "prefix", null, 0, 1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenerator_GlobalDensity(), ecorePackage.getEInt(), "globalDensity", null, 0, 1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenerator_GlobalDeviation(), ecorePackage.getEFloat(), "globalDeviation", null, 0, 1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getGenerator_Classes(), this.getClazz(), null, "classes", null, 0, -1, Generator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(bundleEClass, Bundle.class, "Bundle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBundle_Size(), ecorePackage.getEInt(), "size", null, 0, 1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBundle_Times(), ecorePackage.getEInt(), "times", null, 0, 1, Bundle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(metamodelEClass, Metamodel.class, "Metamodel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getMetamodel_Name(), ecorePackage.getEString(), "name", null, 0, 1, Metamodel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -550,11 +628,17 @@ public class DMGenPackageImpl extends EPackageImpl implements DMGenPackage
 
     initEClass(clazzEClass, Clazz.class, "Clazz", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClazz_Name(), ecorePackage.getEString(), "name", null, 0, 1, Clazz.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClazz_Instances(), ecorePackage.getEInt(), "instances", null, 0, 1, Clazz.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getClazz_Range(), this.getRange(), null, "range", null, 0, 1, Clazz.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClazz_Depth(), ecorePackage.getEInt(), "depth", null, 0, 1, Clazz.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getClazz_Properties(), this.getProperty(), null, "properties", null, 0, -1, Clazz.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(rangeEClass, Range.class, "Range", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRange_Lower(), ecorePackage.getEInt(), "lower", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRange_Upper(), ecorePackage.getEInt(), "upper", null, 0, 1, Range.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(propertyEClass, Property.class, "Property", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProperty_Name(), ecorePackage.getEString(), "name", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProperty_Range(), this.getRange(), null, "range", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProperty_Density(), ecorePackage.getEInt(), "density", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProperty_Variation(), ecorePackage.getEInt(), "variation", null, 0, 1, Property.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

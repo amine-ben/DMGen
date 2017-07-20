@@ -51,12 +51,11 @@ import fr.inria.diverse.spark_generator.util.GenerationException;
  *  
  * @author <a href="mailto:abel.gomez-llana@inria.fr">Abel Gomez</a>
  * @author <a href="mailto:amine.benelallam@inria.fr">Amine Benelallam</a>
- *
  */
 
-public class Launcher {
+public class LauncherStandalone {
 	
-	private final static Logger LOGGER = Logger.getLogger(Launcher.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(LauncherStandalone.class.getName());
 
 	private static final int DEFAULT_AVERAGE_MODEL_SIZE = 1000;
 	private static final float DEFAULT_DEVIATION = 0.1f;
@@ -120,20 +119,20 @@ public class Launcher {
 			String epackage_class = commandLine.getOptionValue(E_PACKAGE_CLASS);
 			
 			LOGGER.info("Start loading the package");
-			Class<?> inClazz = Launcher.class.getClassLoader().loadClass(epackage_class);
+			Class<?> inClazz = LauncherStandalone.class.getClassLoader().loadClass(epackage_class);
 			EPackage _package = (EPackage) inClazz.getMethod("init").invoke(null);
 			
 			Resource metamodelResource = new XMIResourceImpl(URI.createFileURI("dummy"));
 		    metamodelResource.getContents().add(_package);
 		    LOGGER.info("Finish loading the package");
 		    
-			int size = Launcher.DEFAULT_AVERAGE_MODEL_SIZE;
+			int size = LauncherStandalone.DEFAULT_AVERAGE_MODEL_SIZE;
 			if (commandLine.hasOption(SIZE)) {
 				Number number = (Number) commandLine.getParsedOptionValue(SIZE);
 				 size = (int) Math.min(Integer.MAX_VALUE, number.longValue());
 			}
 			
-			float variation = Launcher.DEFAULT_DEVIATION;
+			float variation = LauncherStandalone.DEFAULT_DEVIATION;
 			if (commandLine.hasOption(VARIATION)) {
 				Number number = (Number) commandLine.getParsedOptionValue(VARIATION);
 				if (number.floatValue() < 0.0f || number.floatValue() > 1.0f) {
@@ -142,7 +141,7 @@ public class Launcher {
 				variation = number.floatValue();
 			}
 			
-			float propVariation = Launcher.DEFAULT_DEVIATION;
+			float propVariation = LauncherStandalone.DEFAULT_DEVIATION;
 			if (commandLine.hasOption(PROP_VARIATION)) {
 				Number number = (Number) commandLine.getParsedOptionValue(PROP_VARIATION);
 				if (number.floatValue() < 0.0f || number.floatValue() > 1.0f) {
@@ -162,7 +161,9 @@ public class Launcher {
 					Math.round(size * (1 + variation)));
 			
 			GenericMetamodelConfig config = new GenericMetamodelConfig(metamodelResource, range, seed);
+			
 			GenericMetamodelGenerator modelGen = new GenericMetamodelGenerator(config);
+			
 
 
 			if (commandLine.hasOption(OUTPUT_PATH)) {
@@ -183,7 +184,7 @@ public class Launcher {
 			}
 
 			int referencesSize = GenericMetamodelConfig.DEFAULT_AVERAGE_REFERENCES_SIZE;
-			if (commandLine.hasOption(VALUES_SIZE)) {
+			if (commandLine.hasOption(DEGREE)) {
 				Number number = (Number) commandLine.getParsedOptionValue(DEGREE);
 				referencesSize = (int) Math.min(Integer.MAX_VALUE, number.longValue());
 			}
@@ -300,7 +301,7 @@ public class Launcher {
 		Option sizeOption = OptionBuilder.create(SIZE);
 		sizeOption.setLongOpt(SIZE_LONG);
 		sizeOption.setArgName("size");
-		sizeOption.setDescription(MessageFormat.format("Average models'' size (defaults to {0})", Launcher.DEFAULT_AVERAGE_MODEL_SIZE));
+		sizeOption.setDescription(MessageFormat.format("Average models'' size (defaults to {0})", LauncherStandalone.DEFAULT_AVERAGE_MODEL_SIZE));
 		sizeOption.setType(Number.class);
 		sizeOption.setArgs(1);
 
@@ -309,7 +310,7 @@ public class Launcher {
 		variationOption.setArgName("proportion");
 		variationOption.setDescription(
 				MessageFormat.format("Variation ([0..1]) in the models'' size (defaults to {0})",
-				Launcher.DEFAULT_DEVIATION));
+				LauncherStandalone.DEFAULT_DEVIATION));
 		variationOption.setType(Number.class);
 		variationOption.setArgs(1);
 
@@ -318,7 +319,7 @@ public class Launcher {
 		propVariationOption.setArgName("properties deviation");
 		propVariationOption.setDescription(
 				MessageFormat.format("Variation ([0..1]) in the properties'' size (defaults to {0})",
-				Launcher.DEFAULT_DEVIATION));
+				LauncherStandalone.DEFAULT_DEVIATION));
 		propVariationOption.setType(Number.class);
 		propVariationOption.setArgs(1);
 		

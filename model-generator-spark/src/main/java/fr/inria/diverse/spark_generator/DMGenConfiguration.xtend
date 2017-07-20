@@ -25,5 +25,6 @@ interface DMGenConfiguration {
 	* @param the <code>eReference</code> for which we compute the range
 	*/
   def Range<Integer> getRangeFor(EReference eReference)
+
  
 }

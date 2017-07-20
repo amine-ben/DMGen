@@ -10,6 +10,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/metamodel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/package"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/hdfsMaster"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/deployMode"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//GenConfig/numberOfNodes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/hbaseMaster"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//GenConfig/generators"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Generator">
@@ -21,21 +24,23 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/globalDeviation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Generator/classes"/>
     </genClasses>
-    <genClasses ecoreClass="DMGen.ecore#//Bundle">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Bundle/size"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Bundle/times"/>
-    </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Metamodel">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Metamodel/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Metamodel/uri"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Clazz">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Clazz/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Clazz/instances"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Clazz/range"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Clazz/depth"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Clazz/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="DMGen.ecore#//Range">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Range/lower"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Range/upper"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//Property">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Property/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Property/range"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Property/density"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Property/variation"/>
     </genClasses>

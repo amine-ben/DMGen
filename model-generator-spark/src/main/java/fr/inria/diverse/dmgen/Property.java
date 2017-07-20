@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link fr.inria.diverse.dmgen.Property#getName <em>Name</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.Property#getRange <em>Range</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.Property#getDensity <em>Density</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.Property#getVariation <em>Variation</em>}</li>
  * </ul>
@@ -50,6 +51,32 @@ public interface Property extends EObject
    * @generated
    */
   void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Range</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Range</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Range</em>' containment reference.
+   * @see #setRange(Range)
+   * @see fr.inria.diverse.dmgen.DMGenPackage#getProperty_Range()
+   * @model containment="true"
+   * @generated
+   */
+  Range getRange();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.Property#getRange <em>Range</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Range</em>' containment reference.
+   * @see #getRange()
+   * @generated
+   */
+  void setRange(Range value);
 
   /**
    * Returns the value of the '<em><b>Density</b></em>' attribute.

@@ -20,6 +20,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getNumber <em>Number</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getSize <em>Size</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getPrefix <em>Prefix</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getGlobalDensity <em>Global Density</em>}</li>
+ *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getGlobalDeviation <em>Global Deviation</em>}</li>
  *   <li>{@link fr.inria.diverse.dmgen.dMGen.Generator#getClasses <em>Classes</em>}</li>
  * </ul>
  *
@@ -132,6 +134,58 @@ public interface Generator extends EObject
    * @generated
    */
   void setPrefix(String value);
+
+  /**
+   * Returns the value of the '<em><b>Global Density</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Global Density</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Global Density</em>' attribute.
+   * @see #setGlobalDensity(int)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenerator_GlobalDensity()
+   * @model
+   * @generated
+   */
+  int getGlobalDensity();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.Generator#getGlobalDensity <em>Global Density</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Global Density</em>' attribute.
+   * @see #getGlobalDensity()
+   * @generated
+   */
+  void setGlobalDensity(int value);
+
+  /**
+   * Returns the value of the '<em><b>Global Deviation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Global Deviation</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Global Deviation</em>' attribute.
+   * @see #setGlobalDeviation(float)
+   * @see fr.inria.diverse.dmgen.dMGen.DMGenPackage#getGenerator_GlobalDeviation()
+   * @model
+   * @generated
+   */
+  float getGlobalDeviation();
+
+  /**
+   * Sets the value of the '{@link fr.inria.diverse.dmgen.dMGen.Generator#getGlobalDeviation <em>Global Deviation</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Global Deviation</em>' attribute.
+   * @see #getGlobalDeviation()
+   * @generated
+   */
+  void setGlobalDeviation(float value);
 
   /**
    * Returns the value of the '<em><b>Classes</b></em>' containment reference list.

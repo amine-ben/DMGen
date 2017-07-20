@@ -13,7 +13,6 @@ import java.util.Random;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.math3.distribution.IntegerDistribution;
 import org.apache.spark.api.java.function.FlatMapFunction;
-import org.apache.spark.api.java.function.PairFlatMapFunction;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -33,9 +32,8 @@ import com.hazelcast.core.MultiMap;
 import fr.inria.atlanmod.neoemf.core.PersistentEObject;
 import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration;
 import fr.inria.diverse.spark_generator.util.EPackagesData;
-import scala.Tuple2;
 
-public class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
+public class VerticesGenToPair2 implements FlatMapFunction<Iterator<Long>, String> {
 
 	/**
 	 * 
@@ -58,7 +56,7 @@ public class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String
 
 	private long averageSize;
 		
-    public VerticesGenToPair(ISpecimenConfiguration conf, long averageSize, Resource resource) {
+    public VerticesGenToPair2(ISpecimenConfiguration conf, long averageSize, Resource resource) {
 		
     	_conf = conf;
 		this.generator = new Random(seed);
@@ -67,8 +65,6 @@ public class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String
 		this.averageSize = averageSize;
 		_resource = resource;
 		hcInstance = Hazelcast.newHazelcastInstance();
-	
-
 	}
     
 	@Override

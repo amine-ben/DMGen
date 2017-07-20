@@ -95,13 +95,40 @@ public interface DMGenPackage extends EPackage
   int GEN_CONFIG__HDFS_MASTER = 2;
 
   /**
+   * The feature id for the '<em><b>Deploy Mode</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GEN_CONFIG__DEPLOY_MODE = 3;
+
+  /**
+   * The feature id for the '<em><b>Number Of Nodes</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GEN_CONFIG__NUMBER_OF_NODES = 4;
+
+  /**
+   * The feature id for the '<em><b>Hbase Master</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GEN_CONFIG__HBASE_MASTER = 5;
+
+  /**
    * The feature id for the '<em><b>Generators</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GEN_CONFIG__GENERATORS = 3;
+  int GEN_CONFIG__GENERATORS = 6;
 
   /**
    * The number of structural features of the '<em>Gen Config</em>' class.
@@ -110,7 +137,7 @@ public interface DMGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GEN_CONFIG_FEATURE_COUNT = 4;
+  int GEN_CONFIG_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.GeneratorImpl <em>Generator</em>}' class.
@@ -195,43 +222,6 @@ public interface DMGenPackage extends EPackage
   int GENERATOR_FEATURE_COUNT = 7;
 
   /**
-   * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.BundleImpl <em>Bundle</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see fr.inria.diverse.dmgen.impl.BundleImpl
-   * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getBundle()
-   * @generated
-   */
-  int BUNDLE = 2;
-
-  /**
-   * The feature id for the '<em><b>Size</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BUNDLE__SIZE = 0;
-
-  /**
-   * The feature id for the '<em><b>Times</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BUNDLE__TIMES = 1;
-
-  /**
-   * The number of structural features of the '<em>Bundle</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BUNDLE_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.MetamodelImpl <em>Metamodel</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -239,7 +229,7 @@ public interface DMGenPackage extends EPackage
    * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getMetamodel()
    * @generated
    */
-  int METAMODEL = 3;
+  int METAMODEL = 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -276,7 +266,7 @@ public interface DMGenPackage extends EPackage
    * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getClazz()
    * @generated
    */
-  int CLAZZ = 4;
+  int CLAZZ = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -288,13 +278,22 @@ public interface DMGenPackage extends EPackage
   int CLAZZ__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Instances</b></em>' attribute.
+   * The feature id for the '<em><b>Range</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLAZZ__INSTANCES = 1;
+  int CLAZZ__RANGE = 1;
+
+  /**
+   * The feature id for the '<em><b>Depth</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLAZZ__DEPTH = 2;
 
   /**
    * The feature id for the '<em><b>Properties</b></em>' containment reference list.
@@ -303,7 +302,7 @@ public interface DMGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLAZZ__PROPERTIES = 2;
+  int CLAZZ__PROPERTIES = 3;
 
   /**
    * The number of structural features of the '<em>Clazz</em>' class.
@@ -312,7 +311,44 @@ public interface DMGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLAZZ_FEATURE_COUNT = 3;
+  int CLAZZ_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.RangeImpl <em>Range</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see fr.inria.diverse.dmgen.impl.RangeImpl
+   * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getRange()
+   * @generated
+   */
+  int RANGE = 4;
+
+  /**
+   * The feature id for the '<em><b>Lower</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__LOWER = 0;
+
+  /**
+   * The feature id for the '<em><b>Upper</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE__UPPER = 1;
+
+  /**
+   * The number of structural features of the '<em>Range</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RANGE_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.PropertyImpl <em>Property</em>}' class.
@@ -334,13 +370,22 @@ public interface DMGenPackage extends EPackage
   int PROPERTY__NAME = 0;
 
   /**
+   * The feature id for the '<em><b>Range</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY__RANGE = 1;
+
+  /**
    * The feature id for the '<em><b>Density</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROPERTY__DENSITY = 1;
+  int PROPERTY__DENSITY = 2;
 
   /**
    * The feature id for the '<em><b>Variation</b></em>' attribute.
@@ -349,7 +394,7 @@ public interface DMGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROPERTY__VARIATION = 2;
+  int PROPERTY__VARIATION = 3;
 
   /**
    * The number of structural features of the '<em>Property</em>' class.
@@ -358,7 +403,7 @@ public interface DMGenPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PROPERTY_FEATURE_COUNT = 3;
+  int PROPERTY_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link fr.inria.diverse.dmgen.impl.URIImpl <em>URI</em>}' class.
@@ -449,6 +494,39 @@ public interface DMGenPackage extends EPackage
    * @generated
    */
   EReference getGenConfig_HdfsMaster();
+
+  /**
+   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.GenConfig#getDeployMode <em>Deploy Mode</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Deploy Mode</em>'.
+   * @see fr.inria.diverse.dmgen.GenConfig#getDeployMode()
+   * @see #getGenConfig()
+   * @generated
+   */
+  EAttribute getGenConfig_DeployMode();
+
+  /**
+   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.GenConfig#getNumberOfNodes <em>Number Of Nodes</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Number Of Nodes</em>'.
+   * @see fr.inria.diverse.dmgen.GenConfig#getNumberOfNodes()
+   * @see #getGenConfig()
+   * @generated
+   */
+  EAttribute getGenConfig_NumberOfNodes();
+
+  /**
+   * Returns the meta object for the containment reference '{@link fr.inria.diverse.dmgen.GenConfig#getHbaseMaster <em>Hbase Master</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Hbase Master</em>'.
+   * @see fr.inria.diverse.dmgen.GenConfig#getHbaseMaster()
+   * @see #getGenConfig()
+   * @generated
+   */
+  EReference getGenConfig_HbaseMaster();
 
   /**
    * Returns the meta object for the containment reference list '{@link fr.inria.diverse.dmgen.GenConfig#getGenerators <em>Generators</em>}'.
@@ -549,38 +627,6 @@ public interface DMGenPackage extends EPackage
   EReference getGenerator_Classes();
 
   /**
-   * Returns the meta object for class '{@link fr.inria.diverse.dmgen.Bundle <em>Bundle</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Bundle</em>'.
-   * @see fr.inria.diverse.dmgen.Bundle
-   * @generated
-   */
-  EClass getBundle();
-
-  /**
-   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Bundle#getSize <em>Size</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Size</em>'.
-   * @see fr.inria.diverse.dmgen.Bundle#getSize()
-   * @see #getBundle()
-   * @generated
-   */
-  EAttribute getBundle_Size();
-
-  /**
-   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Bundle#getTimes <em>Times</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Times</em>'.
-   * @see fr.inria.diverse.dmgen.Bundle#getTimes()
-   * @see #getBundle()
-   * @generated
-   */
-  EAttribute getBundle_Times();
-
-  /**
    * Returns the meta object for class '{@link fr.inria.diverse.dmgen.Metamodel <em>Metamodel</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -634,15 +680,26 @@ public interface DMGenPackage extends EPackage
   EAttribute getClazz_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Clazz#getInstances <em>Instances</em>}'.
+   * Returns the meta object for the containment reference '{@link fr.inria.diverse.dmgen.Clazz#getRange <em>Range</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Instances</em>'.
-   * @see fr.inria.diverse.dmgen.Clazz#getInstances()
+   * @return the meta object for the containment reference '<em>Range</em>'.
+   * @see fr.inria.diverse.dmgen.Clazz#getRange()
    * @see #getClazz()
    * @generated
    */
-  EAttribute getClazz_Instances();
+  EReference getClazz_Range();
+
+  /**
+   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Clazz#getDepth <em>Depth</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Depth</em>'.
+   * @see fr.inria.diverse.dmgen.Clazz#getDepth()
+   * @see #getClazz()
+   * @generated
+   */
+  EAttribute getClazz_Depth();
 
   /**
    * Returns the meta object for the containment reference list '{@link fr.inria.diverse.dmgen.Clazz#getProperties <em>Properties</em>}'.
@@ -654,6 +711,38 @@ public interface DMGenPackage extends EPackage
    * @generated
    */
   EReference getClazz_Properties();
+
+  /**
+   * Returns the meta object for class '{@link fr.inria.diverse.dmgen.Range <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Range</em>'.
+   * @see fr.inria.diverse.dmgen.Range
+   * @generated
+   */
+  EClass getRange();
+
+  /**
+   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Range#getLower <em>Lower</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Lower</em>'.
+   * @see fr.inria.diverse.dmgen.Range#getLower()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_Lower();
+
+  /**
+   * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Range#getUpper <em>Upper</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Upper</em>'.
+   * @see fr.inria.diverse.dmgen.Range#getUpper()
+   * @see #getRange()
+   * @generated
+   */
+  EAttribute getRange_Upper();
 
   /**
    * Returns the meta object for class '{@link fr.inria.diverse.dmgen.Property <em>Property</em>}'.
@@ -675,6 +764,17 @@ public interface DMGenPackage extends EPackage
    * @generated
    */
   EAttribute getProperty_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link fr.inria.diverse.dmgen.Property#getRange <em>Range</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Range</em>'.
+   * @see fr.inria.diverse.dmgen.Property#getRange()
+   * @see #getProperty()
+   * @generated
+   */
+  EReference getProperty_Range();
 
   /**
    * Returns the meta object for the attribute '{@link fr.inria.diverse.dmgen.Property#getDensity <em>Density</em>}'.
@@ -799,6 +899,30 @@ public interface DMGenPackage extends EPackage
     EReference GEN_CONFIG__HDFS_MASTER = eINSTANCE.getGenConfig_HdfsMaster();
 
     /**
+     * The meta object literal for the '<em><b>Deploy Mode</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GEN_CONFIG__DEPLOY_MODE = eINSTANCE.getGenConfig_DeployMode();
+
+    /**
+     * The meta object literal for the '<em><b>Number Of Nodes</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GEN_CONFIG__NUMBER_OF_NODES = eINSTANCE.getGenConfig_NumberOfNodes();
+
+    /**
+     * The meta object literal for the '<em><b>Hbase Master</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference GEN_CONFIG__HBASE_MASTER = eINSTANCE.getGenConfig_HbaseMaster();
+
+    /**
      * The meta object literal for the '<em><b>Generators</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -873,32 +997,6 @@ public interface DMGenPackage extends EPackage
     EReference GENERATOR__CLASSES = eINSTANCE.getGenerator_Classes();
 
     /**
-     * The meta object literal for the '{@link fr.inria.diverse.dmgen.impl.BundleImpl <em>Bundle</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see fr.inria.diverse.dmgen.impl.BundleImpl
-     * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getBundle()
-     * @generated
-     */
-    EClass BUNDLE = eINSTANCE.getBundle();
-
-    /**
-     * The meta object literal for the '<em><b>Size</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BUNDLE__SIZE = eINSTANCE.getBundle_Size();
-
-    /**
-     * The meta object literal for the '<em><b>Times</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BUNDLE__TIMES = eINSTANCE.getBundle_Times();
-
-    /**
      * The meta object literal for the '{@link fr.inria.diverse.dmgen.impl.MetamodelImpl <em>Metamodel</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -943,12 +1041,20 @@ public interface DMGenPackage extends EPackage
     EAttribute CLAZZ__NAME = eINSTANCE.getClazz_Name();
 
     /**
-     * The meta object literal for the '<em><b>Instances</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CLAZZ__INSTANCES = eINSTANCE.getClazz_Instances();
+    EReference CLAZZ__RANGE = eINSTANCE.getClazz_Range();
+
+    /**
+     * The meta object literal for the '<em><b>Depth</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CLAZZ__DEPTH = eINSTANCE.getClazz_Depth();
 
     /**
      * The meta object literal for the '<em><b>Properties</b></em>' containment reference list feature.
@@ -957,6 +1063,32 @@ public interface DMGenPackage extends EPackage
      * @generated
      */
     EReference CLAZZ__PROPERTIES = eINSTANCE.getClazz_Properties();
+
+    /**
+     * The meta object literal for the '{@link fr.inria.diverse.dmgen.impl.RangeImpl <em>Range</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see fr.inria.diverse.dmgen.impl.RangeImpl
+     * @see fr.inria.diverse.dmgen.impl.DMGenPackageImpl#getRange()
+     * @generated
+     */
+    EClass RANGE = eINSTANCE.getRange();
+
+    /**
+     * The meta object literal for the '<em><b>Lower</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__LOWER = eINSTANCE.getRange_Lower();
+
+    /**
+     * The meta object literal for the '<em><b>Upper</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute RANGE__UPPER = eINSTANCE.getRange_Upper();
 
     /**
      * The meta object literal for the '{@link fr.inria.diverse.dmgen.impl.PropertyImpl <em>Property</em>}' class.
@@ -975,6 +1107,14 @@ public interface DMGenPackage extends EPackage
      * @generated
      */
     EAttribute PROPERTY__NAME = eINSTANCE.getProperty_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROPERTY__RANGE = eINSTANCE.getProperty_Range();
 
     /**
      * The meta object literal for the '<em><b>Density</b></em>' attribute feature.
