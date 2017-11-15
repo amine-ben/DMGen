@@ -1,29 +1,48 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: fr.inria.diverse.dmgen
-Bundle-Vendor: My Company
+Bundle-Vendor: DiverSE --Inria
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: fr.inria.diverse.dmgen; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext,
+Require-Bundle: org.eclipse.xtend.lib,
+ com.google.guava;bundle-version="[14.0.0,19.0.0)",
+ org.eclipse.xtext.xbase.lib,
+ org.junit;bundle-version="4.12.0",
+ org.eclipse.xtend.core;bundle-version="2.10.0",
+ org.eclipse.xtext,
+ org.apache.log4j;bundle-version="1.2.15",
+ org.eclipse.xtext.xbase.junit;bundle-version="2.10.0",
  org.eclipse.xtext.xbase,
+ org.eclipse.jdt.core;bundle-version="3.12.2",
  org.eclipse.equinox.common;bundle-version="3.5.0",
  org.eclipse.emf.ecore,
- org.eclipse.xtext.xbase.lib,
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib,
  org.eclipse.emf.common,
- org.antlr.runtime
+ org.antlr.runtime,
+ fr.inria.diverse.dmgen.libs;bundle-version="1.0.0",
+ org.eclipse.osgi,
+ org.eclipse.equinox.registry,
+ org.eclipse.emf.ecore.edit,
+ org.objectweb.asm;bundle-version="5.0.1";resolution:=optional,
+ org.eclipse.emf.codegen;bundle-version="2.11.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: fr.inria.diverse.dmgen.services,
+Export-Package: fr.inria.diverse.dmgen,
+ fr.inria.diverse.dmgen.Launcher,
  fr.inria.diverse.dmgen.dMGen,
- fr.inria.diverse.dmgen.serializer,
- fr.inria.diverse.dmgen.scoping,
- fr.inria.diverse.dmgen.generator,
- fr.inria.diverse.dmgen.dMGen.util,
- fr.inria.diverse.dmgen.validation,
- fr.inria.diverse.dmgen,
  fr.inria.diverse.dmgen.dMGen.impl,
+ fr.inria.diverse.dmgen.dMGen.util,
+ fr.inria.diverse.dmgen.generator,
+ fr.inria.diverse.dmgen.inferrer,
  fr.inria.diverse.dmgen.parser.antlr,
- fr.inria.diverse.dmgen.parser.antlr.internal
-Import-Package: org.apache.log4j
+ fr.inria.diverse.dmgen.parser.antlr.internal,
+ fr.inria.diverse.dmgen.scoping,
+ fr.inria.diverse.dmgen.serializer,
+ fr.inria.diverse.dmgen.services,
+ fr.inria.diverse.dmgen.util,
+ fr.inria.diverse.dmgen.validation
+Import-Package: org.apache.log4j,
+ org.eclipse.core.runtime;version="3.5.0",
+ org.eclipse.equinox.internal.app,
+ org.eclipse.ui.plugin,
+ org.eclipse.xtend.lib.annotations
