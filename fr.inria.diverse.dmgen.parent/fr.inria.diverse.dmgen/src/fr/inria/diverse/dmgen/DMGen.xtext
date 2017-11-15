@@ -14,28 +14,21 @@ GenConfig returns GenConfig:
 	 generators+=Generator (generators+=Generator)*
 	;
 
-INTorUNBOUNDED returns ecore::EString:
-	'*' | INT
-;
 
-PACKAGE returns ecore::EString :
-	ID(('.' |'_') ID)*
-;
-
-DECIMAL returns ecore::EFloat:
-	INT'.'INT
-;
-
-Generator returns Generator:
-	name='generate' number=INT 'with'  (('size' size=INT) & ('prefix' prefix=STRING)?)
+Generator returns Generator :
+	name='generate' number=INT 'with'  (('size' size=INT) & ('prefix' prefix=STRING)? & ('base' basePath=PATH)?) 
 		'{'
 		 (( 'density' globalDensity= INT ';')?  & 
 			( 'deviation' globalDeviation= DECIMAL ';')? )
 			(classes+=Clazz)? ( ';' classes+=Clazz)*		
 		'}'
+		;
+
+PATH:
+	('./')? ('/'ID)*
 ;
 
-Metamodel returns Metamodel:
+Metamodel returns Metamodel :
 	name=ID uri=URI
 ;
 
@@ -50,8 +43,47 @@ Range returns Range:
 ;
 
 Property returns Property:
-	//name=ID (('density' density=INT)? & ('variation' variation=INT)?)
-	name=ID (range=Range ('density' density=INT)? & ('variation' variation=INT)?)	
+	name=ID ( ':'(range=Range ('density' density=INT)? & ('variation' variation=INT)?)? ('in' rule=Rule ('where' condition=Condition)?)?)?	
+;
+
+Condition returns Condition :
+	value='condition' 'holds'
+;
+
+Rule returns Rule:
+	NumericalRule 
+	| RegExRule
+;
+
+RegExRule returns RegExRule:
+	expression=STRING
+;
+
+NumericalRule returns NumericalRule:
+	RangeRule
+	| FunctionRule
+	| SetRule
+;
+
+SetRule returns SetRule:
+	'{' elements+=Element (';'elements+=Element)+ '}'
+;
+
+Element :
+	INT | DECIMAL |STRING;
+
+//FIXME 
+FunctionRule returns FunctionRule:
+	value = 'function'
+;
+
+RangeRule returns RangeRule:
+	isLowerExclu?=(']')? '['? lowerBound = INT_OR_DECIMAL'..' upperBound=INT_OR_DECIMAL isUpperExclu?='['? (']')?
+;
+
+INT_OR_DECIMAL:
+	INT
+	| DECIMAL
 ;
 
 URI returns URI:
@@ -60,17 +92,22 @@ URI returns URI:
 	fragments+=FRAGMENT ('/' fragments+=FRAGMENT)*	// 
 ;
 
-// FIXME adding support for port number 
-FRAGMENT returns ecore::EString:
-	ID(('.' |'-') ID)*(':'INT)?
+INTorUNBOUNDED returns ecore::EString :
+	'*' | INT
 ;
 
-//AUTHORITY:
-//	ID('.'ID)*(':'INT)? //TODO limit the number of characters 
-//;
+PACKAGE returns ecore::EString :
+	ID(('.' |'_') ID)*
+;
+
+DECIMAL returns ecore::EFloat :
+	INT'.'INT
+;
+
+FRAGMENT returns ecore::EString :
+	ID(('.' |'-') ID)*(':'INT)?
+;
 
 terminal SCHEME:
 	'http://'|'file:///'|'platform:/'|'neoemfhbase://'|'hdfs://'
 ;
-		
-

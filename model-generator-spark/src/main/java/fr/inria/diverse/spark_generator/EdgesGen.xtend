@@ -91,6 +91,5 @@ class EdgesGen  implements  FlatMapFunction<Iterator<String>, Boolean>  {
 	protected def boolean booleanInDistribution(IntegerDistribution distribution) {
 		distribution.sample <= distribution.numericalMean
 	}
-
 	
 }

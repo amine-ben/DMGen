@@ -118,7 +118,7 @@ class DMGenMeatamodelGenerator implements IGenerator{
 						.collect(Collectors.toList()), numberOfNodes) as JavaRDD<Long>
 
 				val exitCode =  vertices.mapPartitions(new VerticesGenToPair (config, generator.size/numberOfNodes, resource))
-										.mapPartitions(new EdgesGen2(config, resource))
+										.mapPartitions(new EdgesGen(config, resource))
 										.count() 
 								
 				LOGGER.info(MessageFormat.format("Saving resource {0}", resource.getURI())) 

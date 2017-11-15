@@ -19,30 +19,36 @@ import org.eclipse.swt.widgets.Shell
 class DMGenLaunchShortcut implements ILaunchShortcut {
 	
 	var IFile file 
-	
+	/**
+	 * {@inheritsDoc}
+	 */
 	override launch(ISelection selection, String mode) {
 		val structuredSelection = selection as IStructuredSelection
 		file = structuredSelection.firstElement as IFile
 		
 		launch(file, mode)
 	}
-	
+	/**
+	 * {@inheritsDoc}
+	 */
 	override launch(IEditorPart editor, String mode) {
 		file = (editor.editorInput as IFileEditorInput).file
 		launch (file, mode) 
 	}
-	
+	/**
+	 * @param <code></code>
+	 */
 	protected def launch (IFile file, String mode) {
 		
 		//val moduleName = file.fullPath.lastSegment
 		try {
-			val availablesConfs = launchManager.getLaunchConfigurations(getDMGenConfigurationType())
+			val availableConfs = launchManager.getLaunchConfigurations(getDMGenConfigurationType())
 											   .filter[ config | config.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, "")
 																	   .equals(file.fullPath.toOSString)
 											  ]
 											  
-			if (! availablesConfs.isEmpty) {
-				var configuration = availablesConfs.get(0)
+			if (! availableConfs.isEmpty) {
+				var configuration = availableConfs.get(0)
 				DebugUITools.openLaunchConfigurationDialog(DmgenActivator.instance.shell,
 															configuration, 
 															DebugUITools.getLaunchGroup(configuration, mode).identifier, 

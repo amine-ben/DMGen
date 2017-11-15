@@ -20,6 +20,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/number"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/size"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/basePath"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/globalDensity"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Generator/globalDeviation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Generator/classes"/>
@@ -43,6 +44,24 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Property/range"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Property/density"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//Property/variation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Property/rule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DMGen.ecore#//Property/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="DMGen.ecore#//Condition"/>
+    <genClasses ecoreClass="DMGen.ecore#//Rule"/>
+    <genClasses ecoreClass="DMGen.ecore#//RegExRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//RegExRule/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="DMGen.ecore#//NumericalRule"/>
+    <genClasses ecoreClass="DMGen.ecore#//SetRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//SetRule/elements"/>
+    </genClasses>
+    <genClasses ecoreClass="DMGen.ecore#//FunctionRule"/>
+    <genClasses ecoreClass="DMGen.ecore#//RangeRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//RangeRule/isLowerExclu"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//RangeRule/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//RangeRule/upperBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//RangeRule/isUpperExclu"/>
     </genClasses>
     <genClasses ecoreClass="DMGen.ecore#//URI">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DMGen.ecore#//URI/scheme"/>

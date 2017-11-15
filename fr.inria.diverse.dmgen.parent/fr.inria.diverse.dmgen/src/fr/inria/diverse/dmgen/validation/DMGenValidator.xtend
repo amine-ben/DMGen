@@ -4,9 +4,9 @@
 package fr.inria.diverse.dmgen.validation
 
 import fr.inria.diverse.dmgen.dMGen.Clazz
-import fr.inria.diverse.dmgen.dMGen.Property
 import fr.inria.diverse.dmgen.dMGen.DMGenPackage
 import fr.inria.diverse.dmgen.dMGen.Metamodel
+import fr.inria.diverse.dmgen.dMGen.Property
 import fr.inria.diverse.dmgen.dMGen.URI
 import java.util.HashSet
 import java.util.Set
@@ -17,8 +17,7 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 import org.eclipse.xtext.validation.Check
-import java.util.List
-import java.lang.annotation.Documented
+import org.eclipse.emf.ecore.EClass
 
 /**
  * This class contains custom validation rules. 
@@ -29,12 +28,25 @@ class DMGenValidator extends AbstractDMGenValidator {
 	
 	public static val INVALID_NAME = 'invalidName'
 	public static val DUPLICATE_CLASS_NAME = 'duplicateClass'
-	public static val DUPLICATE_PROPERTY_NAME = 'duplicateClass'
+	public static val DUPLICATE_PROPERTY_NAME = 'duplicateProperty'
 	public static val CLASS_NOT_FOUND = 'ClassNotFound'
 	public static val PROPERTY_NOT_FOUND = 'PropertyNotFound'
+	public static val RANGE_NOT_REQUIED = ''
 
 	
 	public static Set<EPackage> importedPackages 
+	
+	@Check 
+	def checkPropertyAttributeHasNoRange (Property property) {
+		if(property.hasRange && property.isAttributeType)
+			error('Attribute types should not have ranges "[a..b]". This range will be ignored!', 
+					DMGenPackage.Literals.PROPERTY__RANGE,
+					INVALID_NAME)
+	}
+	
+	def hasRange(Property property) {
+		return property.range != null 
+	}
 	
 	/**
 	 * Checking if class names do not start with Capital
@@ -56,7 +68,10 @@ class DMGenValidator extends AbstractDMGenValidator {
 		val allClasses = clazz.eContainer.eGet(DMGenPackage.Literals.GENERATOR__CLASSES) as EList<Clazz>
 		
 		if (allClasses.filter[clz | clz.name.equals(clazz.name)].size > 1) {
-			error('Duplicate class name', DMGenPackage.Literals.CLAZZ__NAME, DUPLICATE_CLASS_NAME)
+			error('Duplicate class name', 
+				DMGenPackage.Literals.CLAZZ__NAME, 
+				DUPLICATE_CLASS_NAME
+			)
 		}
 	}
 	
@@ -67,7 +82,10 @@ class DMGenValidator extends AbstractDMGenValidator {
 	def duplicatePropertyName (Property property) {
 		val allProperties = property.eContainer.eGet(DMGenPackage.Literals.CLAZZ__PROPERTIES) as EList<Property>
 		if (allProperties.filter[prop | prop.name.equals(property.name)].size > 1 ) {
-						error('Duplicate property name', DMGenPackage.Literals.PROPERTY__NAME, DUPLICATE_PROPERTY_NAME)
+			error('Duplicate property name', 
+				DMGenPackage.Literals.PROPERTY__NAME, 
+				DUPLICATE_PROPERTY_NAME
+			)
 		}
 	}
 	
@@ -96,13 +114,22 @@ class DMGenValidator extends AbstractDMGenValidator {
 													   .flatten
 													   .findFirst[eCls | eCls.name.equals(className)]
 													   .eGet(DMGenPackage.Literals.CLAZZ__PROPERTIES) as EList<Property>
-													   					 
-													   					
+													   					 				   					
 		if ( !allProperties.map[prop | prop.name].contains(property.name)) {
 			error('Unable to find a property with name: '+ property.name, 
 						DMGenPackage.Literals.PROPERTY__NAME, PROPERTY_NOT_FOUND
 			)
 		}
+	}
+	
+	def isAttributeType(Property property) {
+		val clazzName = (property.eContainer as Clazz).name
+		val eClazz = _importedPackages(property).map[ePck |ePck.EClassifiers]
+								   .flatten
+								   .findFirst[eCls | eCls.name.equals(clazzName)] as EClass
+								   
+		return eClazz.EAllAttributes.map[eAttr | eAttr.name].contains(property.name)
+
 	}
 	/**
 	 * Loading the  
