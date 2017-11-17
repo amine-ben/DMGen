@@ -1,4 +1,4 @@
-package fr.inria.diverse.spark_generator
+package fr.inria.diverse.generator.util
 
 import java.text.MessageFormat
 import java.util.Iterator
@@ -17,8 +17,8 @@ import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
 
-import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.spark_generator.util.EPackagesData
+import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.generator.util.EPackagesData
 
 class EdgesGen  implements  FlatMapFunction<Iterator<String>, Boolean>  {
 	

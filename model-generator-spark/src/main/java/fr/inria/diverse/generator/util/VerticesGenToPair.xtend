@@ -1,12 +1,11 @@
-package fr.inria.diverse.spark_generator
-
+package fr.inria.diverse.generator.util
 import com.google.common.base.Optional
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
 import fr.inria.atlanmod.neoemf.core.PersistentEObject
-import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.spark_generator.util.EPackagesData
+import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.generator.util.EPackagesData
 import java.text.MessageFormat
 import java.util.ArrayList
 import java.util.Iterator
@@ -34,7 +33,8 @@ import com.google.common.collect.ImmutableList
 
 class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 	
-	static val serialVersionUID = 9182626593341469021L
+	//static val serialVersionUID = 9182626593341469021L
+	
 	static val seed = 265933L
 	
 	static val Logger LOGGER = LogManager.getLogger("Generator")
@@ -70,6 +70,7 @@ class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 	 * 
 	 */
 	 override Iterator<String> call(Iterator<Long> key) throws Exception {
+	 	
 		val result = new ArrayList<String> 
 		val possibleRootEClasses = _conf.possibleRootEClasses 
 		val MultiMap<String, String> indexByName = hcInstance.getMultiMap("indexed-elements")
@@ -111,6 +112,7 @@ class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 			generateAttributes(eObject, eAttribute)
 		}
 	}
+	
 	protected def void generateAttributes(EObject eObject, EAttribute eAttribute) {
 		val distribution = _conf.getDistributionFor(eAttribute)
 		val eAttributeType = eAttribute.EAttributeType 
@@ -121,10 +123,12 @@ class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 			generateSingleAttribute(eObject, eAttribute, distribution, instanceClass)
 		}
 	}
+	
 	protected def boolean booleanInDistribution(IntegerDistribution distribution) {
 		val sample = distribution.sample
 		return sample <= distribution.numericalMean 
 	}
+	
 	protected def void generateSingleAttribute(EObject eObject, EAttribute eAttribute, IntegerDistribution distribution,
 			Class<?> instanceClass) {
 		if (eAttribute.isRequired.operator_or(booleanInDistribution(distribution))) {
