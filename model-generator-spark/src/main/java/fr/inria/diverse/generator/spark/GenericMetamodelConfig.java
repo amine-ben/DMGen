@@ -9,7 +9,7 @@
  *     Abel Gomez (AtlanMod) - Additional modifications      
  *******************************************************************************/
 
-package fr.inria.diverse.spark_generator;
+package fr.inria.diverse.generator.spark;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
-import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration;
+import fr.inria.diverse.generator.specimen.ISpecimenConfiguration;
 
 
 

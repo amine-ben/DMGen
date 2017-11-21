@@ -8,7 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package fr.inria.diverse.spark_generator.util;
+package fr.inria.diverse.generator.util;
 
 import java.io.Serializable;
 import java.util.Iterator;

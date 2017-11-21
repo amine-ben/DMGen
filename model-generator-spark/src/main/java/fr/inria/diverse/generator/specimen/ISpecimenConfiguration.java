@@ -7,10 +7,10 @@
  * 
  * Contributors:
  *     Obeo - initial API and implementation
- *     Abel G�mez (AtlanMod) - Additional modifications      
+ *     Abel Gomez (AtlanMod) - Additional modifications      
 *******************************************************************************/
 
-package fr.inria.diverse.spark_generator.specimen;
+package fr.inria.diverse.generator.specimen;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,8 +33,9 @@ import com.google.common.collect.ImmutableSet;
 /**
  * @author <a href="mailto:mikael.barbero@obeo.fr">Mikael Barbero</a>
  * @author <a href="mailto:abel.gomez-llana@inria.fr">Abel Gomez</a>
+ * @author <a href="mailto:amine.benelallam@inria.fr">Amine BENELALLAM</a>
  */
-public interface ISpecimenConfiguration extends Serializable{
+public interface ISpecimenConfiguration extends Serializable {
 
 	/**
 	 * Returns the set of {@link EPackage}s to consider as the metamodel of the
@@ -201,6 +202,4 @@ public interface ISpecimenConfiguration extends Serializable{
 	 * @return {@link ImmutableList} of the names of all classes in 
 	 */
 	List<String> getAllClassNames();
-
-
 }

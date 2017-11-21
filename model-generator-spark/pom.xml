@@ -44,6 +44,8 @@
         
         <hbase.version>1.3.1</hbase.version>
         <hadoop.version>2.7.3</hadoop.version>
+        
+        <neoemf.version>1.0.1</neoemf.version>   
     </properties>
 
   <dependencies>
@@ -174,10 +176,24 @@
 <!-- NeoEMF dependency -->
 	<dependency>
 	  <groupId>fr.inria.atlanmod.neoemf</groupId>
-	  <artifactId>neoemf-data-hbase</artifactId>
-	  <version>1.0.1</version>
+	  <artifactId>neoemf-data-mapdb</artifactId>
+	  <version>${neoemf.version}</version>
 	</dependency>
-	
+	<dependency>
+	  <groupId>fr.inria.atlanmod.neoemf</groupId>
+	  <artifactId>neoemf-data-blueprints-neo4j</artifactId>
+	  <version>${neoemf.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>fr.inria.atlanmod.neoemf</groupId>
+	  <artifactId>neoemf-data-hbase</artifactId>
+	  <version>${neoemf.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>fr.inria.atlanmod.neoemf</groupId>
+	  <artifactId>neoemf-data-berkeleydb</artifactId>
+	  <version>${neoemf.version}</version>
+	</dependency>
 <!-- Jline dependency -->
 	<dependency>
 	    <groupId>jline</groupId>
