@@ -221,8 +221,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 				}
 			}
 		}) 
-		
-		
+			
 		val metamodelGrp = new Group(rootCont, SWT.NULL)
 		metamodelGrp.text = DMGenConfigurationAttributes.METAMODEL_GROUP_NAME
 		metamodelGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
@@ -491,7 +490,6 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			conf.setAttribute(DMGenConfigurationAttributes.XMI_HOST_NAME, xmiBasePathText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, moduleFileName)
 		conf.setAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, sparkNodesText.text)
-		//conf.setAttribute(DMGenConfigurationAttributes.FS_HOST_NAME, genconf)
 		
 	}
 	/**
@@ -499,7 +497,6 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
 		
-		//throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	/**
@@ -553,12 +550,10 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 
 	def private rebuild() {		
 		resetAll
-		//getGenConfFromFile
 		build		
 	}
 	                 
 	def private build() {
-		//genConfig.assertNotNull	
 		
 		metamodelFileText.text = genConfig.metamodel.uri.toPrettyString ?: metamodel
 		sparkMasterCombo.text = genConfig.deployMode 
