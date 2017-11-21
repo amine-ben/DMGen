@@ -3,7 +3,7 @@ Bundle-SymbolicName: fr.inria.diverse.dmgen-3rdparty-bundle
 Bundle-Name: dmgen-3rdparty-bundle
 Bundle-Version: 1.0.0.SNAPSHOT
 Bundle-ManifestVersion: 2
-Bnd-LastModified: 1511255713368
+Bnd-LastModified: 1511260535236
 Created-By: 1.8.0_121 (Oracle Corporation)
 Tool: Bnd-0.0.357
 
