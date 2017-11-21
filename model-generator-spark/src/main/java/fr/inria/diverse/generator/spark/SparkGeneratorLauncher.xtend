@@ -1,10 +1,10 @@
-package fr.inria.diverse.spark_generator
+package fr.inria.diverse.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI
 import fr.inria.atlanmod.neoemf.resource.PersistentResourceFactory
 import fr.inria.diverse.dmgen.GenConfig
 import fr.inria.diverse.dmgen.impl.DMGenPackageImpl
-import fr.inria.diverse.spark_generator.util.HadoopURIConverterImpl
+import fr.inria.diverse.generator.util.HadoopURIConverterImpl
 import java.text.MessageFormat
 import java.util.Comparator
 import org.apache.commons.cli.GnuParser
@@ -27,10 +27,10 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
 import org.apache.hadoop.hdfs.DistributedFileSystem
 import org.apache.hadoop.fs.LocalFileSystem
 
-class Launcher {
+class SparkGeneratorLauncher {
 	
 	// The logger of the instance
-	static val Logger LOGGER = Logger.getLogger(Launcher)
+	static val Logger LOGGER = Logger.getLogger(SparkGeneratorLauncher)
 	
 	// Application arguments
 	static val String HDFS_MASTER = "h"
@@ -129,9 +129,8 @@ class Launcher {
 			// loading the metamodel from hdfs 
 			LOGGER.info("Start loading the packages")
 			if (ePackage != null && !ePackage.isEmpty) {
-				val clazz = Launcher.classLoader.loadClass(ePackage)
-				val importedPackage = clazz.getMethod("init").invoke(null)
-				
+				val clazz = SparkGeneratorLauncher.classLoader.loadClass(ePackage)
+				clazz.getMethod("init").invoke(null)
 			}
 			
 			if (metamodelUrl != null && !metamodelUrl.isEmpty) {

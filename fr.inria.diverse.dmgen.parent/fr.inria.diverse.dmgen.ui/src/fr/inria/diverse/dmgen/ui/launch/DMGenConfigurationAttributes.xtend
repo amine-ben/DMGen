@@ -3,11 +3,11 @@ package fr.inria.diverse.dmgen.ui.launch
 interface DMGenConfigurationAttributes {
 	
 	
-
-	
 	val String TAB_GENARATION_NAME = "Main"
 	
 	val String SELECT_FILE = "Select File"
+	
+	val String PERSISTENCE_SCHEME = "persistence.scheme"
 	
 	val String MODULE_GROUP_NAME = "DMGen module"
 	val String MODULE_NAME = "module.name"
@@ -37,7 +37,9 @@ interface DMGenConfigurationAttributes {
 	val String DMGEN_FILE_NAME = "dmgen.file.name"
 	
 	val String[] SPARK_MASTER_ARRAY = #["yarn-cluster", "local"]
+	val String[] NEOEMF_HBASE_SCHEMES = #["neo-hbase"]
+	val String[] NEOEMF_STANDALONE_SCHEMES = #["neo-berkeleydb","neo-blueprints","neo-mapdb", "xmi"]
 	
-
+	
 	
 }

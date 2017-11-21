@@ -1,4 +1,4 @@
-package fr.inria.diverse.spark_generator.util
+package fr.inria.diverse.generator.util
 
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
 import org.apache.hadoop.conf.Configuration

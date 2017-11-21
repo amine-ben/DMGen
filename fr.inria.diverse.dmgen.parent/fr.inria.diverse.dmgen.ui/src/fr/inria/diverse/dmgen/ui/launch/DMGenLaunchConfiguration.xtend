@@ -60,6 +60,7 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 															DMGenConstants.FS_HOST_NAME_DEFAULT)
 		executionEnv.executors = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, 
 												  DMGenConfigurationAttributes.SPARK_NODES_NUMBER_DEFAULT)
+		executionEnv.isLocal = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME,"").equals(DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(1))									  
 		
 		val editor = EditorUtils.getActiveXtextEditor()
 			

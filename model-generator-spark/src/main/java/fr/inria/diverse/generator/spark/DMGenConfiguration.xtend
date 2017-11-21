@@ -1,4 +1,4 @@
-package fr.inria.diverse.spark_generator
+package fr.inria.diverse.generator.spark
 
 import org.apache.commons.lang3.Range
 import org.eclipse.emf.ecore.EClass

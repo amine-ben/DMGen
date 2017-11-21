@@ -1,4 +1,4 @@
-package fr.diverse.inria.generator
+package fr.inria.diverse.generator
 
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance

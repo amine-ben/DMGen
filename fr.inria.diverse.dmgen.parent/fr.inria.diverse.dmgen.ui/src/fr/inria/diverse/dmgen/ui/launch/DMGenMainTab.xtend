@@ -62,6 +62,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	
 	var String numberOfNodes
 	
+	var String persistenceScheme
 	
 	// launch configuration UI
 	
@@ -74,6 +75,10 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	var Text metamodelFileText
 	
 	var Combo sparkMasterCombo
+	
+	var Combo localBackendCombo
+	
+	var Combo distributedBackendCombo
 	
 	var Text hbaseHostText
 	
@@ -314,12 +319,29 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		hbaseGrp = new Group(rootCont, SWT.NULL)
 		hbaseGrp.text = DMGenConfigurationAttributes.HBASE_GROUP_NAME
 		hbaseGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
-		hbaseGrp.layout = new GridLayout (2, false)
+		hbaseGrp.layout = new GridLayout (3, false)
 		
 		val hbaseHostLabel = new Label(hbaseGrp, SWT.LEFT)
 		hbaseHostLabel.setLayoutData(new GridData(SWT.LEFT))
-		hbaseHostLabel.setText("Host:")
+		hbaseHostLabel.setText("Distributed backend:")
 
+		distributedBackendCombo = new Combo(hbaseGrp, SWT.READ_ONLY)
+		distributedBackendCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+		distributedBackendCombo.items = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES
+		distributedBackendCombo.addSelectionListener(new SelectionListener() {	
+
+				override widgetDefaultSelected(SelectionEvent e) {
+					persistenceScheme = distributedBackendCombo.text
+					updateLaunchConfigurationDialog
+					hidePathContent
+				}
+				
+				override widgetSelected(SelectionEvent e) {
+					persistenceScheme = distributedBackendCombo.text
+					updateLaunchConfigurationDialog
+					hidePathContent
+				}
+		})
 		hbaseHostText = new Text(hbaseGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
 		hbaseHostText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 		hbaseHostText.addModifyListener(new ModifyListener() {	
@@ -329,15 +351,36 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 				}
 		})
 		
+	
 		xmiGrp = new Group(rootCont, SWT.NULL)
 		xmiGrp.text = DMGenConfigurationAttributes.XMI_GROUP_NAME
-		xmiGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
-		xmiGrp.layout = new GridLayout (2, false)
+		xmiGrp.layoutData = new GridData(GridData.HORIZONTAL_ALIGN_FILL)
+		xmiGrp.layout = new GridLayout (3, false)
 		
 		val xmiLabel = new Label(xmiGrp, SWT.LEFT)
 		xmiLabel.setLayoutData(new GridData(SWT.LEFT))
-		xmiLabel.setText("Base path:")
+		xmiLabel.setText("Local backend:")
 
+		localBackendCombo = new Combo(xmiGrp, SWT.READ_ONLY)
+		localBackendCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+		localBackendCombo.items = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES
+		
+		localBackendCombo.addSelectionListener(new SelectionListener() {	
+
+				override widgetDefaultSelected(SelectionEvent e) {
+					sparkHost = sparkMasterCombo.text
+					updateLaunchConfigurationDialog
+					hidePathContent
+				}
+				
+				override widgetSelected(SelectionEvent e) {
+					sparkHost = sparkMasterCombo.text
+					updateLaunchConfigurationDialog
+					hidePathContent
+				}
+				
+		})
+		
 		xmiBasePathText = new Text(xmiGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
 		xmiBasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 		xmiBasePathText.addModifyListener(new ModifyListener() {	
@@ -395,17 +438,26 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			
 			sparkHost = conf.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, "")
 			sparkMasterCombo.text = sparkHost
+			persistenceScheme = conf.getAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME, "")
 			
 			if (sparkHost == DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) {
 				hbaseHost = conf.getAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, "")
-				hbaseHostText.text = hbaseHost				
+				hbaseHostText.text = hbaseHost
+				distributedBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.get(
+												DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.indexOf(persistenceScheme))
+							
+							
 			} else {
 				xmiBasePath = conf.getAttribute(DMGenConfigurationAttributes.XMI_HOST_NAME, "")
 				xmiBasePathText.text = xmiBasePath
+				localBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.get(
+											DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.indexOf(persistenceScheme)
+				)
 			}
 			
 			numberOfNodes = conf.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, "8")
 			sparkNodesText.text = numberOfNodes
+			
 			
 			hidePathContent
 			
@@ -431,7 +483,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		conf.setAttribute(DMGenConfigurationAttributes.MODULE_PATH, modulePathText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, metamodelFileText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, sparkMasterCombo.text)
-		
+		conf.setAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME,persistenceScheme)
 		if (sparkMasterCombo.text ==
 				DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) 
 			conf.setAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, hbaseHostText.text)

@@ -1,7 +1,7 @@
-package fr.inria.diverse.spark_generator
+package fr.inria.diverse.generator.spark
 
 import fr.inria.diverse.dmgen.Generator
-import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
 import java.util.HashMap
 import java.util.Map
 import java.util.Random

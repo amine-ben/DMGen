@@ -1,9 +1,9 @@
-package fr.inria.diverse.spark_generator
+package fr.inria.diverse.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil
 import fr.inria.diverse.dmgen.Generator
-import fr.inria.diverse.spark_generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.spark_generator.util.GenerationException
+import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.generator.util.GenerationException
 import java.io.File
 import java.io.IOException
 import java.text.MessageFormat
@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import java.util.Random
 import org.apache.commons.lang3.Range
+import fr.inria.diverse.generator.util.VerticesGenToPair
+import fr.inria.diverse.generator.util.EdgesGen
 
 class DMGenMeatamodelGenerator implements IGenerator{
 	
@@ -47,11 +49,9 @@ class DMGenMeatamodelGenerator implements IGenerator{
 			int numberOfNodes) {
 		super()
 		this.generator = generator
-		//this.prefix = generator.prefix
 		this.hbaseMaster = hbaseMaster
 		this.metamodel = metamodel
 		this.numberOfNodes = numberOfNodes
-		
 		
 		config = new DMGenGenerationConfig (metamodel, generator,Range.between(0,DEFAULT_PROPERTIES_RANGE), generator.seed )
 	}
@@ -117,9 +117,10 @@ class DMGenMeatamodelGenerator implements IGenerator{
 						.boxed()
 						.collect(Collectors.toList()), numberOfNodes) as JavaRDD<Long>
 
-				val exitCode =  vertices.mapPartitions(new VerticesGenToPair (config, generator.size/numberOfNodes, resource))
-										.mapPartitions(new EdgesGen(config, resource))
-										.count() 
+				val exitCode = if ( vertices.mapPartitions(new VerticesGenToPair (config, generator.size/numberOfNodes, resource) )
+											.mapPartitions(new EdgesGen(config, resource))
+											.count() > 1) 0
+							   else 1
 								
 				LOGGER.info(MessageFormat.format("Saving resource {0}", resource.getURI())) 
 				resource.save(Collections.emptyMap()) 
@@ -132,7 +133,6 @@ class DMGenMeatamodelGenerator implements IGenerator{
 			
 		} catch (Exception e) {
 			LOGGER.error(e.getLocalizedMessage()) 
-
 		}
 	}
 	
