@@ -1,4 +1,4 @@
-package fr.inria.diverse.dmgen.Launcher
+package fr.inria.diverse.dmgen.launcher
 
 interface DMGenConstants {
 	

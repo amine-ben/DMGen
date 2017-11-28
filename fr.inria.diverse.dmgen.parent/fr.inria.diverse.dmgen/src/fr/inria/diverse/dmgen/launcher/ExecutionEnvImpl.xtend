@@ -1,4 +1,4 @@
-package fr.inria.diverse.dmgen.Launcher
+package fr.inria.diverse.dmgen.launcher
 
 import com.google.inject.Injector
 import fr.inria.diverse.dmgen.DMGenStandaloneSetupGenerated
@@ -20,7 +20,9 @@ abstract class ExecutionEnvImpl implements ExecutionEnv {
 	protected var boolean isLocal
 	protected var String ePackageImpl
 	protected var String persistenceScheme
-
+	
+	// application arguments 
+	
 	def getPresistenceScheme() {
 		persistenceScheme
 	}

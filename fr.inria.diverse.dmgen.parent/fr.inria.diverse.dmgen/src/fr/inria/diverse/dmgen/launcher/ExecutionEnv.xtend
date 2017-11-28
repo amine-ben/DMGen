@@ -1,4 +1,4 @@
-package fr.inria.diverse.dmgen.Launcher
+package fr.inria.diverse.dmgen.launcher
 
 import org.apache.log4j.Logger
 import org.eclipse.core.runtime.CoreException

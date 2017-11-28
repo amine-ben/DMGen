@@ -1,4 +1,4 @@
-package fr.inria.diverse.dmgen.Launcher
+package fr.inria.diverse.dmgen.launcher
 
 import java.io.IOException
 import java.net.URL
@@ -42,7 +42,14 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	def setExecutors(String nodes) {
 		executors = nodes
 	}
+	
+	def setSparkMaster(String sparkMaster) {
+		this.sparkMaster = sparkMaster
+	}
 
+	def setFsMaster(String fsMaster) {
+		this.fsMaster = fsMaster
+	}
 	/**
 	 * Creates a {@link SparkLauncher} and launches the generation  
 	 */
