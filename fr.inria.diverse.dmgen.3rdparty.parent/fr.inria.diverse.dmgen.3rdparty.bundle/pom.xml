@@ -34,6 +34,41 @@
     	<groupId>org.apache.hadoop</groupId>
     	<artifactId>hadoop-hdfs</artifactId>
 	</dependency>
+	<dependency>
+	    <groupId>net.java.dev.jets3t</groupId>
+	    <artifactId>jets3t</artifactId>
+	    <version>0.7.1</version>
+	</dependency>
+	<!-- Hazalcast dependency -->
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast-spark</artifactId>
+	    <version>0.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast</artifactId>
+	    <version>3.7.2</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast-client</artifactId>
+	    <version>3.7.2</version>
+	</dependency>
+	<!-- Jline dependency -->
+	<dependency>
+	    <groupId>jline</groupId>
+	    <artifactId>jline</artifactId>
+	    <version>0.9.94</version>
+	</dependency>
+<!-- Local dependencies -->
+	<!-- dependency>
+	    <groupId>fr.inria.diverse</groupId>
+	    <artifactId>dag</artifactId>
+	    <version>1.0</version>
+	    <scope>system</scope>
+	    <systemPath>${project.basedir}/resources/dag.jar</systemPath>
+	</dependency-->
   </dependencies>
 
   <build>

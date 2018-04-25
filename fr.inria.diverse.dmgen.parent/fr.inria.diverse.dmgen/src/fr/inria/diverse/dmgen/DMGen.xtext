@@ -105,7 +105,7 @@ DECIMAL returns ecore::EFloat :
 ;
 
 FRAGMENT returns ecore::EString :
-	ID(('.' |'-') ID)*(':'INT)?
+	(ID|INT)('.' |'-' |ID|INT)*(':'INT)?
 ;
 
 terminal SCHEME:

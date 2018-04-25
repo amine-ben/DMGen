@@ -34,6 +34,33 @@
     	<groupId>org.apache.hadoop</groupId>
     	<artifactId>hadoop-hdfs</artifactId>
 	</dependency>
+	<dependency>
+    	<groupId>net.java.dev.jets3t</groupId>
+	    <artifactId>jets3t</artifactId>
+	    <version>0.7.1</version>
+	</dependency>
+	<!-- Jline dependency -->
+	<dependency>
+	    <groupId>jline</groupId>
+	    <artifactId>jline</artifactId>
+	    <version>0.9.94</version>
+	</dependency>
+	<!-- Hazalcast dependency -->
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast-spark</artifactId>
+	    <version>0.1</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast</artifactId>
+	    <version>3.7.2</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.hazelcast</groupId>
+	    <artifactId>hazelcast-client</artifactId>
+	    <version>3.7.2</version>
+	</dependency>
   </dependencies>
 
   <build>
@@ -65,7 +92,9 @@
             <_exportcontents>
               org.apache.spark.*,
               org.apache.hadoop.*,
-              org.apache.log4j
+              org.apache.log4j,
+              com.hazelcast.*,
+              jline.*
             </_exportcontents>
             <Import-Package>*;resolution:=optional</Import-Package>
             <Bundle-ClassPath>{maven-dependencies}</Bundle-ClassPath>

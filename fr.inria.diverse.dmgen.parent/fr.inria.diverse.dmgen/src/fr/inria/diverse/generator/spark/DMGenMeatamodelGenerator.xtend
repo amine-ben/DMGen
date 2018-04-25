@@ -1,7 +1,7 @@
 package fr.inria.diverse.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil
-import fr.inria.diverse.dmgen.Generator
+import fr.inria.diverse.dmgen.dMGen.Generator
 import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
 import fr.inria.diverse.generator.util.GenerationException
 import java.io.File

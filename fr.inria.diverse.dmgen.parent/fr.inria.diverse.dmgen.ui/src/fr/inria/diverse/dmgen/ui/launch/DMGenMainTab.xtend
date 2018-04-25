@@ -34,6 +34,8 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
+import javax.annotation.Nonnull
+import java.util.Set
 
 /**
  * Derived from EMFTVM Launcher @link 
@@ -367,13 +369,13 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		localBackendCombo.addSelectionListener(new SelectionListener() {	
 
 				override widgetDefaultSelected(SelectionEvent e) {
-					sparkHost = sparkMasterCombo.text
+					persistenceScheme = localBackendCombo.text
 					updateLaunchConfigurationDialog
 					hidePathContent
 				}
 				
 				override widgetSelected(SelectionEvent e) {
-					sparkHost = sparkMasterCombo.text
+					persistenceScheme = localBackendCombo.text
 					updateLaunchConfigurationDialog
 					hidePathContent
 				}
@@ -424,10 +426,11 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			
 			moduleFileName = conf.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, "")
 			
-			// loading the genConf 
+			// loading the genConf & initiliazing the hbase
 			if (moduleFileName != null && 
-					moduleFileName != "")
-				loadGenConfig(moduleFileName)
+					moduleFileName != ""){
+					loadGenConfig(moduleFileName)
+					}
 				
 			modulePath = conf.getAttribute(DMGenConfigurationAttributes.MODULE_PATH, "")
 			modulePathText.text = modulePath
@@ -438,20 +441,18 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			sparkHost = conf.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, "")
 			sparkMasterCombo.text = sparkHost
 			persistenceScheme = conf.getAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME, "")
-			
+			val schemeIndex = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.indexOf(persistenceScheme)
 			if (sparkHost == DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) {
-				hbaseHost = conf.getAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, "")
-				hbaseHostText.text = hbaseHost
-				distributedBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.get(
-												DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.indexOf(persistenceScheme))
-							
-							
+				hbaseHost = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
+				hbaseHostText.text = hbaseHost	
+				if (schemeIndex > -1) 
+					distributedBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.get(schemeIndex)
+											
 			} else {
-				xmiBasePath = conf.getAttribute(DMGenConfigurationAttributes.XMI_HOST_NAME, "")
+				xmiBasePath = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
 				xmiBasePathText.text = xmiBasePath
-				localBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.get(
-											DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.indexOf(persistenceScheme)
-				)
+				if (schemeIndex > -1)
+					localBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.get(schemeIndex)
 			}
 			
 			numberOfNodes = conf.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, "8")
@@ -464,10 +465,12 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	def loadGenConfig(String module) {
+	def loadGenConfig(@Nonnull String module) {
 		new DMGenStandaloneSetup().createInjectorAndDoEMFRegistration()
 		val resource = rs.getResource(URI.createURI(module),true)
 		genConfig = resource.contents.head as GenConfig
+		
+		
  		
 	}
 	
@@ -483,16 +486,17 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		conf.setAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, metamodelFileText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME, sparkMasterCombo.text)
 		conf.setAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME,persistenceScheme)
+		conf.setAttribute(DMGenConfigurationAttributes.FS_HOST_NAME, genConfig.hdfsMaster.uriToString)
 		if (sparkMasterCombo.text ==
 				DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) 
-			conf.setAttribute(DMGenConfigurationAttributes.HBASE_HOST_NAME, hbaseHostText.text)
+			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, hbaseHostText.text)
 		else 
-			conf.setAttribute(DMGenConfigurationAttributes.XMI_HOST_NAME, xmiBasePathText.text)
+			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, xmiBasePathText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, moduleFileName)
 		conf.setAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, sparkNodesText.text)
-		
 	}
-	/**
+	
+		/**
 	 * {@inheritDoc}
 	 */
 	override setDefaults(ILaunchConfigurationWorkingCopy configuration) {
@@ -574,6 +578,16 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		}
 		builder.toString
 	}
+	
+	def String uriToString(fr.inria.diverse.dmgen.dMGen.URI uri) {
+		val StringBuilder builder = new StringBuilder(uri.scheme)
+		for ( frag : uri.fragments) {
+			builder.append(frag)
+			builder.append('/')
+		}
+		builder.toString
+	}
+	
 	
 	def boolean assertNotNull(Object object) {
 		if (object == null)

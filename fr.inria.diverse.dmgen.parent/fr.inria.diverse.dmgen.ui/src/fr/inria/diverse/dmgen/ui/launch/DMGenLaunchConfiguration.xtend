@@ -38,7 +38,9 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	) throws CoreException {
 		var isLocal = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME,"")
 								   .equals(DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(1))
-		ExecutionEnvFactory.create(isLocal).initializeFromConfiguration(configuration).launch 
+		 ExecutionEnvFactory.create(isLocal)
+							.initializeFromConfiguration(configuration)
+							.launch
  }
 	/**
 	 * Initializes the execution environment from the executor 
@@ -46,37 +48,43 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	 * @param {@link IConfiguration} <code>configuration</code>
 	 */	
 	def ExecutionEnv initializeFromConfiguration(ExecutionEnv executionEnv, 
-														ILaunchConfiguration configuration) 
-														throws IOException {
+													ILaunchConfiguration configuration) 
+													throws IOException {
 		
-		var isLocal = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_HOST_NAME,"")
-									.equals(DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(1))
-		
+	
 		val editor = EditorUtils.getActiveXtextEditor()
+		val execEnvImpl = executionEnv as ExecutionEnvImpl	
 			
 		if (editor != null) {		
 			val genFile  =  (editor.getEditorInput() as FileEditorInput).getFile();
 			try{
-				(executionEnv as ExecutionEnvImpl).dmgenURL = DMGenUtil.exportXMI(genFile.fullPath.toOSString, resourceSet).toFileString
+				execEnvImpl.dmgenURL = DMGenUtil.exportXMI(genFile.fullPath.toOSString, resourceSet).toFileString
 			} catch (IOException e) {
 				LOG.error(String.format("The file {0} is not found", genFile.fullPath.toOSString()), e)
 				throw e
 			} 
 		} else {
 			val dmgenFileName = configuration.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, StringUtils.EMPTY)
-			if ( dmgenFileName != StringUtils.EMPTY) {
-				(executionEnv as ExecutionEnvImpl).dmgenURL = DMGenUtil.exportXMI(dmgenFileName, resourceSet).toFileString					 
+			
+			if ( !dmgenFileName.equals(StringUtils.EMPTY)) {
+				execEnvImpl.dmgenURL = DMGenUtil.exportXMI(dmgenFileName, resourceSet).toFileString					 
 			} else {
 				throw new IOException("Unable to find active DMGen file")	
 			}
 		}	
 		
-		if (isLocal) {
-			(executionEnv as LocalExecutionEnvImpl).initializeFromConfiguration(configuration)
-		} else {
-			(executionEnv as DistributedExecutionEnvImpl).initializeFromConfiguration(configuration)	
+		execEnvImpl.persistenceScheme = configuration.getAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME, "")
+		execEnvImpl.metamodelURL = configuration.getAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, "")
+		
+		// distribution specific parameters 
+		if (execEnvImpl instanceof DistributedExecutionEnvImpl) {
+			val distExec = execEnvImpl as DistributedExecutionEnvImpl
+			distExec.fsMaster = configuration.getAttribute(DMGenConfigurationAttributes.FS_HOST_NAME, StringUtils.EMPTY)
+			distExec.executors = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, StringUtils.EMPTY)
+			//distExec.hbaseMaster = configuration.getAttribute(DMGenConfigurationAttributes., StringUtils.EMPTY)
+
 		}
-		return executionEnv
+		return execEnvImpl
 	}
 					
 }

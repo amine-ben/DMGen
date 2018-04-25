@@ -1,137 +1,105 @@
-package fr.inria.diverse.generator
-
+package fr.inria.diverse.generator.util
+import com.google.common.base.Optional
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
-import fr.inria.diverse.dmgen.Generator
-import fr.inria.diverse.generator.spark.IGenerator
+import fr.inria.atlanmod.neoemf.core.PersistentEObject
 import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
 import fr.inria.diverse.generator.util.EPackagesData
 import java.text.MessageFormat
-import java.util.Random
-import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.base.Optional
-import fr.inria.atlanmod.neoemf.core.PersistentEObject
-import org.eclipse.emf.ecore.EAttribute
-import org.eclipse.emf.ecore.EEnum
-import org.apache.commons.math3.distribution.IntegerDistribution
-import org.apache.commons.lang3.RandomStringUtils
-import org.eclipse.emf.ecore.EReference
-import com.google.common.collect.ImmutableMultiset
+import java.util.ArrayList
+import java.util.Iterator
 import java.util.List
-import com.google.common.collect.ImmutableList
+import java.util.Random
+import org.apache.commons.lang.RandomStringUtils
+import org.apache.commons.math3.distribution.IntegerDistribution
+import org.apache.log4j.LogManager
+import org.apache.log4j.Logger
+import org.apache.spark.api.java.function.FlatMapFunction
+import org.eclipse.emf.ecore.EAttribute
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.resource.Resource
 
 import static com.google.common.primitives.Primitives.isWrapperType
 import static com.google.common.primitives.Primitives.unwrap
 import static com.google.common.collect.Iterables.get
 
+import com.google.common.collect.ImmutableMultiset
+import com.google.common.collect.ImmutableList
 
-/**
- * @author <a href="mailto:mikael.barbero@obeo.fr">Mikael Barbero</a>
- * @author <a href="mailto:abel.gomez-llana@inria.fr">Abel Gomez</a>
- * @author <a href="mailto:amine.benelallam@inria.fr">Amine Benelallam</a>
- */
 
- 
-@Accessors (PUBLIC_GETTER, PROTECTED_SETTER) 
-class LocalGenerator implements IGenerator {
+class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 	
-	static protected val Logger LOGGER = Logger.getLogger(LocalGenerator.name)
+	//static val serialVersionUID = 9182626593341469021L
 	
-	protected var ISpecimenConfiguration configuration
-	protected var EPackagesData ePackagesData
-	protected Generator generator;
-	protected Random random
-	/* inner Variable state */
-	protected var int currentDepth
-	protected var int currentMaxDepth
-	protected var int currentObjectCount
-	protected var int goalObjects
+	static val seed = 265933L
 	
-	var MultiMap<String, String> indexByName
-    var HazelcastInstance hcInstance
-  
-  
-  	/**
-  	 * 
-  	 */
-	override getConfig() {
-		configuration
-	}
-	/**
-	 * TODO replace/adapt to GEnerator configuration  with 
-	 * @param {@link ISpeciman} <code>configuration</code>
-	 */
-	new (ISpecimenConfiguration configuration) {
-		this.configuration = configuration
-		random = new Random(configuration.seed)
-		hcInstance = Hazelcast.newHazelcastInstance
-		indexByName = hcInstance.getMultiMap("indexed-elements")
-		ePackagesData = new EPackagesData(configuration.ePackages,
-			 configuration.ignoredEClasses)	
-	}
+	static val Logger LOGGER = LogManager.getLogger("Generator")
+	
+	static var ISpecimenConfiguration _conf
+	static var EPackagesData ePackagesData
+	static var Resource _resource
+	static var HazelcastInstance hcInstance
+	
+	var Random _generator
+	
+	var currentDepth = 0
+	var currentMaxDepth = 0
+	var currentObjectCount = 0
+
+	var long averageSize
+	
 	/**
 	 * 
 	 */
-	new (ISpecimenConfiguration configuration, long seed, Generator generator) {
-		this(configuration)
-		this.generator = generator
+	new (ISpecimenConfiguration conf, long averageSize, Resource resource) {
+		
+    	_conf = conf
+		_generator = new Random(seed)
+		ePackagesData = new EPackagesData(conf.ePackages, 
+											conf.ignoredEClasses)
+		this.averageSize = averageSize
+		_resource = resource
+		hcInstance = Hazelcast.newHazelcastInstance 
 	}
-   /**
-     * Core method for generating models elements
-     */
-	override generate(Resource resource) {
-			LOGGER.info(MessageFormat.format("Creating {0} model{1} using as generator {2}", 
-								  generator.number, if (generator.number > 1 ) 's' else "" , 
-								  "Spark Model Generator"))
-			
-			LOGGER.info(MessageFormat.format("Generator seed is ''{0}''", config.getSeed()))
-			LOGGER.info(MessageFormat.format("Config parameters: range for models size is [{0}, {1}]", 
-					config.getElementsRange().getMinimum(), config.getElementsRange().getMaximum())) 
-			LOGGER.info(MessageFormat.format("Config parameters: range for properties number is [{0}, {1}]", 
-					config.getPropertiesRange().getMinimum(), config.getPropertiesRange().getMaximum())) 
-			LOGGER.info(MessageFormat.format("Config parameters: range for references number is [{0}, {1}]", 
-					config.getReferencesRange().getMinimum(), config.getReferencesRange().getMaximum())) 
-			LOGGER.info(MessageFormat.format("Config parameters: range for values length is [{0}, {1}]", 
-					config.getValuesRange().getMinimum(), config.getValuesRange().getMaximum())) 
-					
 	
-		val  possibleRootEClasses = configuration.possibleRootEClasses()
-
-		currentDepth = 0
-		currentMaxDepth = 0
-		currentObjectCount = 0
-		goalObjects = generator.size
-
-		while (currentObjectCount < goalObjects) {
-			val eClass = configuration.getNextRootEClass(possibleRootEClasses);
-			currentMaxDepth = configuration.getDepthDistributionFor(eClass).sample();
-			val generateEObject = generateEObject(eClass, indexByName);
-			if (generateEObject.isPresent()) {
-				resource.contents.add(generateEObject.get());
+	/**
+	 * 
+	 */
+	 override Iterator<String> call(Iterator<Long> key) throws Exception {
+	 	
+		val result = new ArrayList<String> 
+		val possibleRootEClasses = _conf.possibleRootEClasses 
+		val MultiMap<String, String> indexByName = hcInstance.getMultiMap("indexed-elements")
+ 		while (currentObjectCount < averageSize) {
+			var eClass = _conf.getNextRootEClass(possibleRootEClasses)
+			currentMaxDepth = _conf.getDepthDistributionFor(eClass).sample 
+			val Optional<EObject> generateEObject = generateEObject(eClass, result, indexByName)
+			if (generateEObject.isPresent) {
+				_resource.contents.add(generateEObject.get)
 			}
-		}
-
-		LOGGER.info("Generating cross-references");
-	
+ 		}
+		return result.iterator 
 	}
 	
-	private def Optional<EObject> generateEObject(EClass eClass, MultiMap<String,String> indexByName) {
+	private def Optional<EObject> generateEObject(EClass eClass, ArrayList<String> result,MultiMap<String,String> indexByName) {
 		
 		currentObjectCount++
-		val eObject = createEObject(eClass, indexByName)
+		LOGGER.info(MessageFormat.format("Generating EObject {0} / ~{1} (EClass={2})", 
+				currentObjectCount, averageSize, eClass.name))
+		val eObject = createEObject(eClass, result,indexByName)
 		generateEAttributes(eObject, eClass)
-		generateEContainmentReferences(eObject, eClass, indexByName)
+		generateEContainmentReferences(eObject, eClass, result, indexByName)
 		return Optional.fromNullable(eObject)
 	}
-	
-	protected def EObject createEObject(EClass eClass, MultiMap<String, String> indexByName) {
+
+	protected def EObject createEObject(EClass eClass, ArrayList<String> result, MultiMap<String, String> indexByName) {
 		val eObject = eClass.EPackage.EFactoryInstance.create(eClass)
 
+		result.add((eObject as PersistentEObject).id.toString)
 		indexByName.put((eObject as PersistentEObject).id.toString, eClass.name)
 		for (EClass eSuperType : eClass.EAllSuperTypes) {
 			indexByName.put((eObject as PersistentEObject).id.toString, eSuperType.name)
@@ -146,7 +114,7 @@ class LocalGenerator implements IGenerator {
 	}
 	
 	protected def void generateAttributes(EObject eObject, EAttribute eAttribute) {
-		val distribution = configuration.getDistributionFor(eAttribute)
+		val distribution = _conf.getDistributionFor(eAttribute)
 		val eAttributeType = eAttribute.EAttributeType 
 		val instanceClass = eAttributeType.instanceClass 
 		if (eAttribute.isMany) {
@@ -159,14 +127,16 @@ class LocalGenerator implements IGenerator {
 	protected def boolean booleanInDistribution(IntegerDistribution distribution) {
 		val sample = distribution.sample
 		return sample <= distribution.numericalMean 
-	}	
-	 def void generateSingleAttribute(EObject eObject, EAttribute eAttribute, IntegerDistribution distribution,
+	}
+	
+	protected def void generateSingleAttribute(EObject eObject, EAttribute eAttribute, IntegerDistribution distribution,
 			Class<?> instanceClass) {
 		if (eAttribute.isRequired.operator_or(booleanInDistribution(distribution))) {
 			var intermediateInstance = instanceClass 
 			var Object value
 			val eAttributeType = eAttribute.EAttributeType 
 			if (eAttributeType instanceof EEnum) {
+				//assert instanceClass == null
 				val eEnum =  eAttributeType as EEnum
 				intermediateInstance = int
 				val randomValue = Math.abs(nextValue(intermediateInstance) as Integer)
@@ -200,6 +170,7 @@ class LocalGenerator implements IGenerator {
 			var Object value
 			val eAttributeType = eAttribute.EAttributeType 
 			if (eAttributeType instanceof EEnum) {
+				//assert instanceClass == null
 				val eEnum = eAttributeType as EEnum
 				intermediateInstance = int
 				val randomValue = Math.abs( nextValue(instanceClass) as Integer)
@@ -220,8 +191,8 @@ class LocalGenerator implements IGenerator {
 	protected def Object nextObject(Class<?> instanceClass) {
 		if (instanceClass == String) {
 			return RandomStringUtils.random(
-					configuration.getValueDistributionFor(instanceClass).sample, 
-					0, 0, true, true, null, random)
+					_conf.getValueDistributionFor(instanceClass).sample, 
+					0, 0, true, true, null, _generator)
 		} else {
 			LOGGER.warn(
 					MessageFormat.format("Do not know how to randomly generate ''{0}'' object",
@@ -237,52 +208,53 @@ class LocalGenerator implements IGenerator {
 	 */
 	protected def Object nextPrimitive(Class<?> instanceClass) {
 		if (instanceClass == boolean) {
-			return random.nextBoolean 
+			return _generator.nextBoolean 
 		} else if (instanceClass == byte) {
 			var byte[] buff = newByteArrayOfSize(1)
-			random.nextBytes(buff)
+			_generator.nextBytes(buff)
 			return buff.get(0)
 		} else if (instanceClass == char) {
-			val nextChar =  random.nextInt as char 
+			val nextChar =  _generator.nextInt as char 
 			return nextChar
 		} else if (instanceClass == double) {
-			return random.nextDouble 
+			return _generator.nextDouble 
 		} else if (instanceClass == float) {
-			return random.nextFloat 
+			return _generator.nextFloat 
 		} else if (instanceClass == int) {
-			return random.nextInt 
+			return _generator.nextInt 
 		} else if (instanceClass == long) {
-			return random.nextLong 
+			return _generator.nextLong 
 		} else if (instanceClass == short) {
-			val nextShort =  random.nextInt as short
+			val nextShort =  _generator.nextInt as short
 			return nextShort
 		} else {
 			throw new IllegalArgumentException 
 		}
 	}
 	
-		/**
+	/**
 	 * @param eObject
 	 * @param eClass
 	 * @param indexByKind
 	 */
-	protected def generateEContainmentReferences(EObject eObject, EClass eClass,  MultiMap<String, String> indexByName) {
+	protected def generateEContainmentReferences(EObject eObject, EClass eClass,
+			 ArrayList<String> result, MultiMap<String, String> indexByName) {
 		for (EReference eReference : ePackagesData.eAllContainment(eClass)) {
 			if (eReference.isRequired || 
-					(currentObjectCount < goalObjects && currentDepth <= currentMaxDepth)) {
-				generateEContainmentReference(eObject, eReference, indexByName)
+					(currentObjectCount < averageSize && currentDepth <= currentMaxDepth)) {
+				generateEContainmentReference(eObject, eReference, result,indexByName)
 			}
 		}
 
 	}
-	
+
 	/**
 	 * @param eObject
 	 * @param eReference
 	 * @param indexByKind
 	 */
 	protected def generateEContainmentReference(EObject eObject, EReference eReference,
-			 MultiMap<String, String> indexByName) {
+			 ArrayList<String> result, MultiMap<String, String> indexByName) {
 		currentDepth++
 
 		val eAllConcreteSubTypeOrSelf = ePackagesData.eAllConcreteSubTypeOrSelf(eReference)
@@ -291,9 +263,9 @@ class LocalGenerator implements IGenerator {
 
 		if (!eAllConcreteSubTypesOrSelf.isEmpty) {
 			if (eReference.isMany) {
-				generateManyContainmentReference(eObject, eReference, indexByName,eAllConcreteSubTypesOrSelf)
+				generateManyContainmentReference(eObject, eReference, result, indexByName,eAllConcreteSubTypesOrSelf)
 			} else {
-				generateSingleContainmentReference(eObject, eReference, indexByName, eAllConcreteSubTypesOrSelf)
+				generateSingleContainmentReference(eObject, eReference, result, indexByName, eAllConcreteSubTypesOrSelf)
 			}
 		}
 		currentDepth--
@@ -301,13 +273,15 @@ class LocalGenerator implements IGenerator {
 
 	protected def generateSingleContainmentReference(EObject eObject, 
 														EReference eReference, 
+														ArrayList<String> result, 
 														MultiMap<String, String> indexByName, 
-														ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf) {														
-		val distribution = configuration.getDistributionFor(eReference)
+														ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf) {
+															
+		val distribution = _conf.getDistributionFor(eReference)
 		if (eReference.isRequired || booleanInDistribution(distribution)) {
 			LOGGER.info(MessageFormat.format("Generating EReference ''{0}'' in EObject {1}", eReference.name, eObject.toString))
-			val idx = random.nextInt(eAllConcreteSubTypesOrSelf.size)
-			val Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx), indexByName)
+			val idx = _generator.nextInt(eAllConcreteSubTypesOrSelf.size)
+			val Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx), result, indexByName)
 			if (nextEObject.isPresent) {
 				eObject.eSet(eReference, nextEObject.get)
 			}
@@ -316,15 +290,16 @@ class LocalGenerator implements IGenerator {
 
 	protected def generateManyContainmentReference(EObject eObject, 
 													  EReference eReference,
+													  ArrayList<String> result, 
 													  MultiMap<String, String> indexByName, 
 													  ImmutableMultiset<EClass> eAllConcreteSubTypesOrSelf) {
-		val distribution = configuration.getDistributionFor(eReference)
+		val distribution = _conf.getDistributionFor(eReference)
 		val values =  eObject.eGet(eReference) as List<EObject>
 		val sample = distribution.sample 
 		LOGGER.info(MessageFormat.format("Generating {0} values for EReference ''{1}'' in EObject {2}", sample, eReference.name, eObject.toString))
 		for (var i = 0; i < sample;  i++) {
-			val idx = random.nextInt(eAllConcreteSubTypesOrSelf.size)
-			val Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx),  indexByName)
+			val idx = _generator.nextInt(eAllConcreteSubTypesOrSelf.size)
+			val Optional<EObject> nextEObject = generateEObject(get(eAllConcreteSubTypesOrSelf, idx), result, indexByName)
 			if (nextEObject.isPresent) {
 				values.add(nextEObject.get)
 			}
@@ -335,9 +310,10 @@ class LocalGenerator implements IGenerator {
 																  ImmutableList<EClass> eAllSubTypesOrSelf) {
 		val ImmutableMultiset.Builder<EClass> eAllSubTypesOrSelfWithWeights = ImmutableMultiset.builder  
 		for (EClass eClass : eAllSubTypesOrSelf) {
-			eAllSubTypesOrSelfWithWeights.addCopies(eClass, configuration.getWeightFor(eReference, eClass))
+			eAllSubTypesOrSelfWithWeights.addCopies(eClass, _conf.getWeightFor(eReference, eClass))
 		}
 		return eAllSubTypesOrSelfWithWeights.build 
 	}
-	
+
 }
+		

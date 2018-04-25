@@ -3,7 +3,6 @@ package fr.inria.diverse.generator
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
-import fr.inria.diverse.dmgen.Generator
 import fr.inria.diverse.generator.spark.IGenerator
 import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
 import fr.inria.diverse.generator.util.EPackagesData
@@ -28,7 +27,7 @@ import com.google.common.collect.ImmutableList
 import static com.google.common.primitives.Primitives.isWrapperType
 import static com.google.common.primitives.Primitives.unwrap
 import static com.google.common.collect.Iterables.get
-
+import fr.inria.diverse.dmgen.dMGen.Generator
 
 /**
  * @author <a href="mailto:mikael.barbero@obeo.fr">Mikael Barbero</a>
@@ -37,7 +36,7 @@ import static com.google.common.collect.Iterables.get
  */
 
  
-@Accessors (PUBLIC_GETTER, PROTECTED_SETTER) 
+//@Accessors (PUBLIC_GETTER, PROTECTED_SETTER) 
 class LocalGenerator implements IGenerator {
 	
 	static protected val Logger LOGGER = Logger.getLogger(LocalGenerator.name)

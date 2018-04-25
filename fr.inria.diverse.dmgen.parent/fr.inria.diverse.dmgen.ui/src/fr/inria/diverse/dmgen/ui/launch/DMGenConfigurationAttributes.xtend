@@ -22,11 +22,10 @@ interface DMGenConfigurationAttributes {
 	val String SPARK_NODES_NUMBER = "spark.nodes"
 	val String SPARK_NODES_NUMBER_DEFAULT = "*"
 	
-	val String HBASE_GROUP_NAME = "HBase host"
-	val String HBASE_HOST_NAME = "hbase.host"
+	val String HBASE_GROUP_NAME = "HBase Base Path"
 	
-	val String XMI_GROUP_NAME = "XMI Base"
-	val String XMI_HOST_NAME = "xmi.base"
+	val String XMI_GROUP_NAME = "Local Base Path"
+	val String BASE_PATH = "path.base"
 	
 	val String FS_HOST_NAME = "fs.name"	
 	val String DEFAULT_EXTENSION = "dmgen"

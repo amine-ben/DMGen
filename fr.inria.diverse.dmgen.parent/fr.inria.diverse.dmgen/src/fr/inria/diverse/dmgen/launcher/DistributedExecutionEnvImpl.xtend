@@ -23,7 +23,6 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	var String sparkMaster
 	var String hbaseMaster
 	var String fsMaster
-	var String ePackageImpl
 	var String executors
 	// spark configuration variables
 	// var String sparkDeployMode = "cluster"
@@ -55,17 +54,25 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	 */
 	override launch() throws CoreException {
 		// setting up the execution environment the execution environment after setting up 
+		setupEnv
 		// creating a sparkLauncher using the environment variables from 
 		val sparkLauncher = new SparkLauncher(#{DMGenConstants.YARN_CONF_DIR -> yarnConfPath})
 
 		// add application arguments to spark launcher
 		sparkLauncher.addAppArgs(
-			#[HDFS_MASTER, hbaseMaster, METAMODEL_URL, metamodelURL, DMGEN_URL, dmgenURL, E_PACKAGE_CLASS, ePackageImpl,
+			#[HDFS_MASTER, hbaseMaster, 
+				METAMODEL_URL, metamodelURL, 
+				DMGEN_URL, dmgenURL, 
+				E_PACKAGE_CLASS, ePackageImpl,
 				HBASE_MASTER, hbaseMaster])
 
-		val handle = sparkLauncher.setAppResource(DMGenConstants.SPARK_APP_RESOURCE).setMainClass(
-			DMGenConstants.SPARK_MAIN_CLASS).setMaster(sparkMaster)// .setDeployMode(sparkDeployMode)
-		.setSparkHome(sparkHomePath).setVerbose(true).setConf(SparkLauncher.EXECUTOR_CORES, executors).startApplication
+		val handle = sparkLauncher.setAppResource(DMGenConstants.SPARK_APP_RESOURCE)
+								  .setMainClass(DMGenConstants.SPARK_MAIN_CLASS)
+								  .setMaster(sparkMaster)// .setDeployMode(sparkDeployMode)
+								  .setSparkHome(sparkHomePath)
+								  .setVerbose(true)
+								  .setConf(SparkLauncher.EXECUTOR_CORES, executors)
+								  .startApplication
 
 		val countDownLatch = new CountDownLatch(1)
 		handle.addListener(new SparkAppHandle.Listener {
@@ -89,8 +96,11 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	 * Creates application arguments 
 	 */
 	protected def String[] createAppArgs() {
-		return #[HDFS_MASTER, hbaseMaster, METAMODEL_URL, metamodelURL, DMGEN_URL, dmgenURL, E_PACKAGE_CLASS,
-			ePackageImpl, HBASE_MASTER, hbaseMaster]
+		return #[HDFS_MASTER, hbaseMaster, 
+					METAMODEL_URL, metamodelURL, 
+					DMGEN_URL, dmgenURL, 
+					E_PACKAGE_CLASS, ePackageImpl, 
+					HBASE_MASTER, hbaseMaster]
 	}
 
 	override setupEnv() throws IOException, CoreException {
@@ -104,7 +114,6 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 		fsConfiguration.set("dfs.permissions.enabled", "false")
 
 		val fs = FileSystem.get(fsConfiguration)
-
 		// fetching and copying sparkApp
 		// val sparkApp = new org.eclipse.core.runtime.Path("/resources/"+DMGenConstants.SPARK_APP_RESOURCE) as IPath
 		val sparkAppFile = FileLocator.toFileURL(

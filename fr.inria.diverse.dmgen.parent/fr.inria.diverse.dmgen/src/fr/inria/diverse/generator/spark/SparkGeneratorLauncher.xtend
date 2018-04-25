@@ -2,8 +2,8 @@ package fr.inria.diverse.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI
 import fr.inria.atlanmod.neoemf.resource.PersistentResourceFactory
-import fr.inria.diverse.dmgen.GenConfig
-import fr.inria.diverse.dmgen.impl.DMGenPackageImpl
+import fr.inria.diverse.dmgen.dMGen.GenConfig
+import fr.inria.diverse.dmgen.dMGen.impl.DMGenPackageImpl
 import fr.inria.diverse.generator.util.HadoopURIConverterImpl
 import java.text.MessageFormat
 import java.util.Comparator

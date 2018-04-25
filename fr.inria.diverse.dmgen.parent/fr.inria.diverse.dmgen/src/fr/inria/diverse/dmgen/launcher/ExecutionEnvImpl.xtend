@@ -17,15 +17,20 @@ abstract class ExecutionEnvImpl implements ExecutionEnv {
 	// runtime arguments	
 	protected var String metamodelURL
 	protected var String dmgenURL
-	protected var boolean isLocal
+	
+	//protected var boolean isLocal
 	protected var String ePackageImpl
 	protected var String persistenceScheme
-	
 	// application arguments 
 	
 	def getPresistenceScheme() {
 		persistenceScheme
 	}
+	
+	def setPersistenceScheme (String scheme) {
+		persistenceScheme = scheme
+	}
+	
 	def getMetamodelURL() {
 		metamodelURL
 	}
@@ -46,17 +51,10 @@ abstract class ExecutionEnvImpl implements ExecutionEnv {
 		dmgenURL = dmgen
 	}
 
-	def isLocal() {
-		isLocal
-	}
-	
-	def setIsLocal(boolean isLocal) {
-		this.isLocal = isLocal
-	}
-
 	/**
 	 * Default constructor
 	 */
+	 
 	new() {
 		super()
 	}
@@ -68,13 +66,10 @@ abstract class ExecutionEnvImpl implements ExecutionEnv {
 	 * @param {@link String} <code>ePackage</code>
 	 * @param {@link Boolean} <code>isLocal</code>
 	 */
-	new(String dmgenURL, String metamodelURL, String ePackage, boolean isLocal) {
-
+	new(String dmgenURL, String metamodelURL, String ePackage) {
 		this.dmgenURL = dmgenURL
 		this.metamodelURL = metamodelURL
-		this.ePackageImpl = ePackage
-		this.isLocal = isLocal
-		
+		this.ePackageImpl = ePackage		
 	}
 
 	abstract override launch() throws CoreException

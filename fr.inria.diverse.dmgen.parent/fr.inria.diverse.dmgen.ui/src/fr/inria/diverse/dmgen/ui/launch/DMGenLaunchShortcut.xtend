@@ -25,7 +25,6 @@ class DMGenLaunchShortcut implements ILaunchShortcut {
 	override launch(ISelection selection, String mode) {
 		val structuredSelection = selection as IStructuredSelection
 		file = structuredSelection.firstElement as IFile
-		
 		launch(file, mode)
 	}
 	/**
@@ -41,14 +40,14 @@ class DMGenLaunchShortcut implements ILaunchShortcut {
 	protected def launch (IFile file, String mode) {
 		
 		//val moduleName = file.fullPath.lastSegment
-		try {
+	try {
 			val availableConfs = launchManager.getLaunchConfigurations(getDMGenConfigurationType())
 											   .filter[ config | config.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, "")
 																	   .equals(file.fullPath.toOSString)
 											  ]
 											  
-			if (! availableConfs.isEmpty) {
-				var configuration = availableConfs.get(0)
+			if (!availableConfs.isEmpty) {
+				var configuration = availableConfs.head
 				DebugUITools.openLaunchConfigurationDialog(DmgenActivator.instance.shell,
 															configuration, 
 															DebugUITools.getLaunchGroup(configuration, mode).identifier, 
@@ -64,8 +63,8 @@ class DMGenLaunchShortcut implements ILaunchShortcut {
 			}		
 			
 		} catch (Exception e) {
-			System.err.println(e.message)
-			MessageDialog.openError(DmgenActivator.instance.shell, "Launching error", e.getMessage()); //$NON-NLS-1$
+			System.err.println(e)
+			MessageDialog.openError(DmgenActivator.instance.shell, "Launching error", e.toString); //$NON-NLS-1$
 		}
 	}
 	
