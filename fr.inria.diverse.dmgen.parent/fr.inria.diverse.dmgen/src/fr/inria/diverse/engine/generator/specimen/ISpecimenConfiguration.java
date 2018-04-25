@@ -10,7 +10,7 @@
  *     Abel Gomez (AtlanMod) - Additional modifications      
 *******************************************************************************/
 
-package fr.inria.diverse.generator.specimen;
+package fr.inria.diverse.engine.generator.specimen;
 
 import java.io.Serializable;
 import java.util.List;

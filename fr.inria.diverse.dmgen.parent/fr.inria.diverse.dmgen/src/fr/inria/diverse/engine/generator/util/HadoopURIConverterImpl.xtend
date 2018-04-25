@@ -1,4 +1,4 @@
-package fr.inria.diverse.generator.util
+package fr.inria.diverse.engine.generator.util
 
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl
 import org.apache.hadoop.conf.Configuration

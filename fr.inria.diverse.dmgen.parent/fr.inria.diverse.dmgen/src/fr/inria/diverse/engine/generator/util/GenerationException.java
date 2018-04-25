@@ -9,7 +9,7 @@
  *     Abel G�mez (AtlanMod) - Additional modifications      
  *******************************************************************************/
 
-package fr.inria.diverse.generator.util;
+package fr.inria.diverse.engine.generator.util;
 
 
 /**

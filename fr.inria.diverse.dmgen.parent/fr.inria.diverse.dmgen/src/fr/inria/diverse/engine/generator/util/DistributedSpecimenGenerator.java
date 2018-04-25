@@ -10,7 +10,7 @@
  *     Amine Benelallam (DiverSE) - Additional modifications      
  *******************************************************************************/
 
-package fr.inria.diverse.generator.spark;
+package fr.inria.diverse.engine.generator.util;
 
 import static com.google.common.collect.Iterables.get;
 import static com.google.common.primitives.Primitives.isWrapperType;
@@ -42,9 +42,8 @@ import com.google.common.collect.ImmutableMultiset;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ListMultimap;
 import fr.inria.atlanmod.neoemf.core.PersistentEObject;
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration;
-import fr.inria.diverse.generator.util.ClassIterator;
-import fr.inria.diverse.generator.util.EPackagesData;
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration;
+import fr.inria.diverse.engine.generator.IGenerator;
 
 /**
  * 

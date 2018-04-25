@@ -10,7 +10,7 @@
  *     Amine Benelallam (AtlanMod) - Additional modifications      
  *******************************************************************************/
 
-package fr.inria.diverse.generator.spark;
+package fr.inria.diverse.engine.generator.util;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -30,10 +30,10 @@ import fr.inria.atlanmod.neoemf.data.PersistenceBackendFactoryRegistry;
 import fr.inria.atlanmod.neoemf.data.hbase.HBasePersistenceBackendFactory;
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil;
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI;
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration;
-import fr.inria.diverse.generator.util.GenerationException;
-import fr.inria.diverse.generator.util.GeneratorUtil;
-import fr.inria.diverse.generator.util.VerticesGenToPair;
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration;
+import fr.inria.diverse.engine.generator.IGenerator;
+import fr.inria.diverse.engine.generator.spark.GenericMetamodelConfig;
+import fr.inria.diverse.engine.generator.util.VerticesGenToPair;
 
 
 

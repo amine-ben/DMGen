@@ -1,10 +1,9 @@
-package fr.inria.diverse.generator.spark
+package fr.inria.diverse.engine.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI
 import fr.inria.atlanmod.neoemf.resource.PersistentResourceFactory
 import fr.inria.diverse.dmgen.dMGen.GenConfig
 import fr.inria.diverse.dmgen.dMGen.impl.DMGenPackageImpl
-import fr.inria.diverse.generator.util.HadoopURIConverterImpl
 import java.text.MessageFormat
 import java.util.Comparator
 import org.apache.commons.cli.GnuParser
@@ -26,6 +25,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
 import org.apache.hadoop.hdfs.DistributedFileSystem
 import org.apache.hadoop.fs.LocalFileSystem
+import fr.inria.diverse.engine.generator.util.HadoopURIConverterImpl
 
 class SparkGeneratorLauncher {
 	
@@ -152,7 +152,7 @@ class SparkGeneratorLauncher {
 			val generators = (dmgenResource.contents.get(0) as GenConfig).generators
 			val numberOfNodes = 0
 			// generating models  
-			generators.forEach[gen | new DMGenMeatamodelGenerator(gen, 
+			generators.forEach[gen | new DMGenMetamodelGenerator(gen, 
 										hbaseMaster,
 										metamodelResource,
 										numberOfNodes

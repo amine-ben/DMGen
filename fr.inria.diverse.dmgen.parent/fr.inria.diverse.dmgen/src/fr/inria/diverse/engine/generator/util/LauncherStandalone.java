@@ -10,7 +10,7 @@
  *     Amine Benelallam (AtlanMod) - Adaptation for NoeEMF/HBase      
  *******************************************************************************/
 
-package fr.inria.diverse.generator.spark;
+package fr.inria.diverse.engine.generator.util;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -45,7 +45,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI;
 import fr.inria.atlanmod.neoemf.resource.PersistentResourceFactory;
-import fr.inria.diverse.generator.util.GenerationException;
+import fr.inria.diverse.engine.generator.spark.GenericMetamodelConfig;
 
 /**
  *  

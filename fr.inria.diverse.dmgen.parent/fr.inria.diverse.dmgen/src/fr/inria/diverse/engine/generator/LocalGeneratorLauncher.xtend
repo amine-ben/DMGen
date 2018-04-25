@@ -1,4 +1,4 @@
-package fr.inria.diverse.generator
+package fr.inria.diverse.engine.generator
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI
 import fr.inria.atlanmod.neoemf.resource.PersistentResourceFactory

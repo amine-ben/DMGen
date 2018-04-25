@@ -1,33 +1,31 @@
-package fr.inria.diverse.generator
+package fr.inria.diverse.engine.generator
 
+import com.google.common.base.Optional
+import com.google.common.collect.ImmutableList
+import com.google.common.collect.ImmutableMultiset
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
-import fr.inria.diverse.generator.spark.IGenerator
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.generator.util.EPackagesData
-import java.text.MessageFormat
-import java.util.Random
-import org.apache.log4j.Logger
-import org.eclipse.emf.ecore.EClass
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.base.Optional
 import fr.inria.atlanmod.neoemf.core.PersistentEObject
-import org.eclipse.emf.ecore.EAttribute
-import org.eclipse.emf.ecore.EEnum
-import org.apache.commons.math3.distribution.IntegerDistribution
-import org.apache.commons.lang3.RandomStringUtils
-import org.eclipse.emf.ecore.EReference
-import com.google.common.collect.ImmutableMultiset
+import fr.inria.diverse.dmgen.dMGen.Generator
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.engine.generator.util.EPackagesData
+import java.text.MessageFormat
 import java.util.List
-import com.google.common.collect.ImmutableList
+import java.util.Random
+import org.apache.commons.lang3.RandomStringUtils
+import org.apache.commons.math3.distribution.IntegerDistribution
+import org.apache.log4j.Logger
+import org.eclipse.emf.ecore.EAttribute
+import org.eclipse.emf.ecore.EClass
+import org.eclipse.emf.ecore.EEnum
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.resource.Resource
 
+import static com.google.common.collect.Iterables.get
 import static com.google.common.primitives.Primitives.isWrapperType
 import static com.google.common.primitives.Primitives.unwrap
-import static com.google.common.collect.Iterables.get
-import fr.inria.diverse.dmgen.dMGen.Generator
 
 /**
  * @author <a href="mailto:mikael.barbero@obeo.fr">Mikael Barbero</a>

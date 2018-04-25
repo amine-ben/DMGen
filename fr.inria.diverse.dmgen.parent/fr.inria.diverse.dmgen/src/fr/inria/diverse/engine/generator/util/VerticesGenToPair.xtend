@@ -1,11 +1,9 @@
-package fr.inria.diverse.generator.util
+package fr.inria.diverse.engine.generator.util
 import com.google.common.base.Optional
 import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.core.MultiMap
 import fr.inria.atlanmod.neoemf.core.PersistentEObject
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.generator.util.EPackagesData
 import java.text.MessageFormat
 import java.util.ArrayList
 import java.util.Iterator
@@ -29,7 +27,7 @@ import static com.google.common.collect.Iterables.get
 
 import com.google.common.collect.ImmutableMultiset
 import com.google.common.collect.ImmutableList
-
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
 
 class VerticesGenToPair implements FlatMapFunction<Iterator<Long>, String> {
 	

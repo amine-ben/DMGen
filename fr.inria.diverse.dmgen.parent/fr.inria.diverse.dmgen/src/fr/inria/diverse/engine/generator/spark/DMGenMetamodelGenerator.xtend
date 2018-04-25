@@ -1,9 +1,9 @@
-package fr.inria.diverse.generator.spark
+package fr.inria.diverse.engine.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil
 import fr.inria.diverse.dmgen.dMGen.Generator
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
-import fr.inria.diverse.generator.util.GenerationException
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.engine.generator.util.GenerationException
 import java.io.File
 import java.io.IOException
 import java.text.MessageFormat
@@ -19,10 +19,11 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
 import java.util.Random
 import org.apache.commons.lang3.Range
-import fr.inria.diverse.generator.util.VerticesGenToPair
-import fr.inria.diverse.generator.util.EdgesGen
+import fr.inria.diverse.engine.generator.util.VerticesGenToPair
+import fr.inria.diverse.engine.generator.util.EdgesGen
+import fr.inria.diverse.engine.generator.IGenerator
 
-class DMGenMeatamodelGenerator implements IGenerator{
+class DMGenMetamodelGenerator implements IGenerator{
 	
 	
 	static val LOGGER = LogManager.getLogger("Generator") 
@@ -53,7 +54,10 @@ class DMGenMeatamodelGenerator implements IGenerator{
 				this.hbaseMaster = hbaseMaster
 				this.metamodel = metamodel
 				this.numberOfNodes = numberOfNodes
-				config = new DMGenGenerationConfig (metamodel, generator,Range.between(0,DEFAULT_PROPERTIES_RANGE), generator.seed)
+				config = new DMGenGenerationConfig (metamodel, 
+													generator,
+													Range.between(0,DEFAULT_PROPERTIES_RANGE),
+													 generator.seed)
 	}
 	
 	def long getSeed(Generator generator) {

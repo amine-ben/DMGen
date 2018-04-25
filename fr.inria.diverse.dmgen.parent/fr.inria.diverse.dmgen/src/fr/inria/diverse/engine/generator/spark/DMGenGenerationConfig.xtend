@@ -1,9 +1,9 @@
-package fr.inria.diverse.generator.spark
+package fr.inria.diverse.engine.generator.spark
 
 import fr.inria.diverse.dmgen.dMGen.Clazz
 import fr.inria.diverse.dmgen.dMGen.Property
 import fr.inria.diverse.dmgen.dMGen.Generator
-import fr.inria.diverse.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
 import java.util.HashMap
 import java.util.Map
 import java.util.Random
@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.resource.Resource
+import fr.inria.diverse.engine.generator.IGenerator
 
 /**
  * @author <A href="mailto:amine.benelallam@inria.fr">Amine Benelallam</a>
