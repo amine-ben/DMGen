@@ -19,7 +19,7 @@ interface DMGenConfigurationAttributes {
 	val String SPARK_GROUP_NAME = "Spark host"
 	val String SPARK_HOST_NAME = "spark.host"
 	
-	val String SPARK_NODES_NUMBER = "spark.nodes"
+	val String EXECUTORS = "spark.nodes"
 	val String SPARK_NODES_NUMBER_DEFAULT = "*"
 	
 	val String HBASE_GROUP_NAME = "HBase Base Path"
@@ -35,9 +35,16 @@ interface DMGenConfigurationAttributes {
 	val String DMGEN_CONFIG_TYPE = "fr.inria.diverse.dmgen.ui.DMGenLaunchConfigurationType"
 	val String DMGEN_FILE_NAME = "dmgen.file.name"
 	
-	val String[] SPARK_MASTER_ARRAY = #["yarn-cluster", "local"]
+	val String[] SPARK_MASTER_ARRAY = #["yarn-cluster", 
+										"local"]
+										
 	val String[] NEOEMF_HBASE_SCHEMES = #["neo-hbase"]
-	val String[] NEOEMF_STANDALONE_SCHEMES = #["neo-berkeleydb","neo-blueprints","neo-mapdb", "xmi"]
+	
+	val String[] NEOEMF_STANDALONE_SCHEMES = #["neo-berkeleydb",
+											   "neo-blueprints",
+											   "neo-mapdb", 
+											   "neo-hbase", 
+											   "xmi"]
 	
 	
 	

@@ -4,16 +4,17 @@ import com.google.inject.Injector
 import fr.inria.diverse.dmgen.DMGenStandaloneSetupGenerated
 
 import org.eclipse.core.runtime.CoreException
-import org.eclipse.xtext.resource.XtextResourceSet
 import java.io.IOException
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
+import org.eclipse.emf.ecore.resource.ResourceSet
 
 abstract class ExecutionEnvImpl implements ExecutionEnv {
 
 	// Injecting the DMgen metamodel and setting up the resourceset	
 	protected val Injector injector = new DMGenStandaloneSetupGenerated().createInjectorAndDoEMFRegistration
 
-	protected val XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet)
-
+	protected val ResourceSet resourceSet = new ResourceSetImpl
+	
 	// runtime arguments	
 	protected var String metamodelURL
 	protected var String dmgenURL
@@ -21,8 +22,24 @@ abstract class ExecutionEnvImpl implements ExecutionEnv {
 	//protected var boolean isLocal
 	protected var String ePackageImpl
 	protected var String persistenceScheme
-	// application arguments 
+	protected var String basePath
+	//
 	
+	//protected var String hbaseMaster
+	protected var String executors
+	
+	
+	// FIXME Active annotation (@Accessors) not working
+	// Implementing Class accessors manually for now
+	
+	def setBasePath(String master) {
+		basePath = master
+	}
+
+	def setExecutors(String nodes) {
+		executors = nodes
+	}
+	//application arguments 
 	def getPresistenceScheme() {
 		persistenceScheme
 	}

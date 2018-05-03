@@ -21,9 +21,9 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl
 class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	// application arguments     
 	var String sparkMaster
-	var String hbaseMaster
+
 	var String fsMaster
-	var String executors
+
 	// spark configuration variables
 	// var String sparkDeployMode = "cluster"
 	var sparkHomePath = "resources/spark"
@@ -32,15 +32,7 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	// HFDS configuration Env
 	var Configuration fsConfiguration
 
-	// FIXME Active annotation (@Accessors) not working
-	// Implementing Class accessors manually for now
-	def setHbaseMaster(String master) {
-		hbaseMaster = master
-	}
 
-	def setExecutors(String nodes) {
-		executors = nodes
-	}
 	
 	def setSparkMaster(String sparkMaster) {
 		this.sparkMaster = sparkMaster
@@ -60,11 +52,11 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 
 		// add application arguments to spark launcher
 		sparkLauncher.addAppArgs(
-			#[HDFS_MASTER, hbaseMaster, 
+			#[HDFS_MASTER, fsMaster, 
 				METAMODEL_URL, metamodelURL, 
 				DMGEN_URL, dmgenURL, 
 				E_PACKAGE_CLASS, ePackageImpl,
-				HBASE_MASTER, hbaseMaster])
+				HBASE_MASTER, basePath ])
 
 		val handle = sparkLauncher.setAppResource(DMGenConstants.SPARK_APP_RESOURCE)
 								  .setMainClass(DMGenConstants.SPARK_MAIN_CLASS)
@@ -96,11 +88,11 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 	 * Creates application arguments 
 	 */
 	protected def String[] createAppArgs() {
-		return #[HDFS_MASTER, hbaseMaster, 
+		return #[HDFS_MASTER, fsMaster, 
 					METAMODEL_URL, metamodelURL, 
 					DMGEN_URL, dmgenURL, 
 					E_PACKAGE_CLASS, ePackageImpl, 
-					HBASE_MASTER, hbaseMaster]
+					HBASE_MASTER, basePath]
 	}
 
 	override setupEnv() throws IOException, CoreException {
@@ -163,5 +155,6 @@ class DistributedExecutionEnvImpl extends ExecutionEnvImpl {
 
 		return metamodelTmpURI
 	}
+	
 
 }

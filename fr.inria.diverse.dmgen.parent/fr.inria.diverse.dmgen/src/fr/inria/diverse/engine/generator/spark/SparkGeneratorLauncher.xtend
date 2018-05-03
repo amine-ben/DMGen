@@ -50,7 +50,7 @@ class SparkGeneratorLauncher {
 	var Resource dmgenResource
 	var Resource metamodelResource
 
-	var String hbaseMaster
+	var URI baseURI
 	var String hdfsMaster
 	
 	// HDFS file system configuration 
@@ -123,7 +123,6 @@ class SparkGeneratorLauncher {
 					HBaseURI.SCHEME, PersistentResourceFactory.getInstance());				
 		}
 		
-		
 			ePackage = commandLine.getOptionValue(E_PACKAGE_CLASS)
 			var metamodelUrl = commandLine.getOptionValue(METAMODEL_URL)
 			// loading the metamodel from hdfs 
@@ -140,8 +139,8 @@ class SparkGeneratorLauncher {
 			LOGGER.info("Finish loading the packages")
 			
 			
-			hbaseMaster = commandLine.getOptionValue(HBASE_MASTER)
-			
+			baseURI= URI.createURI(commandLine.getOptionValue(HBASE_MASTER))
+		
 			var dmgenUrl = commandLine.getOptionValue(DMGEN_URL)
 			
 			if (dmgenUrl != null && !dmgenUrl.isEmpty) {
@@ -149,13 +148,14 @@ class SparkGeneratorLauncher {
 				dmgenResource = resourceSet.getResource(URI.createURI(dmgenUrl), true)
 			}
 			
-			val generators = (dmgenResource.contents.get(0) as GenConfig).generators
+			val generators = (dmgenResource.contents.head as GenConfig).generators
 			val numberOfNodes = 0
 			// generating models  
 			generators.forEach[gen | new DMGenMetamodelGenerator(gen, 
-										hbaseMaster,
+										baseURI,
 										metamodelResource,
-										numberOfNodes
+										numberOfNodes,
+										true
 										).launch(resourceSet)
 			]
 			

@@ -66,6 +66,7 @@ public class DistributedGenericModelGenerator {
 		super();
 		this.config = config;
 		this.generator = new DirectWriteSpecimenGenerator(config, config.getSeed());
+		
 		PersistenceBackendFactoryRegistry.register(HBaseURI.SCHEME, HBasePersistenceBackendFactory.getInstance());
 		PersistenceBackendFactoryRegistry.register(BerkeleyDbURI.SCHEME, BerkeleyDbPersistenceBackendFactory.getInstance());
 		PersistenceBackendFactoryRegistry.register(MapDbURI.SCHEME, MapDbPersistenceBackendFactory.getInstance());

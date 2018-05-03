@@ -58,7 +58,7 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 		if (editor != null) {		
 			val genFile  =  (editor.getEditorInput() as FileEditorInput).getFile();
 			try{
-				execEnvImpl.dmgenURL = DMGenUtil.exportXMI(genFile.fullPath.toOSString, resourceSet).toFileString
+				execEnvImpl.dmgenURL = DMGenUtil.exportDMgentoXMI(genFile.fullPath.toOSString, resourceSet).toFileString
 			} catch (IOException e) {
 				LOG.error(String.format("The file {0} is not found", genFile.fullPath.toOSString()), e)
 				throw e
@@ -67,7 +67,7 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 			val dmgenFileName = configuration.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, StringUtils.EMPTY)
 			
 			if ( !dmgenFileName.equals(StringUtils.EMPTY)) {
-				execEnvImpl.dmgenURL = DMGenUtil.exportXMI(dmgenFileName, resourceSet).toFileString					 
+				execEnvImpl.dmgenURL = DMGenUtil.exportDMgentoXMI(dmgenFileName, resourceSet).toFileString					 
 			} else {
 				throw new IOException("Unable to find active DMGen file")	
 			}
@@ -77,13 +77,11 @@ class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 		execEnvImpl.metamodelURL = configuration.getAttribute(DMGenConfigurationAttributes.METAMODEL_NAME, "")
 		
 		// distribution specific parameters 
-		if (execEnvImpl instanceof DistributedExecutionEnvImpl) {
-			val distExec = execEnvImpl as DistributedExecutionEnvImpl
-			distExec.fsMaster = configuration.getAttribute(DMGenConfigurationAttributes.FS_HOST_NAME, StringUtils.EMPTY)
-			distExec.executors = configuration.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, StringUtils.EMPTY)
+		//if (execEnvImpl instanceof DistributedExecutionEnvImpl) {
+		execEnvImpl.basePath = configuration.getAttribute(DMGenConfigurationAttributes.BASE_PATH, StringUtils.EMPTY)
+		execEnvImpl.executors = configuration.getAttribute(DMGenConfigurationAttributes.EXECUTORS, StringUtils.EMPTY)
 			//distExec.hbaseMaster = configuration.getAttribute(DMGenConfigurationAttributes., StringUtils.EMPTY)
-
-		}
+		//}
 		return execEnvImpl
 	}
 					

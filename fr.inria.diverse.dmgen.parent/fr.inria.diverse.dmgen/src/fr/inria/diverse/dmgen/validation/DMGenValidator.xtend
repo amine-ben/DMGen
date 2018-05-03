@@ -135,7 +135,7 @@ class DMGenValidator extends AbstractDMGenValidator {
 	 * Loading the  
 	 */
 	def _importedPackages(EObject model) {
-		if (importedPackages == null ) {
+		if ((importedPackages == null)) {
 			var resource = model.eResource
 			importedPackages = new HashSet<EPackage>
 			resource.allContents

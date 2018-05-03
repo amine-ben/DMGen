@@ -56,9 +56,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	
 	var String sparkHost
 	
-	var String hbaseHost
-	
-	var String xmiBasePath
+	var String basePath
 	
 	var String moduleFileName
 	
@@ -82,16 +80,16 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	
 	var Combo distributedBackendCombo
 	
-	var Text hbaseHostText
+	var Text distBasePathText
 	
-	var Text xmiBasePathText
+	var Text localBasePathText
 	
 	var Text sparkNodesText
 	
-	var Group hbaseGrp
+	var Group distGrp
 	
-	var Group xmiGrp
-	// EMF Related variables
+	var Group localGrp
+	//EMF-Related variables
 	
 	val ResourceSet rs = new ResourceSetImpl
 	
@@ -317,16 +315,16 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		sparkNodesText = new Text(sparkGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
 		
 		
-		hbaseGrp = new Group(rootCont, SWT.NULL)
-		hbaseGrp.text = DMGenConfigurationAttributes.HBASE_GROUP_NAME
-		hbaseGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
-		hbaseGrp.layout = new GridLayout (3, false)
+		distGrp = new Group(rootCont, SWT.NULL)
+		distGrp.text = DMGenConfigurationAttributes.HBASE_GROUP_NAME
+		distGrp.layoutData = new GridData(GridData.FILL_HORIZONTAL)
+		distGrp.layout = new GridLayout (3, false)
 		
-		val hbaseHostLabel = new Label(hbaseGrp, SWT.LEFT)
+		val hbaseHostLabel = new Label(distGrp, SWT.LEFT)
 		hbaseHostLabel.setLayoutData(new GridData(SWT.LEFT))
 		hbaseHostLabel.setText("Distributed backend:")
 
-		distributedBackendCombo = new Combo(hbaseGrp, SWT.READ_ONLY)
+		distributedBackendCombo = new Combo(distGrp, SWT.READ_ONLY)
 		distributedBackendCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 		distributedBackendCombo.items = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES
 		distributedBackendCombo.addSelectionListener(new SelectionListener() {	
@@ -343,26 +341,26 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 					hidePathContent
 				}
 		})
-		hbaseHostText = new Text(hbaseGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
-		hbaseHostText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-		hbaseHostText.addModifyListener(new ModifyListener() {	
+		distBasePathText = new Text(distGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
+		distBasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+		distBasePathText.addModifyListener(new ModifyListener() {	
 			override modifyText(ModifyEvent e) {
-				hbaseHost = hbaseHostText.text
+				basePath = distBasePathText.text
 				updateLaunchConfigurationDialog
 				}
 		})
 		
 	
-		xmiGrp = new Group(rootCont, SWT.NULL)
-		xmiGrp.text = DMGenConfigurationAttributes.XMI_GROUP_NAME
-		xmiGrp.layoutData = new GridData(GridData.HORIZONTAL_ALIGN_FILL)
-		xmiGrp.layout = new GridLayout (3, false)
+		localGrp = new Group(rootCont, SWT.NULL)
+		localGrp.text = DMGenConfigurationAttributes.XMI_GROUP_NAME
+		localGrp.layoutData = new GridData(GridData.HORIZONTAL_ALIGN_FILL)
+		localGrp.layout = new GridLayout (3, false)
 		
-		val xmiLabel = new Label(xmiGrp, SWT.LEFT)
+		val xmiLabel = new Label(localGrp, SWT.LEFT)
 		xmiLabel.setLayoutData(new GridData(SWT.LEFT))
 		xmiLabel.setText("Local backend:")
 
-		localBackendCombo = new Combo(xmiGrp, SWT.READ_ONLY)
+		localBackendCombo = new Combo(localGrp, SWT.READ_ONLY)
 		localBackendCombo.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
 		localBackendCombo.items = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES
 		
@@ -382,12 +380,12 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 				
 		})
 		
-		xmiBasePathText = new Text(xmiGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
-		xmiBasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
-		xmiBasePathText.addModifyListener(new ModifyListener() {	
+		localBasePathText = new Text(localGrp, SWT.SINGLE.bitwiseOr(SWT.BORDER))
+		localBasePathText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL))
+		localBasePathText.addModifyListener(new ModifyListener() {	
 			override modifyText(ModifyEvent e) {
-				if (xmiBasePathText.text != null ) {
-				xmiBasePath = xmiBasePathText.text
+				if (localBasePathText.text != null ) {
+				basePath = localBasePathText.text
 				updateLaunchConfigurationDialog
 				}				
 			}
@@ -399,11 +397,11 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 */
 	def hidePathContent() {
 		if (sparkMasterCombo.text.equals(DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0))) {
-			xmiGrp.visible = false
-			hbaseGrp.visible = true
+			localGrp.visible = false
+			distGrp.visible = true
 	 	} else {
-	 		xmiGrp.visible = true
-			hbaseGrp.visible = false
+	 		localGrp.visible = true
+			distGrp.visible = false
 	 	} 
 	}
 	/**
@@ -427,10 +425,9 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			moduleFileName = conf.getAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, "")
 			
 			// loading the genConf & initiliazing the hbase
-			if (moduleFileName != null && 
-					moduleFileName != ""){
-					loadGenConfig(moduleFileName)
-					}
+			if (moduleFileName != null && moduleFileName != "") {
+				loadGenConfig(moduleFileName)
+			}
 				
 			modulePath = conf.getAttribute(DMGenConfigurationAttributes.MODULE_PATH, "")
 			modulePathText.text = modulePath
@@ -443,21 +440,20 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 			persistenceScheme = conf.getAttribute(DMGenConfigurationAttributes.PERSISTENCE_SCHEME, "")
 			val schemeIndex = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.indexOf(persistenceScheme)
 			if (sparkHost == DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) {
-				hbaseHost = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
-				hbaseHostText.text = hbaseHost	
+				basePath = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
+				distBasePathText.text = basePath	
 				if (schemeIndex > -1) 
 					distributedBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_HBASE_SCHEMES.get(schemeIndex)
 											
 			} else {
-				xmiBasePath = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
-				xmiBasePathText.text = xmiBasePath
+				basePath = conf.getAttribute(DMGenConfigurationAttributes.BASE_PATH, "")
+				localBasePathText.text = basePath
 				if (schemeIndex > -1)
 					localBackendCombo.text = DMGenConfigurationAttributes.NEOEMF_STANDALONE_SCHEMES.get(schemeIndex)
 			}
 			
-			numberOfNodes = conf.getAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, "8")
+			numberOfNodes = conf.getAttribute(DMGenConfigurationAttributes.EXECUTORS, "8")
 			sparkNodesText.text = numberOfNodes
-			
 			
 			hidePathContent
 			
@@ -489,11 +485,11 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		conf.setAttribute(DMGenConfigurationAttributes.FS_HOST_NAME, genConfig.hdfsMaster.uriToString)
 		if (sparkMasterCombo.text ==
 				DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)) 
-			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, hbaseHostText.text)
+			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, distBasePathText.text)
 		else 
-			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, xmiBasePathText.text)
+			conf.setAttribute(DMGenConfigurationAttributes.BASE_PATH, localBasePathText.text)
 		conf.setAttribute(DMGenConfigurationAttributes.DMGEN_FILE_NAME, moduleFileName)
-		conf.setAttribute(DMGenConfigurationAttributes.SPARK_NODES_NUMBER, sparkNodesText.text)
+		conf.setAttribute(DMGenConfigurationAttributes.EXECUTORS, sparkNodesText.text)
 	}
 	
 		/**
@@ -528,11 +524,11 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	 		return false 
 	 	} 
 	 	if (sparkMasterCombo.text == DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(0)
-	 		&& hbaseHostText.text.empty) {
+	 		&& distBasePathText.text.empty) {
 	 		errorMessage =  "No hbase host is provided"
 	 		return false 
 	 	} if (sparkMasterCombo.text == DMGenConfigurationAttributes.SPARK_MASTER_ARRAY.get(1)
-	 		&& xmiBasePathText.text.empty) {
+	 		&& localBasePathText.text.empty) {
 	 		errorMessage =  "No XMI base path is provided"
 	 		return false }
 	 	return super.isValid(conf)
@@ -566,7 +562,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 	    	sparkNodesText.text = genConfig.numberOfNodes.toString ?: numberOfNodes
 									
 		if (genConfig.hbaseMaster != null)
-			hbaseHostText.text = genConfig.hbaseMaster.toPrettyString ?: hbaseHost
+			distBasePathText.text = genConfig.hbaseMaster.toPrettyString ?: basePath
 			
 	}
 		
@@ -599,7 +595,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		moduleName = moduleNameText.text
 		modulePath = modulePathText.text
 		sparkHost = sparkMasterCombo.text
-		hbaseHost = hbaseHostText.text
+		basePath = distBasePathText.text
 		numberOfNodes = sparkNodesText.text	
 		hidePathContent
 	}

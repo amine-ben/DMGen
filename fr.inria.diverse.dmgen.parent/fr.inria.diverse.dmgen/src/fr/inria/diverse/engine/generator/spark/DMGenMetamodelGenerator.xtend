@@ -2,37 +2,40 @@ package fr.inria.diverse.engine.generator.spark
 
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil
 import fr.inria.diverse.dmgen.dMGen.Generator
+import fr.inria.diverse.engine.generator.IGenerator
 import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
+import fr.inria.diverse.engine.generator.util.EdgesGen
 import fr.inria.diverse.engine.generator.util.GenerationException
+import fr.inria.diverse.engine.generator.util.VerticesGenToPair
 import java.io.File
 import java.io.IOException
 import java.text.MessageFormat
 import java.util.Collections
+import java.util.Random
 import java.util.stream.Collectors
 import java.util.stream.LongStream
+import org.apache.commons.lang3.Range
 import org.apache.log4j.LogManager
-import org.apache.spark.SparkConf
-import org.apache.spark.api.java.JavaRDD
-import org.apache.spark.api.java.JavaSparkContext
+import org.apache.spark.sql.Encoders
+import org.apache.spark.sql.SparkSession
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
-import java.util.Random
-import org.apache.commons.lang3.Range
-import fr.inria.diverse.engine.generator.util.VerticesGenToPair
-import fr.inria.diverse.engine.generator.util.EdgesGen
-import fr.inria.diverse.engine.generator.IGenerator
 
 class DMGenMetamodelGenerator implements IGenerator{
 	
 	
 	static val LOGGER = LogManager.getLogger("Generator") 
 	
-	val SparkConf sc = new SparkConf().setAppName("Spark EMF models generator")
+	//var protected SparkConf sc = new SparkConf().setAppName("Spark EMF models generator")
 	
-	val protected final JavaSparkContext jsc = new JavaSparkContext(sc)
+	//var protected JavaSparkContext jsc = new JavaSparkContext(sc)
 	
-	var String hbaseMaster
+	val static int OK = 0
+	val static int KO = 1
+	var protected SparkSession spark
+	 
+	var URI baseURI
 	
 	var Generator generator	
 	
@@ -40,28 +43,39 @@ class DMGenMetamodelGenerator implements IGenerator{
 	
 	var ISpecimenConfiguration config
 	
+	var boolean local
 	//var String prefix
 	
 	var int numberOfNodes
 	
 	new(Generator generator, 
-			String hbaseMaster, 
+			URI baseURI, 
 			Resource metamodel, 
-			int numberOfNodes) {
+			int numberOfNodes,
+			boolean local) {
 				
 				super()
 				this.generator = generator
-				this.hbaseMaster = hbaseMaster
+				this.baseURI = baseURI
 				this.metamodel = metamodel
 				this.numberOfNodes = numberOfNodes
+				this.local = local
 				config = new DMGenGenerationConfig (metamodel, 
 													generator,
 													Range.between(0,DEFAULT_PROPERTIES_RANGE),
-													 generator.seed)
+													seed)
+				// TODO add support for non local environment setup
+				this.spark = SparkSession.builder
+										 .appName("Spark EMF models generator")
+										 .master("local")
+										 .getOrCreate		   
 	}
-	
-	def long getSeed(Generator generator) {
-		return  new Random().nextLong
+	// TODO add seed to the language definition in DMGen
+	def long seed() {
+//		if (generator.seed!=0L)
+//			generator.seed
+//		else  
+			new Random().nextLong
 	}
 	/**
 	 * @param rs 
@@ -93,6 +107,7 @@ class DMGenMetamodelGenerator implements IGenerator{
 	override generate(Resource resource) {
 		try {
 
+			SparkSession.builder
 			LOGGER.info(MessageFormat.format("Creating {0} model{1} using as generator {2}", 
 								  generator.number, if (generator.number > 1 ) 's' else "" , 
 								  "Spark Model Generator"))
@@ -117,16 +132,31 @@ class DMGenMetamodelGenerator implements IGenerator{
 						resource.getURI(), generator.size)) 			
 				
 				
-				val vertices = jsc.parallelize(LongStream
-						.rangeClosed(1, numberOfNodes)
-						.boxed()
-						.collect(Collectors.toList()), numberOfNodes) as JavaRDD<Long>
-
-				val exitCode = if ( vertices.mapPartitions(new VerticesGenToPair (config, generator.size/numberOfNodes, resource) )
-											.mapPartitions(new EdgesGen(config, resource))
-											.count() > 1) 0
-							   else 1
-								
+				val vertices = spark.createDataset(LongStream
+													.rangeClosed(1, numberOfNodes)
+													.boxed()
+													.collect(Collectors.toList()), Encoders.LONG())
+									.rdd.toJavaRDD
+				
+//				val vertices = spark.sparkContext.parallelize(LongStream
+//						.rangeClosed(1, numberOfNodes)
+//						.boxed()
+//						.collect(Collectors.toList()), numberOfNodes, null)
+//				
+//				
+//				parallelize() as JavaRDD<Long>
+//				vertices = spark.sparkContext.parallelize(vertices.to)
+//				val exitCode = if (vertices.) OK
+//							   else KO
+				val exitCode = if (vertices.mapPartitions(
+													new VerticesGenToPair (config,
+																			generator.size/numberOfNodes,  
+																			resource
+																		  ) 
+														 )
+										   .mapPartitions(new EdgesGen(config, resource))
+										   .count() > 1) OK
+							   else KO								
 				LOGGER.info(MessageFormat.format("Saving resource {0}", resource.getURI())) 
 				resource.save(Collections.emptyMap()) 
 				
@@ -139,10 +169,12 @@ class DMGenMetamodelGenerator implements IGenerator{
 		} catch (Exception e) {
 			LOGGER.error(e.getLocalizedMessage()) 
 		}
+		finally {
+			// stopping the spark session 
+			spark.stop
+		}
 	}
 	
-	override getConfig() {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
+	override getConfig() {	config	}
 	
 }
