@@ -2,7 +2,6 @@ package fr.inria.diverse.dmgen.ui.launch
 
 import com.google.inject.Injector
 import fr.inria.diverse.dmgen.DMGenStandaloneSetupGenerated
-import fr.inria.diverse.dmgen.launcher.DistributedExecutionEnvImpl
 import fr.inria.diverse.dmgen.launcher.ExecutionEnv
 import fr.inria.diverse.dmgen.launcher.ExecutionEnvImpl
 import fr.inria.diverse.dmgen.util.DMGenUtil
@@ -17,7 +16,6 @@ import org.eclipse.debug.core.model.LaunchConfigurationDelegate
 import org.eclipse.ui.part.FileEditorInput
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.ui.editor.utils.EditorUtils
-import fr.inria.diverse.dmgen.launcher.LocalExecutionEnvImpl
 
 class DMGenLaunchConfiguration extends LaunchConfigurationDelegate {
 	

@@ -15,7 +15,6 @@ package fr.inria.diverse.generator.specimen;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.lang3.Range;
 import org.apache.commons.math3.distribution.BinomialDistribution;
 import org.apache.commons.math3.distribution.IntegerDistribution;

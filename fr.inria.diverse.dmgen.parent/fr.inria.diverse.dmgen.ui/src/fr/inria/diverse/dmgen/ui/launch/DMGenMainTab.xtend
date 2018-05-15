@@ -34,8 +34,7 @@ import org.eclipse.swt.widgets.Group
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.PlatformUI
-import javax.annotation.Nonnull
-import java.util.Set
+
 
 /**
  * Derived from EMFTVM Launcher @link 
@@ -461,7 +460,7 @@ class DMGenMainTab extends AbstractLaunchConfigurationTab {
 		}
 	}
 	
-	def loadGenConfig(@Nonnull String module) {
+	def loadGenConfig( String module) {
 		new DMGenStandaloneSetup().createInjectorAndDoEMFRegistration()
 		val resource = rs.getResource(URI.createURI(module),true)
 		genConfig = resource.contents.head as GenConfig

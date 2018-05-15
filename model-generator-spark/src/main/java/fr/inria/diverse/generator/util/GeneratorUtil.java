@@ -2,7 +2,6 @@ package fr.inria.diverse.generator.util;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.common.util.URI;

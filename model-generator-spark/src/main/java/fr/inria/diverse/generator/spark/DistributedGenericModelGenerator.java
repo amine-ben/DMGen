@@ -35,7 +35,6 @@ import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseResourceUtil;
 import fr.inria.atlanmod.neoemf.data.hbase.util.HBaseURI;
 import fr.inria.atlanmod.neoemf.data.mapdb.MapDbPersistenceBackendFactory;
 import fr.inria.atlanmod.neoemf.data.mapdb.util.MapDbURI;
-import fr.inria.atlanmod.neoemf.resource.DefaultPersistentResource;
 import fr.inria.diverse.generator.specimen.ISpecimenConfiguration;
 import fr.inria.diverse.generator.util.GenerationException;
 

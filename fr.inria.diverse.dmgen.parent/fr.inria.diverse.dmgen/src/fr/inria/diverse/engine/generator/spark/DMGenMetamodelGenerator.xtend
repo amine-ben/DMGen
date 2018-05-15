@@ -82,15 +82,16 @@ class DMGenMetamodelGenerator implements IGenerator{
 	 */
 	def launch (ResourceSet rs) {
 		for (var i = 0 ; i < generator.number ; i++) {
-			 val uri = formatURI(i)
+			 val uri = formatURI(i, baseURI.toString)
 			 val resource = rs.createResource(uri)
 			 generate(resource)
 		}
 	}
 	
-	def URI formatURI(int index) {
-		val builder = new StringBuilder() 
-
+	def URI formatURI(int index, String prefixe) {
+		val builder = new StringBuilder(prefixe) 
+		
+		builder.append(File.separator) 
 		builder.append(generator.prefix) 
 		builder.append(File.separator) 
 		builder.append("model") 

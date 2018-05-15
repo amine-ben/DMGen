@@ -96,12 +96,13 @@
             <_exportcontents>
               org.apache.spark.*,
               org.apache.hadoop.*,
-              org.apache.log4j,
               com.hazelcast.*,
-              jline.*
+              jline.*,
+              org.apache.commons.lang*, 
+              org.apache.commons.math3.*
             </_exportcontents>
-            <Import-Package>*;resolution:=optional</Import-Package>
             <Bundle-ClassPath>{maven-dependencies}</Bundle-ClassPath>
+            <Import-Package>!*</Import-Package>
             <Embed-Transitive>true</Embed-Transitive>
             <Embed-Directory>libs</Embed-Directory>
             <_failok>true</_failok>
@@ -127,6 +128,21 @@
               <destFileName>dmgenLibs.jar</destFileName>
               <overWriteReleases>false</overWriteReleases>
               <overWriteSnapshots>true</overWriteSnapshots>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>libs</outputDirectory>
             </configuration>
           </execution>
         </executions>

@@ -61,6 +61,7 @@ class LocalExecutionEnvImpl extends ExecutionEnvImpl {
 			fsConfiguration.set("fs.hdfs.impl", DistributedFileSystem.name)
 	   		fsConfiguration.set("fs.file.impl",LocalFileSystem.name)
 	   		fsConfiguration.set("dfs.permissions.enabled","false")
+	   		fsConfiguration.set("hadoop.security.group.mapping", "org.apache.hadoop.security.JniBasedUnixGroupsMappingWithFallback")
 	
 			if (ePackageImpl != null && !ePackageImpl.isEmpty) {
 				val clazz = LocalExecutionEnvImpl.classLoader.loadClass(ePackageImpl)

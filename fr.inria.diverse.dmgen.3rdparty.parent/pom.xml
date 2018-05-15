@@ -86,6 +86,6 @@
   <artifactId>dmgen-3rdparty-parent</artifactId>
   <modules>
   	<module>fr.inria.diverse.dmgen.3rdparty</module>
-  	<module>fr.inria.diverse.dmgen.3rdparty.bundle</module>
+  	
   </modules>
 </project>

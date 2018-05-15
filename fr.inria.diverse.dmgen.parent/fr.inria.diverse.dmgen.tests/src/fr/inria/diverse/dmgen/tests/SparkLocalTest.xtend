@@ -1,7 +1,6 @@
 package fr.inria.diverse.dmgen.tests
 
 import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.InjectWith
 import org.junit.runner.RunWith
 import org.eclipse.xtext.junit4.util.ParseHelper
 import com.google.inject.Inject

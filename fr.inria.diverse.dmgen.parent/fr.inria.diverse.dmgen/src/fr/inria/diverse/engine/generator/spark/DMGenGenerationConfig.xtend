@@ -7,7 +7,6 @@ import fr.inria.diverse.engine.generator.specimen.ISpecimenConfiguration
 import java.util.HashMap
 import java.util.Map
 import java.util.Random
-import javax.validation.constraints.NotNull
 import org.apache.commons.lang3.Range
 import org.apache.commons.math3.distribution.UniformIntegerDistribution
 import org.eclipse.emf.ecore.EAttribute
@@ -148,20 +147,16 @@ class DMGenGenerationConfig extends GenericMetamodelConfig implements DMGenConfi
 		else Range.between(Math.round(generator.globalDensity * (1 - generator.globalDeviation)), 
 					Math.round(generator.globalDensity * (1 + generator.globalDeviation)))
 	}
-	@NotNull
 	override getRangeFor(EClass eCLass) {
 		classDepthRange.get(eCLass.name)
 	}
-	@NotNull
 	override getRangeFor(EAttribute eAttribute) {
 		perClassValuesRange.get(eAttribute.eClass.name).get(eAttribute.name) ?: propertiesRange
 	}
-	@NotNull
-	override getRangeFor(EReference eReference) {
+ 	override getRangeFor(EReference eReference) {
 		perClassReferencesRange.get(eReference.eClass.name).get(eReference.name)
 	}
-	@NotNull
-	override getDistributionFor(EAttribute eAttribute) {
+ 	override getDistributionFor(EAttribute eAttribute) {
 		
 		var distribution = distributions.get(eAttribute)
 		
@@ -195,7 +190,6 @@ class DMGenGenerationConfig extends GenericMetamodelConfig implements DMGenConfi
 		return distribution
 	}
 	
-	@NotNull
 	override getDistributionFor(EReference eReference) {
 		var distribution = distributions.get(eReference)
 		
@@ -228,7 +222,6 @@ class DMGenGenerationConfig extends GenericMetamodelConfig implements DMGenConfi
 		}
 		return distribution;
 	}
-	@NotNull
 	override getDepthDistributionFor(EClass eClass) {
 		var distribution = distributions.get(eClass);
 		if (distribution == null) {

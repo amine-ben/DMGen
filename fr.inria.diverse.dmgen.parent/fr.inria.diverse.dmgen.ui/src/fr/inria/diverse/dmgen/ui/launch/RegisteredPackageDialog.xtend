@@ -6,12 +6,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Shell
 import org.eclipse.ui.dialogs.ElementListSelectionDialog
 import org.eclipse.swt.widgets.Control
-import org.eclipse.swt.SWT
-import org.eclipse.swt.layout.GridLayout
-import org.eclipse.swt.events.SelectionEvent
-import org.eclipse.swt.widgets.Button
-import org.eclipse.swt.events.SelectionAdapter
-import org.eclipse.emf.ecore.presentation.EcoreEditorPlugin
+
 import org.eclipse.emf.ecore.plugin.EcorePlugin
 import java.util.Arrays
 import org.eclipse.emf.ecore.EPackage
